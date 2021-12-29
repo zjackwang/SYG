@@ -1,0 +1,19 @@
+//
+//  ProduceItem.swift
+//  sYg
+//
+//  Created by Jack Wang on 12/28/21.
+//
+
+import Foundation
+
+struct ProduceItem: Hashable, Codable {
+    let Category: String
+    let Item: String
+    let SubCategory: String
+    let IsCut: Bool
+    let DaysInFridge: Double
+    let DaysOnShelf: Double
+    let DaysInFreezer: Double
+    let Notes: String
+}
