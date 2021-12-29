@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+/*
+ * Actual UIKit interface for Camera, Photo Library
+ */
 struct ReceiptSelector: UIViewControllerRepresentable {
     
     @Binding var receipt: UIImage?

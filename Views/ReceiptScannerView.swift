@@ -4,6 +4,7 @@
 //
 //  Created by Jack Wang on 12/28/21.
 //  https://www.youtube.com/watch?v=V-kSSjh1T74
+//  https://www.youtube.com/watch?v=d6eTXQfAKJM
 
 import SwiftUI
 
@@ -42,14 +43,23 @@ struct ReceiptScannerView: View {
 
                 }
             }
-            .navigationTitle("Select Image")
-            .sheet(isPresented: $rvm.showSelector) {
-
-            } content: {
+            .sheet(isPresented: $rvm.showSelector) {} content: {
                 ReceiptSelector(receipt: $rvm.receipt, sourceType: rvm.source == .library ? .photoLibrary : .camera)
                     .ignoresSafeArea()
             }
-
+            .alert("Error",
+                   isPresented: $rvm.showCameraAlert,
+                   presenting: rvm.cameraError,
+                   actions: {
+                        cameraError in
+                        cameraError.button
+                    },
+                   message: {
+                        cameraError in
+                        Text(cameraError.message)
+                    }
+            )
+            .navigationTitle("Select Image")
         }
     }
 }
