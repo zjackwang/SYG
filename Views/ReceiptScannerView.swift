@@ -12,35 +12,53 @@ struct ReceiptScannerView: View {
     
     @EnvironmentObject private var rvm: ReceiptViewModel
     @State private var selectReceipt: Bool = false
-   
+    
     var body: some View {
         NavigationView {
             VStack {
+                // Temp. for visibility
+                if let workingLocation = rvm.workingLocation {
+                    Text("Working from \(workingLocation)")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .padding()
+                }
                 Image (uiImage: rvm.receipt ?? UIImage(named: "placeholder")!)
                     .resizable()
                     .frame(width: 300, height: 300)
                     .background(.gray)
           
-                Image(systemName: "plus.app")
-                    .onTapGesture {
-                        self.selectReceipt = true
-                    }
-                .padding()
-                .confirmationDialog(Text("Scan Receipt"), isPresented: $selectReceipt) {
+                if let receipt = rvm.receipt{
                     Button {
-                        rvm.source = .camera
-                        rvm.showReceiptSelector()
+                        rvm.analyzeImage(receipt: receipt)
+                        // TODO pop over
                     } label: {
-                        Text("Scan Receipt")
+                        Text("Confirm Image")
                     }
-                    Button  {
-                        rvm.source = .library
-                        rvm.showReceiptSelector()
-                    } label: {
-                        Text("Choose From Library")
-                    }
-
-
+                    .padding()
+                    .frame(width: 300, height: 100)
+                    .cornerRadius(25)
+                    
+                } else {
+                    Image(systemName: "plus.app")
+                        .onTapGesture {
+                            self.selectReceipt = true
+                        }
+                        .padding()
+                        .confirmationDialog(Text("Scan Receipt"), isPresented: $selectReceipt) {
+                            Button {
+                                rvm.source = .camera
+                                rvm.showReceiptSelector()
+                            } label: {
+                                Text("Scan Receipt")
+                            }
+                            Button  {
+                                rvm.source = .library
+                                rvm.showReceiptSelector()
+                            } label: {
+                                Text("Choose From Library")
+                            }
+                        }
                 }
             }
             .sheet(isPresented: $rvm.showSelector) {} content: {
