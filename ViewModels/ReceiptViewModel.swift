@@ -25,6 +25,9 @@ class ReceiptViewModel: ObservableObject {
     @Published var workingLocation: String?
     @Published var scannedReceipt: AnalyzedReceipt?
     
+    /*
+     * Brings up camera to scan receipt
+     */
     func showReceiptSelector () {
         do {
             if source == .camera {

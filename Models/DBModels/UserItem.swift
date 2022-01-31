@@ -14,6 +14,19 @@ struct UserItem: Identifiable {
     let DateToRemind: Date
 }
 
+extension UserItem: Hashable {
+    static func == (lhs: UserItem, rhs: UserItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(Name)
+        hasher.combine(DateOfPurchase)
+        hasher.combine(DateToRemind)
+    }
+}
+
 extension UserItem {
     static let samples = [
         UserItem(Name: "Apple", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow: 24 * 60 * 60)),

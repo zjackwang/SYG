@@ -11,6 +11,7 @@ struct MainUserView: View {
     
     @State private var exampleItemJSON: [UserItem] = UserItem.samples
     @EnvironmentObject private var rvm: ReceiptViewModel
+    @EnvironmentObject private var svm: ScannedItemsViewModel
     @State private var selectReceipt: Bool = false
 
    private let columns = [
@@ -26,7 +27,7 @@ struct MainUserView: View {
             // Foreground
             VStack {
                 // https://peterfriese.dev/swiftui-listview-part2/
-                UserItemListView(itemsList: UserItem.samples)
+                UserItemListView()
             }
 //            .ignoresSafeArea()
             .sheet(isPresented: $rvm.showSelector) {} content: {
@@ -81,6 +82,7 @@ struct MainUserView: View {
                          Label("Edit", systemImage: "slider.horizontal.3")
                        }
                        .foregroundColor(.black)
+                       .padding()
                 }
             }
         }
@@ -92,6 +94,6 @@ struct MainUserView_Previews: PreviewProvider {
     static var previews: some View {
         MainUserView()
             .environmentObject(ReceiptViewModel())
-
+            .environmentObject(ScannedItemsViewModel())
     }
 }
