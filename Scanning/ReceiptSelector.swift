@@ -15,6 +15,7 @@ struct ReceiptSelector: UIViewControllerRepresentable {
     
     @Binding var receipt: UIImage?
     var sourceType: UIImagePickerController.SourceType = .camera
+    @Binding var showPopover: Bool
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let selector = UIImagePickerController()
@@ -41,6 +42,7 @@ struct ReceiptSelector: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.editedImage] as? UIImage {
                 receiptSelector.receipt = image
+                receiptSelector.showPopover.toggle()
             } else {
                 print("ERROR")
             }

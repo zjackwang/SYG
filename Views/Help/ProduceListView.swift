@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct ProduceListView: View {
-    @StateObject var produceViewModel = ProduceViewModel()
+    @EnvironmentObject var produceViewModel: ProduceViewModel
     var body: some View {
         NavigationView {
             List {
@@ -29,7 +29,7 @@ struct ProduceListView: View {
             .listStyle(.inset)
             .navigationTitle("Savable Produce")
             .onAppear {
-                produceViewModel.fetchProduce()
+                produceViewModel.getAllItemsInfo()
             }
         }
     }

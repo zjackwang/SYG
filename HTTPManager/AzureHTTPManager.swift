@@ -71,19 +71,18 @@ class AzureHTTPManager <T: URLSessionProtocol>{
         makeRequest(request: urlRequest) {
             result, response in
             // get operation location
-            guard
-                let httpResponse = response as? HTTPURLResponse,
-                let operationLocation = httpResponse.value(forHTTPHeaderField: "operation-location")
-            else {
-                completionBlock(.failure(HTTPError.invalidResponse(try! result.get(), response)))
+            switch(result) {
+            case .success:
+                if let httpResponse = response as? HTTPURLResponse,
+                   let operationLocation = httpResponse.value(forHTTPHeaderField: "operation-location")  {
+                    // return operation location somehow, to be used by get... in completion block...
+                    print("Azure form recognizer image POST request suceeded!\nWorking at \(operationLocation)")
+                    completionBlock(.success(Data(operationLocation.utf8)))
+                }
+            case .failure(let error):
+                completionBlock(.failure(error))
                 return
             }
-            
-            // return operation location somehow, to be used by get... in completion block... 
-            print("Azure form recognizer image POST request suceeded!\nWorking at \(operationLocation)")
-            completionBlock(.success(Data(operationLocation.utf8)))
-        
         }
-        
     }
 }
