@@ -14,7 +14,7 @@ struct MainUserView: View {
     @State private var exampleItemJSON: [UserItem] = UserItem.samples
     
     @EnvironmentObject private var mvm: MainViewModel
-    @EnvironmentObject private var pvm: ProduceViewModel
+
     // For Popups
     @State private var selectReceipt: Bool = false
     @State private var showScannedReceipt: Bool = false
@@ -105,7 +105,8 @@ struct ScannedReceiptPopover: View {
     @Binding var showPopover: Bool
     @EnvironmentObject private var mvm: MainViewModel
     @EnvironmentObject private var pvm: ProduceViewModel
-    
+    @EnvironmentObject private var svm: ScannedItemsViewModel
+
     var body: some View {
         ZStack {
             ZStack (alignment: .topLeading){
@@ -131,7 +132,7 @@ struct ScannedReceiptPopover: View {
                 // Confirmation
                 if let receipt = mvm.receipt{
                     Button {
-                        if !mvm.analyzeImage(receipt: receipt, pvm: pvm) {
+                        if !mvm.analyzeImage(receipt: receipt, pvm: pvm, svm: svm) {
                             // Handle error, show popup TODO
                             mvm.imageAnalysisError()
                         }

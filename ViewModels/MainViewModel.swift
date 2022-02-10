@@ -54,7 +54,7 @@ class MainViewModel: ObservableObject {
      *  - converts AnalyzedReceipt struct into list of UserItem structs
      *  - adds to user defaults via scanned items view model
      */
-    func imageAnalyzedSuccesfully(pvm: ProduceViewModel) {
+    func imageAnalyzedSuccesfully(pvm: ProduceViewModel, svm: ScannedItemsViewModel) {
         print("Image analyzed successfully. Now adding to user defaults...")
         // Should have legit receipt
         guard let scannedReceipt = scannedReceipt else {
@@ -91,13 +91,13 @@ class MainViewModel: ObservableObject {
                 self.handleError(error: nil)
                 return
             }
-            
            
             var dateToRemind: Date = dateOfPurchase
             let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
             if let produceInfo = produceInfo {
                 dateToRemind += TimeInterval(produceInfo.DaysInFridge * 24 * 60 * 60)
             }
+            // DEBUGGING
             print("name: \(name)")
             print("- date to remind: \(dateToRemind)")
             
@@ -110,10 +110,9 @@ class MainViewModel: ObservableObject {
                 )
             )
         }
-        // TODO Add to MainnUser View via Dispatch queue
         // Add to user's displayed list
         DispatchQueue.main.async {
-            
+            svm.addItems(scannedItems)
         }
     }
     
@@ -134,7 +133,7 @@ class MainViewModel: ObservableObject {
      * INPUT: UIImage optional, the scanned receipt
      * OUTPUT: Boolean, whether the subroutine validated the URL
      */
-    func analyzeImage(receipt: UIImage?, pvm: ProduceViewModel) -> Bool {
+    func analyzeImage(receipt: UIImage?, pvm: ProduceViewModel, svm: ScannedItemsViewModel) -> Bool {
         // Validate URL
         guard let postUrl = URL(string: "\(self.endpoint)formrecognizer/v2.1/prebuilt/receipt/analyze")
         else {
@@ -199,7 +198,7 @@ class MainViewModel: ObservableObject {
 //                                print(analyzedReceipt)
                                 DispatchQueue.main.async {
                                     self?.scannedReceipt = analyzedReceipt
-                                    self?.imageAnalyzedSuccesfully(pvm: pvm)
+                                    self?.imageAnalyzedSuccesfully(pvm: pvm, svm: svm)
                                 }
                                 return
                             }
@@ -278,6 +277,6 @@ class MainViewModel: ObservableObject {
      * What happens when API Request returns failure?
      */
     private func handleError(error: Error?) {
-        print(error)
+//        print(error) // TODO
     }
 }

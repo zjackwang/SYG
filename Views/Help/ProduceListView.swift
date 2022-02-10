@@ -29,7 +29,7 @@ struct ProduceListView: View {
             .listStyle(.inset)
             .navigationTitle("Savable Produce")
             .onAppear {
-                produceViewModel.getAllItemsInfo()
+                let _ = produceViewModel.getAllItemsInfo()
             }
         }
     }

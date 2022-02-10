@@ -12,6 +12,8 @@ struct ReceiptScannerView: View {
     
     @EnvironmentObject private var rvm: MainViewModel
     @EnvironmentObject private var pvm: ProduceViewModel
+    @EnvironmentObject private var svm: ScannedItemsViewModel
+    
     @State private var selectReceipt: Bool = false
     @State private var showPopover: Bool = false
     
@@ -32,8 +34,9 @@ struct ReceiptScannerView: View {
           
                 if let receipt = rvm.receipt{
                     Button {
-                        rvm.analyzeImage(receipt: receipt, pvm: pvm)
-                        // TODO pop over
+                        if !rvm.analyzeImage(receipt: receipt, pvm: pvm, svm: svm) {
+                            // TODO pop over                            
+                        }
                     } label: {
                         Text("Confirm Image")
                     }

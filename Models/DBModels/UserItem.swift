@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct UserItem: Identifiable {
-    let id: String = UUID().uuidString
+struct UserItem: Identifiable, Codable {
+    var id: String = UUID().uuidString
     let Name: String
     let DateOfPurchase: Date
     let DateToRemind: Date
