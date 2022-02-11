@@ -2,6 +2,7 @@
 //  HTTPManagerProtocol.swift
 //  sYg
 //
+//  Taken from: https://github.com/stevencurtis/BasicHTTPManager
 //  Created by Jack Wang on 1/3/22.
 //
 
@@ -17,11 +18,6 @@ import UIKit
  *     3. Completion Action (Block)
  *
  */
-enum HTTPError: Error {
-    case invalidURL
-    case noInternet
-    case invalidResponse(Data?, URLResponse?)
-}
 
 protocol HTTPManagerProtocol {
     /*
@@ -32,8 +28,15 @@ protocol HTTPManagerProtocol {
     
     init(session: aType)
     
+    
+    func makeRequest(with url: URL, completionBlock: @escaping (Result<Data, Error>, URLResponse?) -> Void)
+    
     /*
      * Make Request
+     *  - Result contains actual returned data
+     *  - URLResponse used by AzureHTTPManager for example to check status of request.
      */
     func makeRequest(request: URLRequest, completionBlock: @escaping (Result<Data, Error>, URLResponse?) -> Void)
+    
+    
 }

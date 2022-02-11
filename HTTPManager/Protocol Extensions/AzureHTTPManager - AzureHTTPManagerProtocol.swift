@@ -1,8 +1,8 @@
 //
-//  AzureHTTPManager-AzureHTTPManagerProtocol.swift
+//  AzureHTTPManager - AzureHTTPManagerProtocol.swift
 //  sYg
 //
-//  Created by Jack Wang on 1/3/22.
+//  Created by Jack Wang on 2/11/22.
 //
 
 import Foundation

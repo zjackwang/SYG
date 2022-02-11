@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol AzureHTTPManagerProtocol: HTTPManagerProtocol {
+protocol AzureHTTPManagerProtocol {
     
     /*
      * GET Request
