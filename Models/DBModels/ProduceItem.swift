@@ -17,3 +17,9 @@ struct ProduceItem: Hashable, Codable {
     let DaysInFreezer: Double
     let Notes: String
 }
+
+extension ProduceItem {
+    static func == (lhs: ProduceItem, rhs: ProduceItem) -> Bool {
+        return lhs.Item == rhs.Item && lhs.IsCut == rhs.IsCut && lhs.DaysInFridge == rhs.DaysInFridge
+    }
+}

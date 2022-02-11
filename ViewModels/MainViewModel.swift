@@ -81,6 +81,8 @@ class MainViewModel: ObservableObject {
         let dateOfPurchase: Date = dateFormatter.date(from: transactionDateString) ?? Date.now
         print("transaction date: \(dateOfPurchase)")
       
+        // Get expiration time interval
+        let itemMatcher = ItemMatcher.factory
 
         var scannedItems: [UserItem] = []
         for item in itemsArray {
@@ -95,13 +97,16 @@ class MainViewModel: ObservableObject {
             var dateToRemind: Date = dateOfPurchase
             let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
             if let produceInfo = produceInfo {
-                dateToRemind += TimeInterval(produceInfo.DaysInFridge * 24 * 60 * 60)
+                // perfect match
+                dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
+            } else {
+                // find best match
+                dateToRemind += itemMatcher.getExpirationTimeInterval(for: name, using: pvm)
             }
             // DEBUGGING
             print("name: \(name)")
             print("- date to remind: \(dateToRemind)")
             
-          
             scannedItems.append(
                 UserItem(
                     Name: name,
