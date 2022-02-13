@@ -22,6 +22,20 @@ class ProduceItemCache: NSCache<NSString, StructWrapper<ProduceItem>> {
     
     private override init() {}
     
+    func bulkCache(items: [ProduceItem], for keys: [String]) {
+        for (item, key) in zip(items, keys) {
+            self.cache(item, for: key)
+        }
+    }
+    
+    func bulkGet(for keys: [String]) -> [ProduceItem?] {
+        var items: [ProduceItem?] = []
+        for key in keys {
+            items.append(self.getItem(for: key))
+        }
+        return items
+    }
+    
     func cache(_ item: ProduceItem, for key: String) {
         let keyString = NSString(string: key)
         let itemWrapper = StructWrapper(item)
@@ -29,7 +43,7 @@ class ProduceItemCache: NSCache<NSString, StructWrapper<ProduceItem>> {
     }
     
     func hasItem(for key: String) -> Bool {
-        return true 
+        return self.getItem(for: key) != nil 
     }
     
     func getItem(for key: String) -> ProduceItem? {
