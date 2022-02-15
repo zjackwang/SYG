@@ -1,23 +1,22 @@
 //
-//  ProduceViewModel.swift
+//  ProduceViewModelMock.swift
 //  sYg
 //
-//  Created by Jack Wang on 12/28/21.
+//  Created by Jack Wang on 2/13/22.
 //
 
 import Foundation
-import SwiftUI
+@testable import sYg 
 
-class ProduceViewModel: ObservableObject {
-    @Published var items: [ProduceItem] = []
+class ProduceViewModelMock: ProduceViewModel {
+        
+    private var itemsHTTPManager: ItemsHTTPManager<URLSession>
     
-    // Delegate to Produce/Item Interface
-    private var itemsHTTPManager: ItemsHTTPManager = ItemsHTTPManager(session: URLSession.shared)
+    init(error: Error?) {
+        itemsHTTPManager = ItemsHTTPManagerMock(session: URLSession.shared, error: error)
+    }
     
-    /*
-     * OUTPUT: List of Produce Items, every one. May not exist
-     */
-    func getAllItemsInfo() -> [ProduceItem] {
+    override func getAllItemsInfo() -> [ProduceItem] {
         if !self.items.isEmpty {
             return self.items
         } else {
@@ -31,7 +30,7 @@ class ProduceViewModel: ObservableObject {
                 case .success(let produceItems):
                     // add to cache
                     for item in produceItems {
-                        ProduceItemCache.shared.cache(item, for: item.Item)
+                        ProduceItemCacheMock.shared.cache(item, for: item.Item)
                     }
                     self?.items.append(contentsOf: produceItems)
                     break
@@ -46,28 +45,24 @@ class ProduceViewModel: ObservableObject {
         }
     }
     
-    /*
-     * Wrapper around fetch calls
-     *  - tries to get from cache, else getse from HTTP
-     * INPUT: String name of produce item, Boolean whether item is cut open
-     * OUTPUT: Optional Produce Item that is found in DB. May not exist
-     */
-    func getProduceInfo(for name: String, isCut: Bool = false) -> ProduceItem? {
+    override func getProduceInfo(for name: String, isCut: Bool = false) -> ProduceItem? {
         // In current cache
-        if let cachedProduceItem = ProduceItemCache.shared.getItem(for: name) {
+        if let cachedProduceItem = ProduceItemCacheMock.shared.getItem(for: name) {
             return cachedProduceItem
         } else {
             let group = DispatchGroup()
             group.enter()
+            
             // Get from API
             itemsHTTPManager.fetchProduceItem(for: name, isCut: isCut) { [weak self]
                 result in
                 switch result {
                 case .success(let produceItems):
                     // Add to cache
-                    // TODO: Add isCut?
-                    ProduceItemCache.shared.cache(produceItems[0], for: name)
-                    self?.items.append(produceItems[0])
+                    for item in produceItems {
+                        ProduceItemCacheMock.shared.cache(item, for: item.Item)
+                    }
+                    self?.items.append(contentsOf: produceItems)
                     break
                 case .failure(let error):
                     self?.handleError(error: error)
@@ -76,15 +71,7 @@ class ProduceViewModel: ObservableObject {
                 group.leave()
             }
             group.wait()
-            return ProduceItemCache.shared.getItem(for: name)
+            return ProduceItemCacheMock.shared.getItem(for: name)
         }
-    }
-    
-    /*
-     * TODO: Should fire off interrupt to main thread (popup) 
-     * What happens when API Request returns failure?
-     */
-    func handleError(error: Error) {
-        
     }
 }

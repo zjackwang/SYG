@@ -96,10 +96,8 @@ class ItemMatcher {
          *  => closestMatch: Avocado
          */
         var closestMatch: ProduceItem?
-        print(capitalizedItem)
         // linear search
         for produceItem in produceItems {
-            print(produceItem.Item)
             if capitalizedItem.contains(produceItem.Item) {
                 let closestMatchCount: Int = closestMatch?.Item.count ?? 0
                 closestMatch = produceItem.Item.count > closestMatchCount ? produceItem : closestMatch
