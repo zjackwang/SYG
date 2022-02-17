@@ -24,8 +24,8 @@ struct UserItemView: View {
             HStack {
                 Text(item.DateOfPurchase, format: .dateTime.day().month().year())
                     .font(.subheadline)
-                    .padding(.trailing, 10)
-                // Have a progress bar with color to depict
+                    .padding(.trailing, 20)
+                
                 StatusClockView(dateToRemind: item.DateToRemind)
                     .onTapGesture {
                         showEatPopup = true

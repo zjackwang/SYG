@@ -61,9 +61,15 @@ struct MainUserView: View {
                                 }
                             }
                         
-                        // Settings TODO
+                        // TODO: Settings
+                        // For now a testing button
                         Button(action: {
-                             showScannedReceipt.toggle()
+                            do {
+                                throw URLError(URLError.Code(rawValue: 404))
+                            } catch (let error) {
+                                mvm.error = error
+                            }
+                             mvm.showConfirmationAlert = true
                              print("Edit")
                            }) {
                              Label("Edit", systemImage: "slider.horizontal.3")
@@ -95,9 +101,26 @@ struct MainUserView: View {
                     .offset(y: showScannedReceipt ? 0 : UIScreen.main.bounds.height)
                     .animation(.spring(response: 0.5, dampingFraction: 1.0, blendDuration: 1.0))
             }
-            
+            .alert(isPresented: $mvm.showConfirmationAlert) {
+                var message: Text?
+                if let error = mvm.error {
+                    message = Text("Error: \(error.localizedDescription)")
+                } else {
+                    message = Text("Success!")
+                }
+                
+                return Alert(
+                        title: Text("Scanning Result"),
+                        message: message!,
+                        dismissButton: .default(Text("Ok"),
+                                        action: {
+                                            mvm.showConfirmationAlert.toggle()
+                            }
+                       )
+                )
+            }
         }
-
+        
     }
 }
 
@@ -154,6 +177,6 @@ struct MainUserView_Previews: PreviewProvider {
     static var previews: some View {
         MainUserView()
             .environmentObject(MainViewModel())
-            .environmentObject(ScannedItemsViewModel())
+            .environmentObject(ScannedItemsViewModel(isDebugging: true))
     }
 }

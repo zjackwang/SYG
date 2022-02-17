@@ -15,6 +15,7 @@
 		DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */; };
 		DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AE227A8E81200EAA3C3 /* Cache.swift */; };
 		DB297AE527A9E73F00EAA3C3 /* ItemsHTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AE427A9E73F00EAA3C3 /* ItemsHTTPManager.swift */; };
+		DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */; };
 		DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */; };
 		DB45EA78277BF7B5001BA6C2 /* ProduceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA77277BF7B5001BA6C2 /* ProduceItem.swift */; };
 		DB45EA7A277BF81C001BA6C2 /* ProduceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */; };
@@ -36,6 +37,10 @@
 		DB7E9B2D27B5F935001A937A /* sYgTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B2C27B5F935001A937A /* sYgTests.swift */; };
 		DB7E9B3427B5FA41001A937A /* ItemMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B3327B5FA41001A937A /* ItemMatcherTests.swift */; };
 		DB7E9B3627B5FEE0001A937A /* ProduceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B3527B5FEE0001A937A /* ProduceViewModelTests.swift */; };
+		DB90CD6727BB0DA800F422DD /* ProduceItemCacheMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB90CD6027BAE4CC00F422DD /* ProduceItemCacheMock.swift */; };
+		DB90CD6C27BB1DF500F422DD /* ProduceItemsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB90CD5E27B95FF200F422DD /* ProduceItemsMock.swift */; };
+		DB90CD7127BB20CA00F422DD /* itemsHTTPManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB90CD5B27B95F2200F422DD /* itemsHTTPManagerMock.swift */; };
+		DB90CD7227BB20CA00F422DD /* ProduceViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB90CD5927B95ED400F422DD /* ProduceViewModelMock.swift */; };
 		DBA3AC1B27B6A352008975C4 /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC1A27B6A352008975C4 /* MainViewModelTests.swift */; };
 		DBA3AC2327B6A57F008975C4 /* ProduceCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC2227B6A57F008975C4 /* ProduceCacheTests.swift */; };
 		DBA3AC3827B6B1D0008975C4 /* ItemsHTTPMockedManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B3727B6008E001A937A /* ItemsHTTPMockedManagerTests.swift */; };
@@ -92,6 +97,7 @@
 		DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusClockView.swift; sourceTree = "<group>"; };
 		DB297AE227A8E81200EAA3C3 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		DB297AE427A9E73F00EAA3C3 /* ItemsHTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsHTTPManager.swift; sourceTree = "<group>"; };
+		DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanningErrors.swift; sourceTree = "<group>"; };
 		DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProduceViewModel.swift; path = ../../../../SYG/sYg/sYg/ViewModels/ProduceViewModel.swift; sourceTree = "<group>"; };
 		DB45EA77277BF7B5001BA6C2 /* ProduceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItem.swift; sourceTree = "<group>"; };
 		DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceListView.swift; sourceTree = "<group>"; };
@@ -116,6 +122,10 @@
 		DB7E9B3327B5FA41001A937A /* ItemMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMatcherTests.swift; sourceTree = "<group>"; };
 		DB7E9B3527B5FEE0001A937A /* ProduceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceViewModelTests.swift; sourceTree = "<group>"; };
 		DB7E9B3727B6008E001A937A /* ItemsHTTPMockedManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsHTTPMockedManagerTests.swift; sourceTree = "<group>"; };
+		DB90CD5927B95ED400F422DD /* ProduceViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProduceViewModelMock.swift; path = Mocks/ProduceViewModelMock.swift; sourceTree = "<group>"; };
+		DB90CD5B27B95F2200F422DD /* itemsHTTPManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemsHTTPManagerMock.swift; sourceTree = "<group>"; };
+		DB90CD5E27B95FF200F422DD /* ProduceItemsMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItemsMock.swift; sourceTree = "<group>"; };
+		DB90CD6027BAE4CC00F422DD /* ProduceItemCacheMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItemCacheMock.swift; sourceTree = "<group>"; };
 		DBA3AC1A27B6A352008975C4 /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		DBA3AC2027B6A57F008975C4 /* ProduceCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProduceCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBA3AC2227B6A57F008975C4 /* ProduceCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceCacheTests.swift; sourceTree = "<group>"; };
@@ -196,6 +206,14 @@
 				DB297AD927A0FE0100EAA3C3 /* Settings.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		DB34300727BEC11700CF076A /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
@@ -315,6 +333,7 @@
 		DB78D9E52753301900EDA0E1 /* sYg */ = {
 			isa = PBXGroup;
 			children = (
+				DB34300727BEC11700CF076A /* Errors */,
 				DB7E9B1C27B5686B001A937A /* ItemMatcher */,
 				DB623D072783AA0700EEEC09 /* HTTPManager */,
 				DB45EA7D277C0919001BA6C2 /* Scanning */,
@@ -356,10 +375,13 @@
 		DB7E9B2B27B5F935001A937A /* VIewModelTests */ = {
 			isa = PBXGroup;
 			children = (
+				DB7E9B2C27B5F935001A937A /* sYgTests.swift */,
+				DB7E9B3327B5FA41001A937A /* ItemMatcherTests.swift */,
 				DBA3AC1A27B6A352008975C4 /* MainViewModelTests.swift */,
 				DB7E9B3527B5FEE0001A937A /* ProduceViewModelTests.swift */,
-				DB7E9B3327B5FA41001A937A /* ItemMatcherTests.swift */,
-				DB7E9B2C27B5F935001A937A /* sYgTests.swift */,
+				DB90CD5B27B95F2200F422DD /* itemsHTTPManagerMock.swift */,
+				DB90CD5927B95ED400F422DD /* ProduceViewModelMock.swift */,
+				DB90CD5827B95EC400F422DD /* Mocks */,
 			);
 			path = VIewModelTests;
 			sourceTree = "<group>";
@@ -370,6 +392,23 @@
 				DBA3AC5C27B6DD18008975C4 /* ProduceItemsDBAsyncTests.swift */,
 			);
 			path = ItemDataTaskTests;
+			sourceTree = "<group>";
+		};
+		DB90CD5827B95EC400F422DD /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				DB90CD6027BAE4CC00F422DD /* ProduceItemCacheMock.swift */,
+				DB90CD5D27B95FE600F422DD /* MockData */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		DB90CD5D27B95FE600F422DD /* MockData */ = {
+			isa = PBXGroup;
+			children = (
+				DB90CD5E27B95FF200F422DD /* ProduceItemsMock.swift */,
+			);
+			path = MockData;
 			sourceTree = "<group>";
 		};
 		DBA3AC2127B6A57F008975C4 /* ProduceCacheTests */ = {
@@ -626,7 +665,9 @@
 				DB623D1B2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift in Sources */,
 				DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */,
 				DBA3AC4527B6C026008975C4 /* HTTPManager.swift in Sources */,
+				DB90CD6727BB0DA800F422DD /* ProduceItemCacheMock.swift in Sources */,
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
+				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */,
 				DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */,
 				DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */,
@@ -655,8 +696,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB7E9B3627B5FEE0001A937A /* ProduceViewModelTests.swift in Sources */,
+				DB90CD6C27BB1DF500F422DD /* ProduceItemsMock.swift in Sources */,
 				DB7E9B2D27B5F935001A937A /* sYgTests.swift in Sources */,
+				DB90CD7227BB20CA00F422DD /* ProduceViewModelMock.swift in Sources */,
 				DB7E9B3427B5FA41001A937A /* ItemMatcherTests.swift in Sources */,
+				DB90CD7127BB20CA00F422DD /* itemsHTTPManagerMock.swift in Sources */,
 				DBA3AC1B27B6A352008975C4 /* MainViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

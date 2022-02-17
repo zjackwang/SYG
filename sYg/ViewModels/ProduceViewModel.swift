@@ -23,7 +23,7 @@ class ProduceViewModel: ObservableObject {
         } else {
             let group = DispatchGroup()
             group.enter()
-            
+            print("Fetching all items")
             // get all items from API
             itemsHTTPManager.fetchProduceItem(for: nil) { [weak self]
                 result in
@@ -42,6 +42,7 @@ class ProduceViewModel: ObservableObject {
                 group.leave()
             }
             group.wait()
+            print("Produce items cached")
             return self.items
         }
     }
@@ -59,6 +60,7 @@ class ProduceViewModel: ObservableObject {
         } else {
             let group = DispatchGroup()
             group.enter()
+            print("Fetching all items")
             // Get from API
             itemsHTTPManager.fetchProduceItem(for: name, isCut: isCut) { [weak self]
                 result in
@@ -76,6 +78,7 @@ class ProduceViewModel: ObservableObject {
                 group.leave()
             }
             group.wait()
+            print("Produce items cached")
             return ProduceItemCache.shared.getItem(for: name)
         }
     }

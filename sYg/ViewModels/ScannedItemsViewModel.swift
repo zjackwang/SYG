@@ -12,6 +12,13 @@ class ScannedItemsViewModel: ObservableObject {
     // User's displayed list of UserItems
     @Published var items: [UserItem] = []
     
+    // Whether we're debugging
+    private var isDebugging: Bool
+    
+    init(isDebugging: Bool) {
+        self.isDebugging = isDebugging
+    }
+    
     /*
      * Defaults:
      *  - "savedItems" : set of UserItem's
@@ -23,15 +30,21 @@ class ScannedItemsViewModel: ObservableObject {
      * Initialize the displayed list with items in UserDefaults
      */
     func populateItems() {
-        guard
-        // for testing TODO CHANGE
-//        let savedUserItems: [UserItem] = UserItem.samples
-            let savedUserItems = try? getAllItems()
-        else {
-            print("Error decoding UserItems from UserDefaults")
-            return
+        var savedUserItems: [UserItem] = []
+        
+        if isDebugging {
+            savedUserItems.append(contentsOf: UserItem.samples)
+            
+        } else {
+            guard
+                // for testing TODO CHANGE
+                let items = try? getAllItems()
+            else {
+                print("Error decoding UserItems from UserDefaults")
+                return
+            }
+            savedUserItems.append(contentsOf: items)
         }
-
         items.append(contentsOf: savedUserItems)
     }
     

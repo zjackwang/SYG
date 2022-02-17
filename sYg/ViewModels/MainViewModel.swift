@@ -34,6 +34,10 @@ class MainViewModel: ObservableObject {
     @Published var workingLocation: String?
     @Published var scannedReceipt: AnalyzedReceipt?
     
+    // Confirmation
+    @Published var showConfirmationAlert: Bool = false
+    @Published var error: Error?
+    
     /*
      * Brings up camera to scan receipt
      */
@@ -57,8 +61,15 @@ class MainViewModel: ObservableObject {
     func imageAnalyzedSuccesfully(pvm: ProduceViewModel, svm: ScannedItemsViewModel) {
         print("Image analyzed successfully. Now adding to user defaults...")
         // Should have legit receipt
-        guard let scannedReceipt = scannedReceipt else {
-            print("NO SCANNED RECEIPT")
+        guard
+            let scannedReceipt = scannedReceipt
+        else {
+            do {
+                print("NO SCANNED RECEIPT")
+                throw ReceiptScanningError("Callback started before receipt fully scanned!")
+            } catch (let error) {
+                handleError(error: error)
+            }
             return
         }
     
@@ -68,8 +79,15 @@ class MainViewModel: ObservableObject {
         let transactionDateString: String = fields?["TransactionDate"]?.valueDate ?? DateFormatter.localizedString(from: Date.now, dateStyle: .medium, timeStyle: .medium)
         let itemsArray: [AnalyzedItem]? = fields?["Items"]?.valueArray
         
-        guard let itemsArray = itemsArray else {
-            print("NO ITEMSARRAY")
+        guard
+            let itemsArray = itemsArray
+        else {
+            do {
+                print("NO ITEMS ARRAY")
+                throw ReceiptScanningError("Receipt Scanner response does not contain items array!")
+            } catch (let error) {
+                handleError(error: error)
+            }
             return
         }  
         
@@ -86,38 +104,40 @@ class MainViewModel: ObservableObject {
 
         var scannedItems: [UserItem] = []
         for item in itemsArray {
-            let name: String? = item.valueObject["Name"]?.valueString
-            
-            guard let name = name else {
-                // TODO when no name... won't happen idt 
-                self.handleError(error: nil)
-                return
-            }
-           
-            var dateToRemind: Date = dateOfPurchase
-            let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
-            if let produceInfo = produceInfo {
-                // perfect match
-                dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
-            } else {
-                // find best match
-                dateToRemind += itemMatcher.getExpirationTimeInterval(for: name, using: pvm)
-            }
-            // DEBUGGING
-            print("name: \(name)")
-            print("- date to remind: \(dateToRemind)")
-            
-            scannedItems.append(
-                UserItem(
-                    Name: name,
-                    DateOfPurchase: dateOfPurchase,
-                    DateToRemind: dateToRemind
+            // Must have scanned a name
+            if let name = item.valueObject["Name"]?.valueString {
+                var dateToRemind: Date = dateOfPurchase
+                let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
+                if let produceInfo = produceInfo {
+                    // perfect match
+                    dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
+                } else {
+                    // find best match
+                    dateToRemind += itemMatcher.getExpirationTimeInterval(for: name, using: pvm)
+                }
+                // DEBUGGING
+                print("name: \(name)")
+                print("- date to remind: \(dateToRemind)")
+                
+                scannedItems.append(
+                    UserItem(
+                        Name: name,
+                        DateOfPurchase: dateOfPurchase,
+                        DateToRemind: dateToRemind
+                    )
                 )
-            )
+            } else {
+                // TODO: Msg saying not all were scanned (Manual entry?)
+                continue
+            }
+            
+            
+            
         }
         // Add to user's displayed list
         DispatchQueue.main.async {
             svm.addItems(scannedItems)
+            self.showConfirmationAlert.toggle()
         }
     }
     
@@ -143,6 +163,11 @@ class MainViewModel: ObservableObject {
         guard let postUrl = URL(string: "\(self.endpoint)formrecognizer/v2.1/prebuilt/receipt/analyze")
         else {
             print("Invalid URL endpoint!")
+            do {
+                throw ReceiptScanningError("Bad URL endpoint for Receipt Scanner!")
+            } catch (let error){
+                handleError(error: error)
+            }
             return false
         }
         
@@ -151,8 +176,8 @@ class MainViewModel: ObservableObject {
         group.enter()
         
         // Upload Receipt via POST
-        azureHTTPManager.post(url: postUrl, image: receipt!, key: self.key) {  [weak self]
-            result in
+        azureHTTPManager.post(url: postUrl, image: receipt!, key: self.key) {
+            [weak self] result in
             
             switch result {
             case .success(let data):
@@ -181,8 +206,8 @@ class MainViewModel: ObservableObject {
                 print("Attempting to get results... try \(count)")
                 DispatchQueue.global().sync {
                     self.azureHTTPManager.get(url: URL(string: self.workingLocation!)!, key: self.key) {
-                        [weak self]
-                        result in
+                        [weak self] result in
+                        
                         switch result {
                         case .success(let data):
                             // DEBUGGING
@@ -192,7 +217,14 @@ class MainViewModel: ObservableObject {
                             let analyzedReceiptResponse = self?.decodeAnalyzedReceipt(data)
                             
                             // Bad JSON or Bad response
-                            guard let analyzedReceipt = analyzedReceiptResponse else {
+                            guard
+                                let analyzedReceipt = analyzedReceiptResponse
+                            else {
+                                do {
+                                    throw ReceiptScanningError("Bad response from scanning API")
+                                } catch (let error) {
+                                    self?.handleError(error: error)
+                                }
                                 return
                             }
                             
@@ -282,6 +314,8 @@ class MainViewModel: ObservableObject {
      * What happens when API Request returns failure?
      */
     private func handleError(error: Error?) {
-//        print(error) // TODO
+        DispatchQueue.main.async {
+            self.error = error
+        }
     }
 }
