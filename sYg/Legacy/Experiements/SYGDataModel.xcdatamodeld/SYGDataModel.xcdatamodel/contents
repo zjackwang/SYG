@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="toCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ItemCategory" inverseName="toItem" inverseEntity="ItemCategory"/>
+    </entity>
+    <entity name="ItemCategory" representedClassName="ItemCategory" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="toItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="toCategory" inverseEntity="Item"/>
+    </entity>
+    <entity name="Throwaway" representedClassName="Throwaway" syncable="YES" codeGenerationType="class"/>
+    <elements>
+        <element name="Item" positionX="-54" positionY="-9" width="128" height="59"/>
+        <element name="Throwaway" positionX="-36" positionY="18" width="128" height="29"/>
+        <element name="ItemCategory" positionX="-18" positionY="54" width="128" height="59"/>
+    </elements>
+</model>
