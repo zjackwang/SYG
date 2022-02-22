@@ -58,8 +58,8 @@ class MainViewModel: ObservableObject {
      *  - converts AnalyzedReceipt struct into list of UserItem structs
      *  - adds to user defaults via scanned items view model
      */
-    func imageAnalyzedSuccesfully(pvm: ProduceViewModel, svm: ScannedItemsViewModel) {
-        print("Image analyzed successfully. Now adding to user defaults...")
+    func imageAnalyzedSuccesfully(pvm: ProduceViewModel) {
+        print("Image analyzed successfully. Now adding to user's persistent storage...")
         // Should have legit receipt
         guard
             let scannedReceipt = scannedReceipt
@@ -107,14 +107,15 @@ class MainViewModel: ObservableObject {
             // Must have scanned a name
             if let name = item.valueObject["Name"]?.valueString {
                 var dateToRemind: Date = dateOfPurchase
-                let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
-                if let produceInfo = produceInfo {
-                    // perfect match
-                    dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
-                } else {
-                    // find best match
-                    dateToRemind += itemMatcher.getExpirationTimeInterval(for: name, using: pvm)
-                }
+//                let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
+//                if let produceInfo = produceInfo {
+//                    // perfect match
+//                    dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
+//                } else {
+                // find best match
+                dateToRemind += itemMatcher.getExpirationTimeInterval(for: name, using: pvm)
+//                }
+
                 // DEBUGGING
                 print("name: \(name)")
                 print("- date to remind: \(dateToRemind)")
@@ -130,13 +131,22 @@ class MainViewModel: ObservableObject {
                 // TODO: Msg saying not all were scanned (Manual entry?)
                 continue
             }
-            
-            
-            
         }
+        print("\(scannedItems.count) items scanned and matched.")
         // Add to user's displayed list
         DispatchQueue.main.async {
-            svm.addItems(scannedItems)
+            ScannedItemViewModel.shared.addScannedItems(userItems: scannedItems) {
+                results in
+                results.forEach {
+                    result, name in
+                    switch result {
+                    case .failure(let error):
+                        print("Error \(error) saving \(name) to persistent storage")
+                    case .success:
+                        break
+                    }
+                }
+            }
             self.showConfirmationAlert.toggle()
         }
     }
@@ -158,7 +168,7 @@ class MainViewModel: ObservableObject {
      * INPUT: UIImage optional, the scanned receipt
      * OUTPUT: Boolean, whether the subroutine validated the URL
      */
-    func analyzeImage(receipt: UIImage?, pvm: ProduceViewModel, svm: ScannedItemsViewModel) -> Bool {
+    func analyzeImage(receipt: UIImage?, pvm: ProduceViewModel) -> Bool {
         // Validate URL
         guard let postUrl = URL(string: "\(self.endpoint)formrecognizer/v2.1/prebuilt/receipt/analyze")
         else {
@@ -235,7 +245,7 @@ class MainViewModel: ObservableObject {
 //                                print(analyzedReceipt)
                                 DispatchQueue.main.async {
                                     self?.scannedReceipt = analyzedReceipt
-                                    self?.imageAnalyzedSuccesfully(pvm: pvm, svm: svm)
+                                    self?.imageAnalyzedSuccesfully(pvm: pvm)
                                 }
                                 return
                             }

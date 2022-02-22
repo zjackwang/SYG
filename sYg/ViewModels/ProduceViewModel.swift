@@ -14,16 +14,20 @@ class ProduceViewModel: ObservableObject {
     // Delegate to Produce/Item Interface
     private var itemsHTTPManager: ItemsHTTPManager = ItemsHTTPManager(session: URLSession.shared)
     
+    // TODO: make this a singleton.
+    //      figure out why I'm using this cache.
+    //      need to be able to fetch my items and match them up. Works in unit tests...
     /*
      * OUTPUT: List of Produce Items, every one. May not exist
      */
     func getAllItemsInfo() -> [ProduceItem] {
-        if !self.items.isEmpty {
-            return self.items
+        if !items.isEmpty{
+            print("Fetching \(items.count) produce items from cache")
+            return items
         } else {
             let group = DispatchGroup()
             group.enter()
-            print("Fetching all items")
+            print("Fetching all produce items from remote")
             // get all items from API
             itemsHTTPManager.fetchProduceItem(for: nil) { [weak self]
                 result in
@@ -42,7 +46,7 @@ class ProduceViewModel: ObservableObject {
                 group.leave()
             }
             group.wait()
-            print("Produce items cached")
+            print("Produce items cached \(items.count) items.")
             return self.items
         }
     }
@@ -56,11 +60,12 @@ class ProduceViewModel: ObservableObject {
     func getProduceInfo(for name: String, isCut: Bool = false) -> ProduceItem? {
         // In current cache
         if let cachedProduceItem = ProduceItemCache.shared.getItem(for: name) {
+            print("Fetching produce item from cache")
             return cachedProduceItem
         } else {
             let group = DispatchGroup()
             group.enter()
-            print("Fetching all items")
+            print("Fetching the specific produce item")
             // Get from API
             itemsHTTPManager.fetchProduceItem(for: name, isCut: isCut) { [weak self]
                 result in
@@ -70,15 +75,15 @@ class ProduceViewModel: ObservableObject {
                     // TODO: Add isCut?
                     ProduceItemCache.shared.cache(produceItems[0], for: name)
                     self?.items.append(produceItems[0])
+                    print("Produce items cached")
                     break
-                case .failure(let error):
-                    self?.handleError(error: error)
+                case .failure:
+                    // Not found in database.
                     return
                 }
                 group.leave()
             }
             group.wait()
-            print("Produce items cached")
             return ProduceItemCache.shared.getItem(for: name)
         }
     }
@@ -88,6 +93,6 @@ class ProduceViewModel: ObservableObject {
      * What happens when API Request returns failure?
      */
     func handleError(error: Error) {
-        
+        print("Error fetching produce items: \(error.localizedDescription)")
     }
 }

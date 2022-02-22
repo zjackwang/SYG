@@ -10,9 +10,6 @@
 import SwiftUI
 
 struct MainUserView: View {
-    // For testing
-    @State private var exampleItemJSON: [UserItem] = UserItem.samples
-    
     @EnvironmentObject private var mvm: MainViewModel
 
     // For Popups
@@ -31,6 +28,7 @@ struct MainUserView: View {
         NavigationView {
             // Foreground
             ZStack {
+                // Produce Items
                 UserItemListView()
                 // Upper toolbar
                 .toolbar {
@@ -64,17 +62,19 @@ struct MainUserView: View {
                         // TODO: Settings
                         // For now a testing button
                         Button(action: {
-                            do {
-                                throw URLError(URLError.Code(rawValue: 404))
-                            } catch (let error) {
-                                mvm.error = error
-                            }
-                             mvm.showConfirmationAlert = true
-                             print("Edit")
+//                            do {
+//                                throw URLError(URLError.Code(rawValue: 404))
+//                            } catch (let error) {
+//                                mvm.error = error
+//                            }
+//                            mvm.showConfirmationAlert = true
+                            
+                            ScannedItemViewModel.shared.resetContainer()
+                            
+                            print("Edit")
                            }) {
-                             Label("Edit", systemImage: "slider.horizontal.3")
+                            Label("Edit", systemImage: "slider.horizontal.3")
                            }
-                           .foregroundColor(.black)
                            .padding()
                     }
                 }
@@ -95,12 +95,13 @@ struct MainUserView: View {
                             Text(cameraError.message)
                         }
                 )
-                // Confirmation of Receipt
+                // User prompt confirmation of Receipt photo
                 ScannedReceiptPopover(showPopover: $showScannedReceipt)
                     .padding(.top, 45)
                     .offset(y: showScannedReceipt ? 0 : UIScreen.main.bounds.height)
                     .animation(.spring(response: 0.5, dampingFraction: 1.0, blendDuration: 1.0))
             }
+            // Confirmation of successful scan + item matching
             .alert(isPresented: $mvm.showConfirmationAlert) {
                 var message: Text?
                 if let error = mvm.error {
@@ -128,7 +129,6 @@ struct ScannedReceiptPopover: View {
     @Binding var showPopover: Bool
     @EnvironmentObject private var mvm: MainViewModel
     @EnvironmentObject private var pvm: ProduceViewModel
-    @EnvironmentObject private var svm: ScannedItemsViewModel
 
     var body: some View {
         ZStack {
@@ -155,7 +155,7 @@ struct ScannedReceiptPopover: View {
                 // Confirmation
                 if let receipt = mvm.receipt{
                     Button {
-                        if !mvm.analyzeImage(receipt: receipt, pvm: pvm, svm: svm) {
+                        if !mvm.analyzeImage(receipt: receipt, pvm: pvm) {
                             // Handle error, show popup TODO
                             mvm.imageAnalysisError()
                         }

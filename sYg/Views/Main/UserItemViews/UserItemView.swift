@@ -10,26 +10,25 @@ import SwiftUI
 struct UserItemView: View {
     @State private var showEatPopup = false
     
-    var item: UserItem
+    var item: ScannedItem?
     let columns = [
                 GridItem(.flexible()),
                 GridItem(.flexible()),
             ]
     var body: some View {
         LazyVGrid(columns: columns, spacing: 30) {
-            Text(item.Name)
+            Text(item?.name ?? "unknown")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.leading, 10)
             HStack {
-                Text(item.DateOfPurchase, format: .dateTime.day().month().year())
+                Text(item?.dateOfPurchase ?? Date.now, format: .dateTime.day().month().year())
                     .font(.subheadline)
                     .padding(.trailing, 20)
                 
-                StatusClockView(dateToRemind: item.DateToRemind)
+                StatusClockView(dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.settings.dayTimeInterval))
                     .onTapGesture {
                         showEatPopup = true
-//                        removeUserItem(svm, item.Name)
                     }
 //                    .popover(isPresented: $showEatPopup) {
 //                        Button {
@@ -47,7 +46,7 @@ struct UserItemView: View {
 struct UserItemView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            UserItemView(item: UserItem(Name: "Apple", DateOfPurchase: Date.now, DateToRemind: Date.init(timeIntervalSinceNow: 1000)))
+            UserItemView()
         }
     }
 }

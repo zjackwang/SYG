@@ -95,14 +95,8 @@ class ItemMatcher {
          *  capitalizedItems: [Large, Hass, Avocados]
          *  => closestMatch: Avocado
          */
-        var closestMatch: ProduceItem?
         // linear search
-        for produceItem in produceItems {
-            if capitalizedItem.contains(produceItem.Item) {
-                let closestMatchCount: Int = closestMatch?.Item.count ?? 0
-                closestMatch = produceItem.Item.count > closestMatchCount ? produceItem : closestMatch
-            }
-        }
+        let closestMatch = linearMatcher(for: capitalizedItem, produceItems: produceItems)
         
         guard let closestMatch = closestMatch else {
             // TODO: default 4 days. could be customizable in settings
@@ -111,6 +105,19 @@ class ItemMatcher {
         
         return closestMatch.DaysInFridge * 24 * 60 * 60
 
+    }
+    
+    private func linearMatcher(for scannedItem: String, produceItems: [ProduceItem]) -> ProduceItem? {
+        var closestMatch: ProduceItem?
+
+        for produceItem in produceItems {
+            if scannedItem.contains(produceItem.Item) {
+                let closestMatchCount: Int = closestMatch?.Item.count ?? 0
+                closestMatch = produceItem.Item.count > closestMatchCount ? produceItem : closestMatch
+            }
+        }
+        
+        return closestMatch
     }
     
     /*

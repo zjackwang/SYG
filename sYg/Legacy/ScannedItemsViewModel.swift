@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
 
 class ScannedItemsViewModel: ObservableObject {
  
     // User's displayed list of UserItems
     @Published var items: [UserItem] = []
+    
+//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // Whether we're debugging
     private var isDebugging: Bool
@@ -30,28 +33,37 @@ class ScannedItemsViewModel: ObservableObject {
      * Initialize the displayed list with items in UserDefaults
      */
     func populateItems() {
-        var savedUserItems: [UserItem] = []
-        
         if isDebugging {
-            savedUserItems.append(contentsOf: UserItem.samples)
-            
+            items.append(contentsOf: UserItem.samples)
         } else {
-            guard
-                // for testing TODO CHANGE
-                let items = try? getAllItems()
-            else {
-                print("Error decoding UserItems from UserDefaults")
-                return
+            do {
+                try updatePublishedItems()
+            } catch (let error) {
+                // TODO: handle error 
             }
-            savedUserItems.append(contentsOf: items)
         }
-        items.append(contentsOf: savedUserItems)
+    }
+    
+    /*
+     * Updates the published list of items
+     */
+    func updatePublishedItems() throws {
+        do {
+            // Get items from cache
+            let savedUserItems = try getAllItems()
+            // Update list
+            items = savedUserItems
+        } catch (let error) {
+            throw error
+        }
     }
     
 //    func addItemsTEST() {
 //        let savedUserItems: [UserItem] = UserItem.samples
 //        items.append(contentsOf: savedUserItems)
 //    }
+    
+   
     
     /*
      * Adds list of items to UserDefault storage
