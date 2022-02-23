@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */; };
+		DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */; };
+		DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */; };
+		DB25C1A127C5ADC200DBEBB2 /* EatByReminderErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */; };
 		DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A592795C92000001DA6 /* UserItem.swift */; };
 		DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A5E2795C9D700001DA6 /* UserItemListView.swift */; };
 		DB297ADA27A0FE0100EAA3C3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AD927A0FE0100EAA3C3 /* Settings.swift */; };
@@ -96,6 +99,9 @@
 
 /* Begin PBXFileReference section */
 		DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionEvaluator.swift; sourceTree = "<group>"; };
+		DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderManager.swift; sourceTree = "<group>"; };
+		DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date - DateFormatExtension.swift"; sourceTree = "<group>"; };
+		DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderErrors.swift; sourceTree = "<group>"; };
 		DB293A592795C92000001DA6 /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
 		DB293A5E2795C9D700001DA6 /* UserItemListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserItemListView.swift; path = ../../../../../../.Trash/UserItemListView.swift; sourceTree = "<group>"; };
 		DB297AD927A0FE0100EAA3C3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -194,6 +200,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB25C19B27C59BEB00DBEBB2 /* LocalNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */,
+				DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */,
+			);
+			path = LocalNotifications;
+			sourceTree = "<group>";
+		};
 		DB293A5B2795C98600001DA6 /* UserItemViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */,
+				DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -249,6 +265,7 @@
 		DB3B7EF027C0B67200C5D3DE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				DB25C19B27C59BEB00DBEBB2 /* LocalNotifications */,
 				DB34300727BEC11700CF076A /* Errors */,
 				DB7E9B1C27B5686B001A937A /* ItemMatcher */,
 				DB623D072783AA0700EEEC09 /* HTTPManager */,
@@ -714,9 +731,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB297ADD27A3832000EAA3C3 /* ScannedItemsViewModel.swift in Sources */,
+				DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */,
 				DB34305227BEDCE200CF076A /* SYGDataModel.xcdatamodeld in Sources */,
 				DB623D152783B15400EEEC09 /* URLSessionProtocol.swift in Sources */,
 				DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */,
+				DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */,
 				DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */,
 				DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */,
 				DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */,
@@ -729,6 +748,7 @@
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB34305727C00EE400CF076A /* ContentView.swift in Sources */,
+				DB25C1A127C5ADC200DBEBB2 /* EatByReminderErrors.swift in Sources */,
 				DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */,
 				DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */,
 				DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */,
