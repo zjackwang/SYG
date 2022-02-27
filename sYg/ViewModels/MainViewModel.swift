@@ -133,8 +133,8 @@ class MainViewModel: ObservableObject {
             }
         }
         print("\(scannedItems.count) items scanned and matched.")
-        // Add to user's displayed list
         DispatchQueue.main.async {
+            // Add to user's displayed list
             ScannedItemViewModel.shared.addScannedItems(userItems: scannedItems) {
                 results in
                 results.forEach {
@@ -147,7 +147,10 @@ class MainViewModel: ObservableObject {
                     }
                 }
             }
+            // Schedule reminders for each added item
+            EatByReminderManager.instance.bulkScheduleReminders(for: ScannedItemViewModel.shared.scannedItems)
             self.showConfirmationAlert.toggle()
+            
         }
     }
     

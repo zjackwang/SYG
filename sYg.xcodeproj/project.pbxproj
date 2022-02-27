@@ -11,6 +11,8 @@
 		DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */; };
 		DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */; };
 		DB25C1A127C5ADC200DBEBB2 /* EatByReminderErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */; };
+		DB25C1A427C961CE00DBEBB2 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A327C961CE00DBEBB2 /* UnfairLock.swift */; };
+		DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */; };
 		DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A592795C92000001DA6 /* UserItem.swift */; };
 		DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A5E2795C9D700001DA6 /* UserItemListView.swift */; };
 		DB297ADA27A0FE0100EAA3C3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AD927A0FE0100EAA3C3 /* Settings.swift */; };
@@ -102,6 +104,8 @@
 		DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderManager.swift; sourceTree = "<group>"; };
 		DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date - DateFormatExtension.swift"; sourceTree = "<group>"; };
 		DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderErrors.swift; sourceTree = "<group>"; };
+		DB25C1A327C961CE00DBEBB2 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
+		DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLockingExtension.swift; sourceTree = "<group>"; };
 		DB293A592795C92000001DA6 /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
 		DB293A5E2795C9D700001DA6 /* UserItemListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserItemListView.swift; path = ../../../../../../.Trash/UserItemListView.swift; sourceTree = "<group>"; };
 		DB297AD927A0FE0100EAA3C3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -209,6 +213,15 @@
 			path = LocalNotifications;
 			sourceTree = "<group>";
 		};
+		DB25C1A227C9619900DBEBB2 /* Concurrency */ = {
+			isa = PBXGroup;
+			children = (
+				DB25C1A327C961CE00DBEBB2 /* UnfairLock.swift */,
+				DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */,
+			);
+			path = Concurrency;
+			sourceTree = "<group>";
+		};
 		DB293A5B2795C98600001DA6 /* UserItemViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +278,7 @@
 		DB3B7EF027C0B67200C5D3DE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				DB25C1A227C9619900DBEBB2 /* Concurrency */,
 				DB25C19B27C59BEB00DBEBB2 /* LocalNotifications */,
 				DB34300727BEC11700CF076A /* Errors */,
 				DB7E9B1C27B5686B001A937A /* ItemMatcher */,
@@ -730,6 +744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */,
 				DB297ADD27A3832000EAA3C3 /* ScannedItemsViewModel.swift in Sources */,
 				DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */,
 				DB34305227BEDCE200CF076A /* SYGDataModel.xcdatamodeld in Sources */,
@@ -761,6 +776,7 @@
 				DB297ADF27A88BAA00EAA3C3 /* UserItemView.swift in Sources */,
 				DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */,
 				DBA3AC4727B6C09B008975C4 /* HTTPManager - HTTPManagerProtocol.swift in Sources */,
+				DB25C1A427C961CE00DBEBB2 /* UnfairLock.swift in Sources */,
 				DB45EA7A277BF81C001BA6C2 /* ProduceListView.swift in Sources */,
 				DB45EA7C277BF8A2001BA6C2 /* ReceiptScannerView.swift in Sources */,
 				DB623D0B2783ABD300EEEC09 /* AzureHTTPManager.swift in Sources */,
