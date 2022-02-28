@@ -67,7 +67,7 @@ class EatByReminderManager {
             do {
                 let _ = try scheduleReminder(for: item)
             } catch (let error) {
-                print("FAULT: could not schedule item \(item.description) bc error \(error.localizedDescription)")
+                print("FAULT: Could not schedule item \(item.description) bc: \((error as! EatByReminderError).localizedDescription)")
             }
         }
     }
@@ -87,7 +87,7 @@ class EatByReminderManager {
             let request = try scheduleReminder(for: addTimeComponentToItem(for: item, at: time))
             return request
         } catch (let error) {
-            print("FAULT: could not schedule item \(item.description) bc error \(error.localizedDescription)")
+            print("FAULT: Could not schedule item \(item.description) bc: \((error as! EatByReminderError).localizedDescription)")
             return nil
         }
        
@@ -111,7 +111,7 @@ class EatByReminderManager {
         do {
             try removeScheduledReminder(for: identifier)
         } catch (let error) {
-            print("FAULT: Error \(error.localizedDescription)")
+            print("FAULT: \((error as! EatByReminderError).localizedDescription)")
         }
     }
     
@@ -125,7 +125,7 @@ class EatByReminderManager {
         do {
             try removeScheduledReminder(for: identifier)
         } catch (let error) {
-            print("FAULT: Error \(error.localizedDescription)")
+            print("FAULT: \((error as! EatByReminderError).localizedDescription)")
         }
     }
     
@@ -183,6 +183,7 @@ class EatByReminderManager {
      * Schedule an individual new notification for current user at a specified time in the day
      *  IF the day doesn't have a notification scheduled yet.
      * Note: Synchronized
+     *       throws EatByReminderError,
      * Input: ScannedItem item - the to-be-eaten item
      * Output: UNNotificationRequest request, the newly scheduled notification request
      * Pre-condition: item MUST have a eat-by reminder date
@@ -191,14 +192,13 @@ class EatByReminderManager {
         // Lock
         mutex.lock()
         
-        // Create new requests for non-intersecting items
         let existingRequestDateDict: [String: UNNotificationRequest] = retrieveExistingRequestsDict()
 
         guard
             let dateToEat = item.dateToRemind
         else {
             mutex.unlock()
-            throw EatByReminderErrors("ScannedItem does not have a reminder date.")
+            throw EatByReminderError("ScannedItem does not have a reminder date.")
         }
         let formattedDateToEat = dateToEat.getFormattedDate(format: TimeConstants.reminderDateFormat)
         print("DEBUG >>> Requests outstanding: \(existingRequestDateDict.debugDescription)")
@@ -208,6 +208,7 @@ class EatByReminderManager {
         
         // Request date doesn't exist
         if !existingRequestDateDict.keys.contains(formattedDateToEat) {
+            // Create new request for item
             let content = createNotificationContent(badge: 1)
             
             var dateComponents = Calendar.current.dateComponents(
@@ -252,6 +253,7 @@ class EatByReminderManager {
      * Delete a scheduled notification when item has been eaten AND no other item is scheduled
      *  for that date
      * Note: Synchronized
+     *       throws EatByReminderError
      * Input: String identifier, the id of the item eaten and taken off notification schedule
      * Pre-conditions: id must exist in requests
      */
@@ -268,7 +270,7 @@ class EatByReminderManager {
             let existingBadgeNumber = requestContent.badge?.intValue
         else {
             mutex.unlock()
-            throw EatByReminderErrors("FAULT: Error retrieving existing request content or badge")
+            throw EatByReminderError("Cannot retrieve existing request content or badge")
         }
         
         print("DEBUG >>> Removing item \(identifier)")
@@ -293,6 +295,7 @@ class EatByReminderManager {
     
     /*
      * Update request badge number
+     * Note: throws EatByReminderError
      * Input: UNNotificationRequest request,
      *        Int update, positive: add, negative: subtract
      */
@@ -306,8 +309,8 @@ class EatByReminderManager {
             // TODO: Update error handling - need to down cast to get actual description.
             // EatByReminderErrors -> EatByReminderError
             // Also account for UNNotification errors
-            // ALso change SIVM error handling to be in external SIVIM functions, shouldn't handle in view. 
-            throw EatByReminderErrors("Could not retrieve request content, badge, or trigger.")
+            // ALso change SIVM error handling to be in external SIVIM functions, shouldn't handle in view.
+            throw EatByReminderError("Could not retrieve request content, badge, or trigger.")
         }
         let updatedBadgeNumber: Int = existingBadgeNumber + update
         let updatedContent = createNotificationContent(badge: updatedBadgeNumber as NSNumber)
@@ -386,7 +389,7 @@ class EatByReminderManager {
         do {
             let _ = try scheduleReminder(for: scannedItem)
         } catch (let error) {
-            print("FAULT: Error \(error.localizedDescription)")
+            print("FAULT: could not schedule item \(scannedItem.description) bc error \((error as! EatByReminderError).localizedDescription)")
         }
     }
 

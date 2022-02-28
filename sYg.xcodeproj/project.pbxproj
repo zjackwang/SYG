@@ -11,7 +11,7 @@
 		DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */; };
 		DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */; };
 		DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */; };
-		DB25C1A127C5ADC200DBEBB2 /* EatByReminderErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */; };
+		DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A027C5ADC200DBEBB2 /* EatByReminderError.swift */; };
 		DB25C1A427C961CE00DBEBB2 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A327C961CE00DBEBB2 /* UnfairLock.swift */; };
 		DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */; };
 		DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A592795C92000001DA6 /* UserItem.swift */; };
@@ -105,7 +105,7 @@
 		DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionEvaluator.swift; sourceTree = "<group>"; };
 		DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderManager.swift; sourceTree = "<group>"; };
 		DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date - DateFormatExtension.swift"; sourceTree = "<group>"; };
-		DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderErrors.swift; sourceTree = "<group>"; };
+		DB25C1A027C5ADC200DBEBB2 /* EatByReminderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderError.swift; sourceTree = "<group>"; };
 		DB25C1A327C961CE00DBEBB2 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
 		DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLockingExtension.swift; sourceTree = "<group>"; };
 		DB293A592795C92000001DA6 /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */,
-				DB25C1A027C5ADC200DBEBB2 /* EatByReminderErrors.swift */,
+				DB25C1A027C5ADC200DBEBB2 /* EatByReminderError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -766,7 +766,7 @@
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB34305727C00EE400CF076A /* ContentView.swift in Sources */,
-				DB25C1A127C5ADC200DBEBB2 /* EatByReminderErrors.swift in Sources */,
+				DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */,
 				DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */,
 				DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */,
 				DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */,

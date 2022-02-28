@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EatByReminderErrors: Error {
+struct EatByReminderError: Error {
     let message: String
     
     init(_ message: String) {
