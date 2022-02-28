@@ -108,15 +108,14 @@ class ScannedItemViewModel: ObservableObject {
     
     /*
      * Delete a scanned item entity via ScannedItem Object from the persistent container and return its identifier
-     * Note: Throws errors if index invalid or eat by date not present or core data throws error
      * Input: IndexSet for entities to be deleted from scannedItems list
      *        completionHandler, returning identifier of removed item
      * Output: String identifier, a formatted version of the eat by date
      */
-    func removeScannedItem(at offsets: IndexSet) throws -> String {
+    func removeScannedItem(at offsets: IndexSet) -> String? {
         guard let index = offsets.first else {
-            print("FAULT: index was not first!")
-            throw ReceiptScanningError("Invalid IndexSet for removal")
+            print("FAULT: Invalid IndexSet for removal-index was not first!")
+            return nil
         }
         let item = scannedItems[index]
         print("INFO: Removing from container item \(item.debugDescription)")
@@ -124,33 +123,38 @@ class ScannedItemViewModel: ObservableObject {
         guard
             let identifier = item.dateToRemind?.getFormattedDate(format: "yyyy-MM-dd")
         else {
-            print("FAULT: Error retrieving scanned item reminder date")
-            throw ReceiptScanningError("Could not retrieve reminder date")
+            print("FAULT: Could not retrieve reminder date")
+            return nil
         }
         
         container.viewContext.delete(item)
-        scannedItems.remove(at: index)
 
-        var saveError: Error?
+        var isFailure = false
         saveScannedItems {
             result in
             switch (result) {
             case .failure(let error):
-                saveError = error
+                isFailure = true
+                print("FAULT: Save returned - \((error as NSError).localizedDescription)")
             case .success(_):
                 break
             }
         }
-        if let saveError = saveError {
-            throw saveError
+
+        if isFailure {
+            return nil
         }
+        self.scannedItems.remove(at: index)
         return identifier
     }
     
     /*
      * Delete a scanned item entity via ScannedItem Object from teh persistent container
+     *
      * Input: IndexSet for entities to be deleted from scannedItems list
-     *        completionHandler, returning identifier of removed item
+     *        Closure completionHandler,
+     *          returning identifier of removed item on success
+     *          returning NSError on failure
      */
     func removeScannedItem(at offsets: IndexSet, completionHandler: @escaping (Result<String, Error>) -> () = {_ in }) {
         guard let index = offsets.first else {
@@ -185,7 +189,7 @@ class ScannedItemViewModel: ObservableObject {
         
     /*
      * Save any changes to the persistent container
-     * Note: Escaping error if failure, nothing if success
+     * Note: Escaping NSError if failure, nothing if success
      */
     func saveScannedItems(completionHandler: @escaping (Result<ScannedItem, Error>) -> () = {_ in }) {
         let context = container.viewContext
