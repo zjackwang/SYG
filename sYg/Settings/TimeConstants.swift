@@ -8,7 +8,7 @@
 import Foundation
 
 class TimeConstants {
-    static let settings = TimeConstants()
+    static let dayTimeInterval: TimeInterval = 24 * 60 * 60
     
-    let dayTimeInterval: TimeInterval = 24 * 60 * 60
+    static let reminderDateFormat = "yyyy-MM-dd"
 }

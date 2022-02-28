@@ -23,9 +23,6 @@ class EatByReminderManager {
     // Mutex for synchronization, NOT spam tolerant (can starve threads)
     private let mutex = UnfairLock()
     
-    // TODO: Settings
-    let reminderDateFormat = "yyyy-MM-dd"
-    
     /*
      * Ask for permission to send notifications
      */
@@ -66,62 +63,13 @@ class EatByReminderManager {
      * Input: [ScannedItem] items - the list of to-be-eaten items
      */
     func bulkScheduleReminders(for items: [ScannedItem]) {
-        /*
-         * TODO: Later, creating more meaningful notification messages?
-         * 1. Retrieve identifying dates from
-         * 2. Find items whose eat-by dates intersect with existing request dates
-         * 3. Add # to existing request's badge
-         */
-        
-                
-
         for item in items {
-            // Lock
-            mutex.lock()
-            
-            // Create new requests for non-intersecting items
-            var existingRequestDateDict: [String: UNNotificationRequest] = retrieveExistingRequestsDict()
-    
-            // MARK: DEBUG/TESTING
-            let time = DateComponents(hour: 14)
-            
-            guard
-                let dateToEat = item.dateToRemind
-            else {
-                // TODO: Error handling
-                print("FAULT: no reminder date exists, not scheduling reminder")
-                continue
+            do {
+                let _ = try scheduleReminder(for: item)
+            } catch (let error) {
+                print("FAULT: could not schedule item \(item.description) bc error \(error.localizedDescription)")
             }
-            let formattedDateToEat = dateToEat.getFormattedDate(format: reminderDateFormat)
-            print("DEBUG >>> Requests outstanding: \(existingRequestDateDict.debugDescription)")
-            print("DEBUG >>> Date to schedule: \(formattedDateToEat.debugDescription)")
-            
-            // Request date doesn't exist
-            if !existingRequestDateDict.keys.contains(formattedDateToEat) {
-                let scheduledRequest: UNNotificationRequest = scheduleReminder(for: addTimeComponentToItem(for: item, at: time))
-                existingRequestDateDict.updateValue(scheduledRequest, forKey: scheduledRequest.identifier)
-            }
-            // Request date does exist
-            else {
-                // Add 1 to existing request badge
-                let existingRequest = existingRequestDateDict[formattedDateToEat]
-                updateRequestBadge(request: existingRequest, update: 1)
-            }
-         
-            // Unlock
-            mutex.unlock()
         }
-        
-    }
-    
-    private func createNotificationContent(badge: NSNumber) -> UNMutableNotificationContent {
-        let content = UNMutableNotificationContent()
-        content.title = "Eat Yo Shit"
-        content.subtitle = "You have items to eat. Don't let them rot and die!!! - 🥦"
-        content.sound = .default
-        content.badge = badge
-        
-        return content
     }
     
     /*
@@ -131,18 +79,87 @@ class EatByReminderManager {
      * Output: UNNotificationRequest request, the newly scheduled notification request
      * Pre-condition: item MUST have a eat-by reminder date
      */
-    func scheduleReminder(for item: ScannedItem, at time: DateComponents = DateComponents(hour: 8)) -> UNNotificationRequest {
-        // Lock
-        mutex.lock()
-        
+    func scheduleReminder(for item: ScannedItem, at time: DateComponents = DateComponents(hour: 8)) -> UNNotificationRequest? {
         // Default 8:00 AM
         print("INFO: Scheduling reminder at time \(time.description)")
         
-        let request = scheduleReminder(for: addTimeComponentToItem(for: item, at: time))
+        do {
+            let request = try scheduleReminder(for: addTimeComponentToItem(for: item, at: time))
+            return request
+        } catch (let error) {
+            print("FAULT: could not schedule item \(item.description) bc error \(error.localizedDescription)")
+            return nil
+        }
+       
+    }
         
+    /*
+     * Delete a scheduled notification when item has been eaten AND no other item is scheduled
+     *  for that date
+     * Input: ScannedItem item, the item eaten and taken off notification schedule
+     * Pre-conditions: item MUST exist in core data
+     */
+    func removeScheduledReminder(for item: ScannedItem) {
+        guard
+            let identifier = item.dateToRemind?.getFormattedDate(format: TimeConstants.reminderDateFormat)
+        else {
+            print("FAULT: Error retrieving scanned item reminder date")
+            return
+        }
+        print("DEBUG >>> Removing item \(item.debugDescription)")
+        
+        do {
+            try removeScheduledReminder(for: identifier)
+        } catch (let error) {
+            print("FAULT: Error \(error.localizedDescription)")
+        }
+    }
+    
+    /*
+     * Delete a scheduled notification when item has been eaten AND no other item is scheduled
+     *  for that date
+     * Input: String identifier, the id of the item eaten and taken off notification schedule
+     * Pre-conditions: id must exist in requests
+     */
+    func removeScheduledReminderID(for identifier: String) {
+        do {
+            try removeScheduledReminder(for: identifier)
+        } catch (let error) {
+            print("FAULT: Error \(error.localizedDescription)")
+        }
+    }
+    
+    /*
+     * Update existing request to a different date
+     * Note: synchronized
+     * Input: String oldIdentifier, the old date id
+     *        String newIdentiifer, the new date id
+     */
+    func updateRequestDate(oldIdentifier: String, newIdentifier: String) {
+        // Lock
+        mutex.lock()
+
+        // TODO: TODO
+
         // Unlock
         mutex.unlock()
-        return request
+    }
+    
+    /*
+     * TODO: Later, creating more meaningful notification messages?
+     * 1. Retrieve identifying dates from
+     * 2. Find items whose eat-by dates intersect with existing request dates
+     * 3. Add # to existing request's badge
+     */
+    
+    private func createNotificationContent(badge: NSNumber) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.title = "Eat Yo Shit"
+        content.subtitle = "You have items to eat. Don't let them rot and die!!! - 🥦"
+        content.sound = .default
+        content.badge = badge
+        
+        return content
     }
     
     private func addTimeComponentToItem(for item: ScannedItem, at time: DateComponents) -> ScannedItem {
@@ -163,67 +180,72 @@ class EatByReminderManager {
     }
     
     /*
-     * Schedule an individual new notification for current user at a specified time in the day in the
+     * Schedule an individual new notification for current user at a specified time in the day
+     *  IF the day doesn't have a notification scheduled yet.
      * Note: Synchronized
      * Input: ScannedItem item - the to-be-eaten item
-     
      * Output: UNNotificationRequest request, the newly scheduled notification request
      * Pre-condition: item MUST have a eat-by reminder date
      */
-    private func scheduleReminder(for item: ScannedItem) -> UNNotificationRequest {
+    private func scheduleReminder(for item: ScannedItem) throws -> UNNotificationRequest {
+        // Lock
+        mutex.lock()
         
-        let content = createNotificationContent(badge: 1)
-        let dateToEat = item.dateToRemind!
-        
-        var dateComponents = Calendar.current.dateComponents(
-            [.year, .month, .day, .hour, .minute, .second],
-            from: dateToEat
-        )
-        
-        print("INFO: Local time zone is \(TimeZone.current.description)")
-        dateComponents.timeZone = TimeZone.current
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-            
-        let request = UNNotificationRequest(
-            // Use yyyy-MM-dd format to intersect with future scanned items
-            // NOTE: only ONE request per day
-            identifier: dateToEat.getFormattedDate(format: reminderDateFormat),
-            content: content,
-            trigger: trigger
-        )
-        
-        UNUserNotificationCenter.current().add(request)
-        print("INFO: Added item \(item.name ?? "") scheduled with request \(request.identifier) triggering at \(request.trigger.debugDescription)")
-        
-        return request
-    }
-        
-    /*
-     * Delete a scheduled notification when item has been eaten AND no other item is scheduled
-     *  for that date
-     * Input: ScannedItem item, the item eaten and taken off notification schedule
-     * Pre-conditions: item MUST exist in core data
-     */
-    func removeScheduledReminder(for item: ScannedItem) {
-        guard
-            let identifier = item.dateToRemind?.getFormattedDate(format: reminderDateFormat)
-        else {
-            print("FAULT: Error retrieving scanned item reminder date")
-            return
-        }
-        print("DEBUG >>> Removing item \(item.debugDescription)")
+        // Create new requests for non-intersecting items
+        let existingRequestDateDict: [String: UNNotificationRequest] = retrieveExistingRequestsDict()
 
-        removeScheduledReminder(for: identifier)
-    }
-    
-    /*
-     * Delete a scheduled notification when item has been eaten AND no other item is scheduled
-     *  for that date
-     * Input: String identifier, the id of the item eaten and taken off notification schedule
-     * Pre-conditions: id must exist in requests
-     */
-    func removeScheduledReminderID(for identifier: String) {
-        removeScheduledReminder(for: identifier)
+        guard
+            let dateToEat = item.dateToRemind
+        else {
+            mutex.unlock()
+            throw EatByReminderErrors("ScannedItem does not have a reminder date.")
+        }
+        let formattedDateToEat = dateToEat.getFormattedDate(format: TimeConstants.reminderDateFormat)
+        print("DEBUG >>> Requests outstanding: \(existingRequestDateDict.debugDescription)")
+        print("DEBUG >>> Date to schedule: \(formattedDateToEat.debugDescription)")
+        
+        var request: UNNotificationRequest?
+        
+        // Request date doesn't exist
+        if !existingRequestDateDict.keys.contains(formattedDateToEat) {
+            let content = createNotificationContent(badge: 1)
+            
+            var dateComponents = Calendar.current.dateComponents(
+                [.year, .month, .day, .hour, .minute, .second],
+                from: dateToEat
+            )
+            dateComponents.timeZone = TimeZone.current
+            print("INFO: Local time zone is \(TimeZone.current.description)")
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            let newRequest = UNNotificationRequest(
+                // Use yyyy-MM-dd format to intersect with future scanned items
+                // NOTE: only ONE request per day
+                identifier: formattedDateToEat,
+                content: content,
+                trigger: trigger
+            )
+            
+            UNUserNotificationCenter.current().add(newRequest)
+            print("INFO: Added item \(item.name ?? "") scheduled with request \(newRequest.identifier) triggering at \(newRequest.trigger.debugDescription)")
+            
+            request = newRequest
+        }
+        // Request date does exist
+        else {
+            // Add 1 to existing request badge
+            let existingRequest = existingRequestDateDict[formattedDateToEat]
+            do {
+                request = try updateRequestBadge(request: existingRequest, update: 1)
+            } catch (let error) {
+                mutex.unlock()
+                throw error
+            }
+        }
+        
+        // Unlock
+        mutex.unlock()
+        return request!
     }
     
     /*
@@ -233,7 +255,7 @@ class EatByReminderManager {
      * Input: String identifier, the id of the item eaten and taken off notification schedule
      * Pre-conditions: id must exist in requests
      */
-    private func removeScheduledReminder(for identifier: String) {
+    private func removeScheduledReminder(for identifier: String) throws {
         // Lock
         mutex.lock()
 
@@ -245,14 +267,19 @@ class EatByReminderManager {
             let requestContent = existingRequest?.content,
             let existingBadgeNumber = requestContent.badge?.intValue
         else {
-            print("FAULT: Error retrieving existing request content or badge")
-            return
+            mutex.unlock()
+            throw EatByReminderErrors("FAULT: Error retrieving existing request content or badge")
         }
         
         print("DEBUG >>> Removing item \(identifier)")
         
         if (existingBadgeNumber > 1) {
-            updateRequestBadge(request: existingRequest, update: -1)
+            do {
+                let _ = try updateRequestBadge(request: existingRequest, update: -1)
+            } catch (let error) {
+                mutex.unlock()
+                throw error
+            }
         } else {
             print("INFO: Removing request with id \(identifier)!")
             UNUserNotificationCenter.current().removePendingNotificationRequests(
@@ -265,35 +292,22 @@ class EatByReminderManager {
     }
     
     /*
-     * Update existing request to a different date
-     * Note: synchronized
-     * Input: String oldIdentifier, the old date id
-     *        String newIdentiifer, the new date id
-     */
-    func updateRequestDate(oldIdentifier: String, newIdentifier: String) {
-        // Lock
-        mutex.lock()
-
-        // TODO: TODO
-
-        // Unlock
-        mutex.unlock()
-    }
-    
-    /*
      * Update request badge number
      * Input: UNNotificationRequest request,
      *        Int update, positive: add, negative: subtract
      */
-    private func updateRequestBadge(request: UNNotificationRequest?, update: Int) {
+    private func updateRequestBadge(request: UNNotificationRequest?, update: Int) throws -> UNNotificationRequest{
         guard
             let requestContent = request?.content,
             let existingBadgeNumber = requestContent.badge?.intValue,
             let trigger = request?.trigger,
             let formattedDateToEat = request?.identifier
         else {
-            print("FAULT: Error retrieving existing request content, badge, or trigger")
-            return
+            // TODO: Update error handling - need to down cast to get actual description.
+            // EatByReminderErrors -> EatByReminderError
+            // Also account for UNNotification errors
+            // ALso change SIVM error handling to be in external SIVIM functions, shouldn't handle in view. 
+            throw EatByReminderErrors("Could not retrieve request content, badge, or trigger.")
         }
         let updatedBadgeNumber: Int = existingBadgeNumber + update
         let updatedContent = createNotificationContent(badge: updatedBadgeNumber as NSNumber)
@@ -306,6 +320,7 @@ class EatByReminderManager {
 
         print("INFO: Updating badge for \(formattedDateToEat) by \(update). Total: \(updatedBadgeNumber)!")
         updateScheduledReminder(for: formattedDateToEat, updatedRequest: updatedRequest)
+        return updatedRequest
     }
     
     /*
@@ -368,7 +383,11 @@ class EatByReminderManager {
         let testDate = Date(timeIntervalSinceNow: timeFromNow)
         let scannedItem = ScannedItemViewModel.shared.createScannedItem(name: "TEST1", dateToRemind: testDate)
         
-        let _ = scheduleReminder(for: scannedItem)
+        do {
+            let _ = try scheduleReminder(for: scannedItem)
+        } catch (let error) {
+            print("FAULT: Error \(error.localizedDescription)")
+        }
     }
 
     func cancelAllNotifications() {

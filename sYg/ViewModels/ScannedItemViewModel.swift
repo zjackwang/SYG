@@ -106,9 +106,13 @@ class ScannedItemViewModel: ObservableObject {
         saveScannedItems(completionHandler: completionHandler)
     }
     
-    // NEW REMOVE
-    // TODO: REFACTOR
-
+    /*
+     * Delete a scanned item entity via ScannedItem Object from the persistent container and return its identifier
+     * Note: Throws errors if index invalid or eat by date not present or core data throws error
+     * Input: IndexSet for entities to be deleted from scannedItems list
+     *        completionHandler, returning identifier of removed item
+     * Output: String identifier, a formatted version of the eat by date
+     */
     func removeScannedItem(at offsets: IndexSet) throws -> String {
         guard let index = offsets.first else {
             print("FAULT: index was not first!")
@@ -181,7 +185,7 @@ class ScannedItemViewModel: ObservableObject {
         
     /*
      * Save any changes to the persistent container
-     * Error if failure, nothing if success
+     * Note: Escaping error if failure, nothing if success
      */
     func saveScannedItems(completionHandler: @escaping (Result<ScannedItem, Error>) -> () = {_ in }) {
         let context = container.viewContext
