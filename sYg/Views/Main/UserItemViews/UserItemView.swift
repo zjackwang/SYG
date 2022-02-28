@@ -26,7 +26,7 @@ struct UserItemView: View {
                     .font(.subheadline)
                     .padding(.trailing, 20)
                 
-                StatusClockView(dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.settings.dayTimeInterval))
+                StatusClockView(dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.dayTimeInterval))
                     .onTapGesture {
                         showEatPopup = true
                     }

@@ -33,9 +33,14 @@ struct MainUserView: View {
                 // Upper toolbar
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Text("Save Your Groceries")
-                            .font(.title)
-                            .fontWeight(.bold)
+                        HStack(spacing: 15) {
+                            Image("icon")
+                                .frame(maxWidth: 10)
+                                .padding(20)
+                            Text("EatThat!")
+                                .font(.title)
+                                .fontWeight(.bold)
+                        }
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         // Scan Receipts
@@ -43,7 +48,6 @@ struct MainUserView: View {
                             .onTapGesture {
                                 self.selectReceipt = true
                             }
-                            .padding()
                             .confirmationDialog(Text("Scan Receipt"), isPresented: $selectReceipt) {
                                 Button {
                                     mvm.source = .camera
@@ -61,20 +65,17 @@ struct MainUserView: View {
                         
                         // TODO: Settings
                         // For now a testing button
-                        Button(action: {
-//                            do {
-//                                throw URLError(URLError.Code(rawValue: 404))
-//                            } catch (let error) {
-//                                mvm.error = error
-//                            }
-//                            mvm.showConfirmationAlert = true
-                            
-                            ScannedItemViewModel.shared.resetContainer()
-                            
-                            print("Edit")
-                           }) {
-                            Label("Edit", systemImage: "slider.horizontal.3")
-                           }
+                        Image(systemName: "slider.horizontal.3")
+                            .onTapGesture {
+    //                            do {
+    //                                throw URLError(URLError.Code(rawValue: 404))
+    //                            } catch (let error) {
+    //                                mvm.error = error
+    //                            }
+    //                            mvm.showConfirmationAlert = true
+                                
+                                ScannedItemViewModel.shared.resetContainer()
+                            }
                            .padding()
                     }
                 }
