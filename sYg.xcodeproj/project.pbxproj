@@ -75,6 +75,8 @@
 		DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C4B277CC3AE00C5F783 /* Selector.swift */; };
 		DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */; };
 		DBFFD78927CDE39600584484 /* DateToEatPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78827CDE39600584484 /* DateToEatPopup.swift */; };
+		DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78C27CE769600584484 /* SettingsView.swift */; };
+		DBFFD78F27CE76DA00584484 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78E27CE76DA00584484 /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +176,8 @@
 		DBB25C4B277CC3AE00C5F783 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptSelector.swift; sourceTree = "<group>"; };
 		DBFFD78827CDE39600584484 /* DateToEatPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToEatPopup.swift; sourceTree = "<group>"; };
+		DBFFD78C27CE769600584484 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DBFFD78E27CE76DA00584484 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -559,6 +563,8 @@
 		DBA6EE9F27868F1E002E19AA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				DBFFD78C27CE769600584484 /* SettingsView.swift */,
+				DBFFD78E27CE76DA00584484 /* OnboardingView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -769,6 +775,7 @@
 				DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */,
 				DB623D0E2783AC0400EEEC09 /* HTTPManagerProtocol.swift in Sources */,
 				DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */,
+				DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */,
 				DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */,
 				DB623D102783AF3C00EEEC09 /* AzureHTTPManagerProtocol.swift in Sources */,
 				DB09F81027CB432D0022C034 /* UrgentToEatView.swift in Sources */,
@@ -786,6 +793,7 @@
 				DB623D092783AA7A00EEEC09 /* AnalyzedReceipt.swift in Sources */,
 				DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */,
 				DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */,
+				DBFFD78F27CE76DA00584484 /* OnboardingView.swift in Sources */,
 				DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */,
 				DB623D172783B18000EEEC09 /* URLSessionDataTaskProtocol.swift in Sources */,
 			);

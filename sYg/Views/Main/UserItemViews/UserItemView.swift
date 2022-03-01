@@ -40,6 +40,7 @@ struct UserItemView: View {
                     message: item?.dateToRemind?.getFormattedDate(format: TimeConstants.reminderDateFormat) ?? "unknown"
                 )
                     .transition(.move(edge: .trailing))
+                // TODO: change to withAnimation
                     .animation(.spring(response: 0.3, dampingFraction: 1.0, blendDuration: 1.0))
             }
             

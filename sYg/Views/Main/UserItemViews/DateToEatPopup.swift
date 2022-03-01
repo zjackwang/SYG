@@ -13,7 +13,11 @@ struct PopOverScreen: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            Color.green
+            LinearGradient(
+                gradient: Gradient(colors: [.green, .gray]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
                 .ignoresSafeArea()
             HStack {
                 Text(title)

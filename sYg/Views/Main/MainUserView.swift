@@ -63,18 +63,10 @@ struct MainUserView: View {
                                 }
                             }
                         
-                        // TODO: Settings
                         // For now a testing button
                         Image(systemName: "slider.horizontal.3")
                             .onTapGesture {
-    //                            do {
-    //                                throw URLError(URLError.Code(rawValue: 404))
-    //                            } catch (let error) {
-    //                                mvm.error = error
-    //                            }
-    //                            mvm.showConfirmationAlert = true
                                 
-                                ScannedItemViewModel.shared.resetContainer()
                             }
                            .padding()
                     }
