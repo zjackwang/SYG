@@ -14,23 +14,36 @@ struct StatusClockView: View {
     var redStatus: TimeInterval = Settings.DefaultSettings.redClockInterval
     var yellowStatus: TimeInterval = Settings.DefaultSettings.yellowClockInterval
     
+    @Binding var showPopup: Bool
+    
     let today: Date = Date.now
     var body: some View {
         let timeToExpiration: TimeInterval = today.distance(to: dateToRemind)
-
-        Image(systemName: "clock.arrow.circlepath")
-            .foregroundColor(
-                timeToExpiration <= redStatus ? .red : timeToExpiration <= yellowStatus ? .yellow : .green
+        Button {
+            print("DEBUG >>> Toggling!")
+            showPopup.toggle()
+        } label: {
+            Image(systemName: "clock.arrow.circlepath")
+                .foregroundColor(
+                    timeToExpiration <= redStatus ? .red : timeToExpiration <= yellowStatus ? .yellow : .green
             )
-            .onTapGesture {
-                // TODO
-                // Bring up Item selection menu
-            }
+        }
+    }
+}
+
+struct StatusClockViewDisplay: View {
+    @State var showPopup: Bool = false
+    
+    var body: some View {
+        ZStack {
+            StatusClockView(dateToRemind: Date(timeIntervalSinceNow: 10000), showPopup: $showPopup)
+        }
     }
 }
 
 struct StatusClock_Previews: PreviewProvider {
+    
     static var previews: some View {
-        StatusClockView(dateToRemind: Date(timeIntervalSinceNow: 10000))
+        StatusClockViewDisplay()
     }
 }

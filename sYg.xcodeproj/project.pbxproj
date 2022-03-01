@@ -74,6 +74,7 @@
 		DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C49277CC29600C5F783 /* MainViewModel.swift */; };
 		DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C4B277CC3AE00C5F783 /* Selector.swift */; };
 		DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */; };
+		DBFFD78927CDE39600584484 /* DateToEatPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78827CDE39600584484 /* DateToEatPopup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,7 @@
 		DBB25C49277CC29600C5F783 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DBB25C4B277CC3AE00C5F783 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptSelector.swift; sourceTree = "<group>"; };
+		DBFFD78827CDE39600584484 /* DateToEatPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToEatPopup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 				DB293A5E2795C9D700001DA6 /* UserItemListView.swift */,
 				DB297ADE27A88BAA00EAA3C3 /* UserItemView.swift */,
 				DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */,
+				DBFFD78827CDE39600584484 /* DateToEatPopup.swift */,
 			);
 			path = UserItemViews;
 			sourceTree = "<group>";
@@ -240,14 +243,6 @@
 				DB45EA7B277BF8A2001BA6C2 /* ReceiptScannerView.swift */,
 			);
 			path = Legacy;
-			sourceTree = "<group>";
-		};
-		DB297ADB27A0FE5D00EAA3C3 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				DB297AD927A0FE0100EAA3C3 /* Settings.swift */,
-			);
-			name = Settings;
 			sourceTree = "<group>";
 		};
 		DB34300727BEC11700CF076A /* Errors */ = {
@@ -314,7 +309,6 @@
 		DB45EA76277BF7A8001BA6C2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DB297ADB27A0FE5D00EAA3C3 /* Settings */,
 				DB623D222784F53B00EEEC09 /* ReceiptModels */,
 				DB623D212784F52500EEEC09 /* DBModels */,
 				DBB25C4B277CC3AE00C5F783 /* Selector.swift */,
@@ -472,6 +466,7 @@
 		DB833FD727C08C29004BF14D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				DB297AD927A0FE0100EAA3C3 /* Settings.swift */,
 				DB833FD827C08C39004BF14D /* TimeConstants.swift */,
 			);
 			path = Settings;
@@ -755,6 +750,7 @@
 				DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */,
 				DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */,
 				DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */,
+				DBFFD78927CDE39600584484 /* DateToEatPopup.swift in Sources */,
 				DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */,
 				DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */,
 				DB45EA78277BF7B5001BA6C2 /* ProduceItem.swift in Sources */,
