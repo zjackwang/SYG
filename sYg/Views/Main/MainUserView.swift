@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct MainUserView: View {
-    @EnvironmentObject private var mvm: MainViewModel
+    @StateObject private var mvm = MainViewModel.shared
 
     // For Popups
     @State private var selectReceipt: Bool = false
@@ -120,8 +120,8 @@ struct MainUserView: View {
 
 struct ScannedReceiptPopover: View {
     @Binding var showPopover: Bool
-    @EnvironmentObject private var mvm: MainViewModel
-    @EnvironmentObject private var pvm: ProduceViewModel
+    @StateObject private var mvm = MainViewModel.shared
+    @StateObject private var pvm = ProduceViewModel.shared
 
     var body: some View {
         ZStack {
@@ -148,7 +148,7 @@ struct ScannedReceiptPopover: View {
                 // Confirmation
                 if let receipt = mvm.receipt{
                     Button {
-                        if !mvm.analyzeImage(receipt: receipt, pvm: pvm) {
+                        if !mvm.analyzeImage(receipt: receipt) {
                             // Handle error, show popup TODO
                             mvm.imageAnalysisError()
                         }
@@ -169,7 +169,5 @@ struct ScannedReceiptPopover: View {
 struct MainUserView_Previews: PreviewProvider {
     static var previews: some View {
         MainUserView()
-            .environmentObject(MainViewModel())
-            .environmentObject(ScannedItemsViewModel(isDebugging: true))
     }
 }

@@ -28,16 +28,24 @@ enum Category: String {
  *    - match scanned item to item view model items
  */
 class ItemMatcher {
-    static let factory = ItemMatcher()
+    /*
+     * MARK: Initialization
+     */
     
+    static let factory = ItemMatcher()
     private init() {}
     
-    func getExpirationTimeInterval(for scannedItem: String, using pvm: ProduceViewModel) -> TimeInterval {
+    private var pvm = ProduceViewModel.shared
+    
+    /*
+     *
+     */
+    func getExpirationTimeInterval(for scannedItem: String) -> TimeInterval {
         let category = matchItemCategory(for: scannedItem)
         
         switch category {
         case .produce:
-            return self.matchScannedItemProduce(for: scannedItem, using: pvm)
+            return self.matchScannedItemProduce(for: scannedItem)
 //        case .dairy:
 //
 //        case .meatPoultrySeafood:
@@ -47,7 +55,7 @@ class ItemMatcher {
 //        case .drinks:
 //            <#code#>
         default:
-            return self.matchScannedItemProduce(for: scannedItem, using: pvm)
+            return self.matchScannedItemProduce(for: scannedItem)
         }
     }
     
@@ -82,8 +90,8 @@ class ItemMatcher {
      */
     
     // TODO use factory to get the viewmodel instead of passing it
-    private func matchScannedItemProduce(for scannedItem: String, using produceViewModel: ProduceViewModel) -> TimeInterval {
-        let produceItems = produceViewModel.getAllItemsInfo()
+    private func matchScannedItemProduce(for scannedItem: String) -> TimeInterval {
+        let produceItems = pvm.getAllItemsInfo()
         
         // Capitalize words
 //        let capitalizedItems: [String.SubSequence] = scannedItem.lowercased().capitalized.split(separator: " ")

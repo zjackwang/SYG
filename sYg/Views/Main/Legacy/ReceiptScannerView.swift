@@ -33,7 +33,7 @@ struct ReceiptScannerView: View {
           
                 if let receipt = rvm.receipt{
                     Button {
-                        if !rvm.analyzeImage(receipt: receipt, pvm: pvm) {
+                        if !rvm.analyzeImage(receipt: receipt) {
                             // TODO pop over                            
                         }
                     } label: {
@@ -89,6 +89,5 @@ struct ReceiptScannerView: View {
 struct ReceiptScannerView_Previews: PreviewProvider {
     static var previews: some View {
         ReceiptScannerView()
-            .environmentObject(MainViewModel())
     }
 }

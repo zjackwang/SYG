@@ -13,6 +13,17 @@ import UIKit
  * Once image is confirmed, sends to Azure for analysis and returns results 
  */
 class MainViewModel: ObservableObject {
+    /*
+     * MARK: Initialization
+     */
+
+    static var shared = MainViewModel()
+    private init() {}
+    
+    // View models
+    private var sivm = ScannedItemViewModel.shared
+    private var pvm = ProduceViewModel.shared
+    
     // Receipt to display for confirmation
     @Published var receipt: UIImage?
     
@@ -39,6 +50,10 @@ class MainViewModel: ObservableObject {
     @Published var error: Error?
     
     /*
+     * MARK: Receipt Analysis Functions
+     */
+    
+    /*
      * Brings up camera to scan receipt
      */
     func showReceiptSelector () {
@@ -58,7 +73,7 @@ class MainViewModel: ObservableObject {
      *  - converts AnalyzedReceipt struct into list of UserItem structs
      *  - adds to user defaults via scanned items view model
      */
-    func imageAnalyzedSuccesfully(pvm: ProduceViewModel) {
+    func imageAnalyzedSuccesfully() {
         print("Image analyzed successfully. Now adding to user's persistent storage...")
         // Should have legit receipt
         guard
@@ -113,7 +128,7 @@ class MainViewModel: ObservableObject {
 //                    dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
 //                } else {
                 // find best match
-                dateToRemind += itemMatcher.getExpirationTimeInterval(for: name, using: pvm)
+                dateToRemind += itemMatcher.getExpirationTimeInterval(for: name)
 //                }
 
                 // DEBUGGING
@@ -171,7 +186,7 @@ class MainViewModel: ObservableObject {
      * INPUT: UIImage optional, the scanned receipt
      * OUTPUT: Boolean, whether the subroutine validated the URL
      */
-    func analyzeImage(receipt: UIImage?, pvm: ProduceViewModel) -> Bool {
+    func analyzeImage(receipt: UIImage?) -> Bool {
         // Validate URL
         guard let postUrl = URL(string: "\(self.endpoint)formrecognizer/v2.1/prebuilt/receipt/analyze")
         else {
@@ -248,7 +263,7 @@ class MainViewModel: ObservableObject {
 //                                print(analyzedReceipt)
                                 DispatchQueue.main.async {
                                     self?.scannedReceipt = analyzedReceipt
-                                    self?.imageAnalyzedSuccesfully(pvm: pvm)
+                                    self?.imageAnalyzedSuccesfully()
                                 }
                                 return
                             }

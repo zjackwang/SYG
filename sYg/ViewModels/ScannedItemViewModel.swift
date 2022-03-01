@@ -17,7 +17,7 @@ class ScannedItemViewModel: ObservableObject {
      */
     
     // Singleton
-    static let shared = ScannedItemViewModel()
+    static var shared = ScannedItemViewModel()
     
     let container: NSPersistentContainer
     @Published var scannedItems: [ScannedItem] = []

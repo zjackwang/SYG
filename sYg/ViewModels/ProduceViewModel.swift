@@ -9,26 +9,36 @@ import Foundation
 import SwiftUI
 
 class ProduceViewModel: ObservableObject {
+    /*
+     * MARK: Initialization
+     */
+    
+    static var shared = ProduceViewModel()
+    
+    private init() {}
+    
     @Published var items: [ProduceItem] = []
     
     // Delegate to Produce/Item Interface
     private var itemsHTTPManager: ItemsHTTPManager = ItemsHTTPManager(session: URLSession.shared)
     
-    // TODO: make this a singleton.
-    //      figure out why I'm using this cache.
-    //      need to be able to fetch my items and match them up. Works in unit tests...
+    /*
+     * MARK: Get functions
+     */
+    
     /*
      * OUTPUT: List of Produce Items, every one. May not exist
      */
     func getAllItemsInfo() -> [ProduceItem] {
         if !items.isEmpty{
-            print("Fetching \(items.count) produce items from cache")
+            print("INFO: Fetching \(items.count) produce items from cache")
             return items
         } else {
             let group = DispatchGroup()
             group.enter()
-            print("Fetching all produce items from remote")
+            print("INFO: Fetching all produce items from remote")
             // get all items from API
+            var returnedItems: [ProduceItem]?
             itemsHTTPManager.fetchProduceItem(for: nil) { [weak self]
                 result in
                 switch result {
@@ -37,16 +47,20 @@ class ProduceViewModel: ObservableObject {
                     for item in produceItems {
                         ProduceItemCache.shared.cache(item, for: item.Item)
                     }
-                    self?.items.append(contentsOf: produceItems)
-                    break
+                    returnedItems = produceItems
                 case .failure(let error):
                     self?.handleError(error: error)
-                    break
                 }
                 group.leave()
             }
             group.wait()
-            print("Produce items cached \(items.count) items.")
+            
+            if let returnedItems = returnedItems {
+                print("INFO: Produce items cached \(returnedItems.count) items.")
+                self.items.append(contentsOf: returnedItems)
+                return self.items
+            }
+            print("FAULT: Error caching items")
             return self.items
         }
     }
