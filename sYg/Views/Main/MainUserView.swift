@@ -16,13 +16,18 @@ struct MainUserView: View {
     @State private var selectReceipt: Bool = false
     @State private var showScannedReceipt: Bool = false
 
-   private let columns = [
+    private let columns = [
                 GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible()),
             ]
     
     private let listRowBackgroundColor: Color = .green
+    
+    
+    // Loading circle
+    @State private var showProgressDialog = false
+    @State private var progressMessage = ""
     
     var body: some View {
         NavigationView {
@@ -66,7 +71,8 @@ struct MainUserView: View {
                         // For now a testing button
                         Image(systemName: "slider.horizontal.3")
                             .onTapGesture {
-                                
+                                showProgressDialog.toggle()
+                                progressMessage = "Progress Test"
                             }
                            .padding()
                     }
@@ -76,7 +82,7 @@ struct MainUserView: View {
                     ReceiptSelector(receipt: $mvm.receipt, sourceType: mvm.source == .library ? .photoLibrary : .camera, showPopover: $showScannedReceipt)
                         .ignoresSafeArea()
                 }
-                .alert("Error",
+                .alert("Scanning Error",
                        isPresented: $mvm.showCameraAlert,
                        presenting: mvm.cameraError,
                        actions: {
@@ -93,6 +99,8 @@ struct MainUserView: View {
                     .padding(.top, 45)
                     .offset(y: showScannedReceipt ? 0 : UIScreen.main.bounds.height)
                     .animation(.spring(response: 0.5, dampingFraction: 1.0, blendDuration: 1.0))
+                // Progress Dialog
+                ProgressDialog(show: $showProgressDialog, message: $progressMessage)
             }
             // Confirmation of successful scan + item matching
             .alert(isPresented: $mvm.showConfirmationAlert) {
@@ -106,16 +114,18 @@ struct MainUserView: View {
                 return Alert(
                         title: Text("Scanning Result"),
                         message: message!,
-                        dismissButton: .default(Text("Ok"),
-                                        action: {
+                        dismissButton:
+                                .default(
+                                    Text("Ok"),
+                                    action: {
                                             mvm.showConfirmationAlert.toggle()
-                            }
-                       )
-                )
+                                    }
+                               )
+                        )
             }
         }
-        
     }
+        
 }
 
 struct ScannedReceiptPopover: View {

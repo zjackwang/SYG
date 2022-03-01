@@ -77,6 +77,7 @@
 		DBFFD78927CDE39600584484 /* DateToEatPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78827CDE39600584484 /* DateToEatPopup.swift */; };
 		DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78C27CE769600584484 /* SettingsView.swift */; };
 		DBFFD78F27CE76DA00584484 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78E27CE76DA00584484 /* OnboardingView.swift */; };
+		DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +179,7 @@
 		DBFFD78827CDE39600584484 /* DateToEatPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToEatPopup.swift; sourceTree = "<group>"; };
 		DBFFD78C27CE769600584484 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DBFFD78E27CE76DA00584484 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +305,7 @@
 		DB45EA75277BF79A001BA6C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DBFFD79027CE853700584484 /* Misc */,
 				DBA6EEA127868F2F002E19AA /* Main */,
 				DBA6EEA027868F27002E19AA /* Help */,
 				DBA6EE9F27868F1E002E19AA /* Settings */,
@@ -588,6 +591,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		DBFFD79027CE853700584484 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -751,6 +762,7 @@
 				DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */,
 				DB297ADD27A3832000EAA3C3 /* ScannedItemsViewModel.swift in Sources */,
 				DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */,
+				DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */,
 				DB34305227BEDCE200CF076A /* SYGDataModel.xcdatamodeld in Sources */,
 				DB623D152783B15400EEEC09 /* URLSessionProtocol.swift in Sources */,
 				DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */,
