@@ -62,6 +62,13 @@ class ScannedItemViewModel: ObservableObject {
     }
     
     /*
+     * Get # of scanned items for user
+     */
+    func getNumberScannedItems() -> Int {
+        return scannedItems.count
+    }
+    
+    /*
      * Add list of newly scanned items to persistent container
      * Input: List of UserItem objs
      */

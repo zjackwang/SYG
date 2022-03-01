@@ -11,8 +11,8 @@ struct StatusClockView: View {
     var dateToRemind: Date
     // reminder settings
     // default is 2 days
-    var redStatus: TimeInterval = Settings.DefaultSettings.redClockInterval
-    var yellowStatus: TimeInterval = Settings.DefaultSettings.yellowClockInterval
+    var redStatus: TimeInterval = Settings.User.redClockInterval
+    var yellowStatus: TimeInterval = Settings.User.yellowClockInterval
     
     @Binding var showPopup: Bool
     

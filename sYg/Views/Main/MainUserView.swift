@@ -15,7 +15,8 @@ struct MainUserView: View {
     // For Popups
     @State private var selectReceipt: Bool = false
     @State private var showScannedReceipt: Bool = false
-
+    @State private var showSettings: Bool = false
+    
     private let columns = [
                 GridItem(.flexible()),
                 GridItem(.flexible()),
@@ -71,8 +72,7 @@ struct MainUserView: View {
                         // For now a testing button
                         Image(systemName: "slider.horizontal.3")
                             .onTapGesture {
-                                showProgressDialog.toggle()
-                                progressMessage = "Progress Test"
+                                showSettings.toggle()
                             }
                            .padding()
                     }
@@ -123,6 +123,11 @@ struct MainUserView: View {
                                )
                         )
             }
+            .sheet(isPresented: $showSettings,
+                   content: {
+                SettingsView(show: $showSettings)
+            })
+
         }
     }
         

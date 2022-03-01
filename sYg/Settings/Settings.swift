@@ -13,7 +13,7 @@ struct Settings {
 }
 
 extension Settings {
-    static let DefaultSettings =
+    static var User =
         Settings (
             redClockInterval: TimeInterval(2 * 24 * 60 * 60),
             yellowClockInterval: TimeInterval(4 * 24 * 60 * 60)
