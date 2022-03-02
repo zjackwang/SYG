@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct UserItemView: View {
-    @State private var showEatPopup = false
-    
     var item: ScannedItem?
+    let background: Color
+
+    @State private var showEatPopup = false
+
+    private let onPrimary: Color = Color.DarkPalette.onPrimary
+
     let columns = [
                 GridItem(.flexible()),
                 GridItem(.flexible()),
@@ -22,10 +26,12 @@ struct UserItemView: View {
                     .font(.headline)
                     .fontWeight(.semibold)
                     .padding(.leading, 10)
+                    .foregroundColor(onPrimary)
                 HStack {
                     Text(item?.dateOfPurchase ?? Date.now, format: .dateTime.day().month().year())
                         .font(.subheadline)
                         .padding(.trailing, 20)
+                        .foregroundColor(onPrimary)
                     
                     StatusClockView(
                         dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.dayTimeInterval),
@@ -46,6 +52,7 @@ struct UserItemView: View {
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .listRowBackground(background)
     }
 }
 
@@ -54,7 +61,7 @@ struct UserItemView: View {
 struct UserItemView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            UserItemView()
+            UserItemView(background: .red)
         }
     }
 }

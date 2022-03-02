@@ -16,6 +16,12 @@ struct StatusClockView: View {
     
     @Binding var showPopup: Bool
     
+    private let background : Color = Color.DarkPalette.background
+    private let primary: Color = Color.DarkPalette.primary
+    private let secondary: Color = Color.DarkPalette.secondary
+    private let tertiary: Color = Color.DarkPalette.tertiary
+    private let quaternary: Color = Color.DarkPalette.quaternary
+
     let today: Date = Date.now
     var body: some View {
         let timeToExpiration: TimeInterval = today.distance(to: dateToRemind)
@@ -24,9 +30,11 @@ struct StatusClockView: View {
             showPopup.toggle()
         } label: {
             Image(systemName: "clock.arrow.circlepath")
+                .font(.system(size: 15))
                 .foregroundColor(
-                    timeToExpiration <= redStatus ? .red : timeToExpiration <= yellowStatus ? .yellow : .green
-            )
+                    timeToExpiration <= redStatus ? quaternary : timeToExpiration <= yellowStatus ? tertiary : secondary
+                )
+                .shadow(color: background, radius: 3)
         }
     }
 }

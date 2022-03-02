@@ -121,22 +121,27 @@ extension OnboardingView {
     private var welcomeSection: some View {
         VStack(spacing: 40){
             Spacer()
-            Image(systemName: "cart.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 200)
-                .foregroundColor(.white)
-            Text("EatThat!")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .overlay(
-                    Capsule(style: .continuous)
-                        .frame(height: 3)
-                        .offset(y: 5)
-                        .foregroundColor(.white)
-                    , alignment: .bottom
-                )
+//            Image(systemName: "cart.circle.fill")
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: 200, height: 200)
+//                .foregroundColor(.white)
+            HStack(spacing: 15) {
+                Image("icon")
+                    .frame(maxWidth: 10)
+                    .padding(20)
+                Text("EatThat!")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .overlay(
+                        Capsule(style: .continuous)
+                            .frame(height: 3)
+                            .offset(y: 5)
+                            .foregroundColor(.white)
+                        , alignment: .bottom
+                    )
+            }
             Text("Save your groceries by scanning your grocery receipt and get reminded on when to eat your purchased items!\nSwipe to delete from your list once eaten.")
                 .fontWeight(.medium)
                 .foregroundColor(.white)

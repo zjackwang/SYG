@@ -11,22 +11,23 @@ struct PopOverScreen: View {
     var title: String
     var message: String
     
+    private let secondary: Color = Color.DarkPalette.secondary
+    private let onSecondary: Color = Color.DarkPalette.onSecondary
+
     var body: some View {
         ZStack(alignment: .center) {
-            LinearGradient(
-                gradient: Gradient(colors: [.green, .gray]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+            secondary
                 .ignoresSafeArea()
             HStack {
                 Text(title)
                     .font(.headline)
                     .fontWeight(.semibold)
                     .padding()
+                    .foregroundColor(onSecondary)
                 Text(message)
                     .font(.subheadline)
                     .fontWeight(.medium)
+                    .foregroundColor(onSecondary)
             }
         }
         .cornerRadius(10)

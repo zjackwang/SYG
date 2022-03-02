@@ -79,6 +79,7 @@
 		DBFFD78F27CE76DA00584484 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78E27CE76DA00584484 /* OnboardingView.swift */; };
 		DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */; };
 		DBFFD79627CEC6DE00584484 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD79527CEC6DE00584484 /* BackButton.swift */; };
+		DBFFD79927CFEC4800584484 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD79827CFEC4800584484 /* ColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +183,7 @@
 		DBFFD78E27CE76DA00584484 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialog.swift; sourceTree = "<group>"; };
 		DBFFD79527CEC6DE00584484 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		DBFFD79827CFEC4800584484 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +309,7 @@
 		DB45EA75277BF79A001BA6C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DBFFD79727CFEC3D00584484 /* UI */,
 				DBFFD79027CE853700584484 /* Misc */,
 				DBA6EEA127868F2F002E19AA /* Main */,
 				DBA6EEA027868F27002E19AA /* Help */,
@@ -602,6 +605,14 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		DBFFD79727CFEC3D00584484 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DBFFD79827CFEC4800584484 /* ColorExtension.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -768,6 +779,7 @@
 				DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */,
 				DBFFD79627CEC6DE00584484 /* BackButton.swift in Sources */,
 				DB34305227BEDCE200CF076A /* SYGDataModel.xcdatamodeld in Sources */,
+				DBFFD79927CFEC4800584484 /* ColorExtension.swift in Sources */,
 				DB623D152783B15400EEEC09 /* URLSessionProtocol.swift in Sources */,
 				DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */,
 				DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */,

@@ -23,8 +23,12 @@ struct MainUserView: View {
                 GridItem(.flexible()),
             ]
     
-    private let listRowBackgroundColor: Color = .green
-    
+    // Color Palette
+    private let background: Color = Color.DarkPalette.background
+    private let surface: Color = Color.DarkPalette.surface
+    private let onBackground: Color = Color.DarkPalette.onBackground
+    private let primary: Color = Color.DarkPalette.primary
+    private let secondary: Color = Color.DarkPalette.secondary
     
     // Loading circle
     @State private var showProgressDialog = false
@@ -32,9 +36,12 @@ struct MainUserView: View {
     
     var body: some View {
         NavigationView {
-            // Foreground
             ZStack {
-                // Produce Items
+                // Background
+                background
+                    .ignoresSafeArea()
+
+                // Foreground
                 UserItemListView()
                 // Upper toolbar
                 .toolbar {
@@ -46,11 +53,13 @@ struct MainUserView: View {
                             Text("EatThat!")
                                 .font(.title)
                                 .fontWeight(.bold)
+                                .foregroundColor(onBackground)
                         }
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         // Scan Receipts
                         Image(systemName: "plus.app")
+                            .foregroundColor(onBackground)
                             .onTapGesture {
                                 self.selectReceipt = true
                             }
@@ -71,6 +80,7 @@ struct MainUserView: View {
                         
                         // For now a testing button
                         Image(systemName: "slider.horizontal.3")
+                            .foregroundColor(onBackground)
                             .onTapGesture {
                                 showSettings.toggle()
                             }
@@ -129,6 +139,7 @@ struct MainUserView: View {
             })
 
         }
+        
     }
         
 }
