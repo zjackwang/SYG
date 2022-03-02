@@ -27,8 +27,15 @@ struct OnboardingView: View {
     @State var showAlert: Bool = false
     
     // UI
-    private var buttonColor: Color = .brown
-    private var mangoBackground: [Color] = [.green, .pink]
+    private let background: Color = Color.DarkPalette.background
+    private let primary: Color = Color.DarkPalette.primary
+    private let secondary: Color = Color.DarkPalette.secondary
+    private let tertiary: Color = Color.DarkPalette.tertiary
+    private let quaternary: Color = Color.DarkPalette.quaternary
+    private let surface: Color = Color.DarkPalette.surface
+    private let onBackground: Color = Color.DarkPalette.onBackground
+    private let onPrimary: Color = Color.DarkPalette.onPrimary
+
     
     // App storage
     @AppStorage("name") var currentUserName: String?
@@ -83,7 +90,7 @@ struct OnboardingView: View {
             
         }
         .background(
-            LinearGradient(colors: mangoBackground, startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors: [background, primary, secondary, tertiary, quaternary], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
         )
     }
@@ -109,42 +116,37 @@ extension OnboardingView {
         } label: {
             Text(onboardingState == .welcome ? "Get Started" :
                 onboardingState == .addName ? "FINISH" : "NEXT")
-                .font(.headline)
-                .foregroundColor(buttonColor)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(onPrimary)
                 .frame(height: 55)
                 .frame(maxWidth: .infinity)
-                .background(.white)
-                .cornerRadius(10)
+                .cornerRadius(25)
         }
     }
     
     private var welcomeSection: some View {
         VStack(spacing: 40){
             Spacer()
-//            Image(systemName: "cart.circle.fill")
-//                .resizable()
-//                .scaledToFit()
-//                .frame(width: 200, height: 200)
-//                .foregroundColor(.white)
             HStack(spacing: 15) {
                 Image("icon")
                     .frame(maxWidth: 10)
                     .padding(20)
                 Text("EatThat!")
                     .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .foregroundColor(onPrimary)
                     .overlay(
                         Capsule(style: .continuous)
                             .frame(height: 3)
                             .offset(y: 5)
-                            .foregroundColor(.white)
+                            .foregroundColor(onPrimary)
                         , alignment: .bottom
                     )
             }
             Text("Save your groceries by scanning your grocery receipt and get reminded on when to eat your purchased items!\nSwipe to delete from your list once eaten.")
                 .fontWeight(.medium)
-                .foregroundColor(.white)
+                .foregroundColor(onPrimary)
             Spacer()
             Spacer()
         }
@@ -159,14 +161,14 @@ extension OnboardingView {
             Text("What's your name?")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
-                .foregroundColor(.white)
+                .foregroundColor(onPrimary)
                     
             TextField("Your name here...", text: $name)
                 .font(.headline)
                 .frame(height: 55)
                 .padding(.horizontal)
-                .background(.white)
-                .foregroundColor(buttonColor)
+                .background(onPrimary)
+                .foregroundColor(onBackground)
                 .cornerRadius(20)
             Spacer()
             Spacer()
