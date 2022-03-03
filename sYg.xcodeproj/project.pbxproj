@@ -70,6 +70,7 @@
 		DBA3AC5827B6C83C008975C4 /* CornNotCutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC5727B6C83B008975C4 /* CornNotCutResponse.swift */; };
 		DBA3AC5A27B6DB01008975C4 /* ItemsHTTPManagerAsyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC5927B6DB01008975C4 /* ItemsHTTPManagerAsyncTests.swift */; };
 		DBA3AC5D27B6DD18008975C4 /* ProduceItemsDBAsyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC5C27B6DD18008975C4 /* ProduceItemsDBAsyncTests.swift */; };
+		DBA4365527D07CB60018A539 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA4365427D07CB60018A539 /* Launch Screen.storyboard */; };
 		DBA6EEA327868F58002E19AA /* MainUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA6EEA227868F58002E19AA /* MainUserView.swift */; };
 		DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C49277CC29600C5F783 /* MainViewModel.swift */; };
 		DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C4B277CC3AE00C5F783 /* Selector.swift */; };
@@ -174,9 +175,11 @@
 		DBA3AC5727B6C83B008975C4 /* CornNotCutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornNotCutResponse.swift; sourceTree = "<group>"; };
 		DBA3AC5927B6DB01008975C4 /* ItemsHTTPManagerAsyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsHTTPManagerAsyncTests.swift; sourceTree = "<group>"; };
 		DBA3AC5C27B6DD18008975C4 /* ProduceItemsDBAsyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItemsDBAsyncTests.swift; sourceTree = "<group>"; };
+		DBA4365427D07CB60018A539 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		DBA6EEA227868F58002E19AA /* MainUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUserView.swift; sourceTree = "<group>"; };
 		DBB25C49277CC29600C5F783 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DBB25C4B277CC3AE00C5F783 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
+		DBB4990A27D030A400E08D8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptSelector.swift; sourceTree = "<group>"; };
 		DBFFD78827CDE39600584484 /* DateToEatPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToEatPopup.swift; sourceTree = "<group>"; };
 		DBFFD78C27CE769600584484 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -313,7 +316,7 @@
 				DBFFD79027CE853700584484 /* Misc */,
 				DBA6EEA127868F2F002E19AA /* Main */,
 				DBA6EEA027868F27002E19AA /* Help */,
-				DBA6EE9F27868F1E002E19AA /* Settings */,
+				DBA6EE9F27868F1E002E19AA /* User */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 		DB78D9E52753301900EDA0E1 /* sYg */ = {
 			isa = PBXGroup;
 			children = (
+				DBB4990A27D030A400E08D8F /* Info.plist */,
 				DB3B7EF027C0B67200C5D3DE /* Tools */,
 				DB3B7EEF27C0B66500C5D3DE /* Legacy */,
 				DB833FD727C08C29004BF14D /* Settings */,
@@ -568,13 +572,14 @@
 			path = ItemsHTTPManagerTests;
 			sourceTree = "<group>";
 		};
-		DBA6EE9F27868F1E002E19AA /* Settings */ = {
+		DBA6EE9F27868F1E002E19AA /* User */ = {
 			isa = PBXGroup;
 			children = (
 				DBFFD78C27CE769600584484 /* SettingsView.swift */,
+				DB09F80F27CB432D0022C034 /* UrgentToEatView.swift */,
 				DBFFD78E27CE76DA00584484 /* OnboardingView.swift */,
 			);
-			path = Settings;
+			path = User;
 			sourceTree = "<group>";
 		};
 		DBA6EEA027868F27002E19AA /* Help */ = {
@@ -591,7 +596,6 @@
 				DB297AD827A0F36500EAA3C3 /* Legacy */,
 				DB293A5B2795C98600001DA6 /* UserItemViews */,
 				DBA6EEA227868F58002E19AA /* MainUserView.swift */,
-				DB09F80F27CB432D0022C034 /* UrgentToEatView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -601,6 +605,7 @@
 			children = (
 				DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */,
 				DBFFD79527CEC6DE00584484 /* BackButton.swift */,
+				DBA4365427D07CB60018A539 /* Launch Screen.storyboard */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB78D9EE2753301C00EDA0E1 /* Preview Assets.xcassets in Resources */,
+				DBA4365527D07CB60018A539 /* Launch Screen.storyboard in Resources */,
 				DB78D9EB2753301C00EDA0E1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1010,16 +1016,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sYg/Preview Content\"";
 				DEVELOPMENT_TEAM = B3TW88R4V6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = sYg/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = sYg;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Would you like to use the camera to scan the receipt?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1040,16 +1050,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sYg/Preview Content\"";
 				DEVELOPMENT_TEAM = B3TW88R4V6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = sYg/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = sYg;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Would you like to use the camera to scan the receipt?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
