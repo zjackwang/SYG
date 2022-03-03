@@ -49,6 +49,10 @@ class MainViewModel: ObservableObject {
     @Published var showConfirmationAlert: Bool = false
     @Published var error: Error?
     
+    // Loading circle
+    @Published var showProgressDialog: Bool = false
+    @Published var progressMessage = "Working..."
+    
     /*
      * MARK: Receipt Analysis Functions
      */
@@ -164,6 +168,7 @@ class MainViewModel: ObservableObject {
             }
             // Schedule reminders for each added item
             EatByReminderManager.instance.bulkScheduleReminders(for: ScannedItemViewModel.shared.scannedItems)
+            self.showProgressDialog.toggle()
             self.showConfirmationAlert.toggle()
             
         }
@@ -187,6 +192,10 @@ class MainViewModel: ObservableObject {
      * OUTPUT: Boolean, whether the subroutine validated the URL
      */
     func analyzeImage(receipt: UIImage?) -> Bool {
+        DispatchQueue.main.async {
+            self.showProgressDialog.toggle()
+        }
+        
         // Validate URL
         guard let postUrl = URL(string: "\(self.endpoint)formrecognizer/v2.1/prebuilt/receipt/analyze")
         else {
