@@ -7,9 +7,6 @@
 
 import CoreData
 
-/*
- * TODO: Description
- */
 class ScannedItemViewModel: ObservableObject {
     
     /*
@@ -66,6 +63,18 @@ class ScannedItemViewModel: ObservableObject {
      */
     func getNumberScannedItems() -> Int {
         return scannedItems.count
+    }
+    
+    /*
+     * Get item at offset
+     * Input: IndexSet offset
+     */
+    func getItemAtOffset(at offsets: IndexSet) -> ScannedItem? {
+        guard let index = offsets.first else {
+            print("FAULT: Invalid IndexSet for removal-index was not first!")
+            return nil
+        }
+        return scannedItems[index]
     }
     
     /*

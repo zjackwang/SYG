@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DB09F81027CB432D0022C034 /* UrgentToEatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB09F80F27CB432D0022C034 /* UrgentToEatView.swift */; };
+		DB2108D027D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2108CF27D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift */; };
 		DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */; };
 		DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */; };
 		DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */; };
@@ -42,7 +43,6 @@
 		DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D252784F70900EEEC09 /* DocumentResult.swift */; };
 		DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78D9E62753301900EDA0E1 /* sYgApp.swift */; };
 		DB78D9EB2753301C00EDA0E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */; };
-		DB78D9EE2753301C00EDA0E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB78D9ED2753301C00EDA0E1 /* Preview Assets.xcassets */; };
 		DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */; };
 		DB7E9B2D27B5F935001A937A /* sYgTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B2C27B5F935001A937A /* sYgTests.swift */; };
 		DB7E9B3427B5FA41001A937A /* ItemMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B3327B5FA41001A937A /* ItemMatcherTests.swift */; };
@@ -109,6 +109,7 @@
 
 /* Begin PBXFileReference section */
 		DB09F80F27CB432D0022C034 /* UrgentToEatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrgentToEatView.swift; sourceTree = "<group>"; };
+		DB2108CF27D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift"; sourceTree = "<group>"; };
 		DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionEvaluator.swift; sourceTree = "<group>"; };
 		DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatByReminderManager.swift; sourceTree = "<group>"; };
 		DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date - DateFormatExtension.swift"; sourceTree = "<group>"; };
@@ -144,7 +145,6 @@
 		DB78D9E32753301900EDA0E1 /* sYg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sYg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB78D9E62753301900EDA0E1 /* sYgApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sYgApp.swift; sourceTree = "<group>"; };
 		DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DB78D9ED2753301C00EDA0E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMatcherFactory.swift; sourceTree = "<group>"; };
 		DB7E9B2A27B5F935001A937A /* sYgTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sYgTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7E9B2C27B5F935001A937A /* sYgTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sYgTests.swift; sourceTree = "<group>"; };
@@ -226,6 +226,7 @@
 			children = (
 				DB25C19C27C59C1200DBEBB2 /* EatByReminderManager.swift */,
 				DB25C19E27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift */,
+				DB2108CF27D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift */,
 			);
 			path = LocalNotifications;
 			sourceTree = "<group>";
@@ -427,17 +428,8 @@
 				DB45EA72277BF74B001BA6C2 /* ViewModels */,
 				DB78D9E62753301900EDA0E1 /* sYgApp.swift */,
 				DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */,
-				DB78D9EC2753301C00EDA0E1 /* Preview Content */,
 			);
 			path = sYg;
-			sourceTree = "<group>";
-		};
-		DB78D9EC2753301C00EDA0E1 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				DB78D9ED2753301C00EDA0E1 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		DB7E9B1C27B5686B001A937A /* ItemMatcher */ = {
@@ -745,7 +737,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB78D9EE2753301C00EDA0E1 /* Preview Assets.xcassets in Resources */,
 				DBA4365527D07CB60018A539 /* Launch Screen.storyboard in Resources */,
 				DB78D9EB2753301C00EDA0E1 /* Assets.xcassets in Resources */,
 			);
@@ -827,6 +818,7 @@
 				DB623D092783AA7A00EEEC09 /* AnalyzedReceipt.swift in Sources */,
 				DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */,
 				DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */,
+				DB2108D027D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift in Sources */,
 				DBFFD78F27CE76DA00584484 /* OnboardingView.swift in Sources */,
 				DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */,
 				DB623D172783B18000EEEC09 /* URLSessionDataTaskProtocol.swift in Sources */,

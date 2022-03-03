@@ -31,9 +31,6 @@ struct MainUserView: View {
     private let primary: Color = Color.DarkPalette.primary
     private let secondary: Color = Color.DarkPalette.secondary
     
-    // Loading circle
-    @State private var showProgressDialog = false
-    @State private var progressMessage = ""
     
     var body: some View {
         NavigationView {
@@ -70,6 +67,18 @@ struct MainUserView: View {
                             Text(cameraError.message)
                         }
                 )
+                .onTapGesture {
+                    // Testing
+                    let date: Date = Date(timeIntervalSinceNow: 5)
+                    let sivm = ScannedItemViewModel.shared
+                    let scannedItems: [ScannedItem] = [
+                        sivm.addRandomScannedItem(dateToRemind: date),
+                        sivm.addRandomScannedItem(dateToRemind: date),
+                        sivm.addRandomScannedItem(dateToRemind: date)
+                    ]
+                    
+                    EatByReminderManager.instance.bulkScheduleReminders(for: scannedItems)
+                }
                 // User prompt confirmation of Receipt photo
                 ScannedReceiptPopover(showPopover: $showScannedReceipt)
                     .padding([.top], 2)
@@ -79,7 +88,8 @@ struct MainUserView: View {
                         removal: .move(edge: .leading)))
                     
                 // Progress Dialog
-                ProgressDialog(show: $showProgressDialog, message: $progressMessage)
+                ProgressDialog(show: $mvm.showProgressDialog, message: $mvm.progressMessage)
+                    .ignoresSafeArea()
             }
             // Confirmation of successful scan + item matching
             .alert(isPresented: $mvm.showConfirmationAlert) {
