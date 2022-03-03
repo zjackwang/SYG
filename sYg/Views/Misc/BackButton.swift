@@ -9,13 +9,14 @@ import SwiftUI
 
 struct BackButton: View {
     
-    @Binding var showSheet: Bool
+    @Binding var show: Bool
     
     var body: some View {
         Image(systemName: "arrowshape.turn.up.left")
             .font(.headline)
             .onTapGesture {
-                showSheet.toggle()
+                print("Debug >>> Toggling sheet")
+                show.toggle()
             }
     }
 }

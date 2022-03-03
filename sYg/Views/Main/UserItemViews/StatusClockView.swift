@@ -25,17 +25,12 @@ struct StatusClockView: View {
     let today: Date = Date.now
     var body: some View {
         let timeToExpiration: TimeInterval = today.distance(to: dateToRemind)
-        Button {
-            print("DEBUG >>> Toggling!")
-            showPopup.toggle()
-        } label: {
-            Image(systemName: "clock.arrow.circlepath")
-                .font(.system(size: 15))
-                .foregroundColor(
-                    timeToExpiration <= redStatus ? quaternary : timeToExpiration <= yellowStatus ? tertiary : secondary
-                )
-                .shadow(color: background, radius: 3)
-        }
+        Image(systemName: "clock.arrow.circlepath")
+            .font(.system(size: 15))
+            .foregroundColor(
+                timeToExpiration <= redStatus ? quaternary : timeToExpiration <= yellowStatus ? tertiary : secondary
+            )
+            .shadow(color: background, radius: 3)
     }
 }
 

@@ -81,7 +81,7 @@ struct PopupDisplay: View {
     }
 }
 
-struct DateToEatPopup_Previews: PreviewProvider {
+struct PopOvers_Previews: PreviewProvider {
     static var previews: some View {
         PopupDisplay()
     }

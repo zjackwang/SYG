@@ -10,9 +10,10 @@
 import SwiftUI
 
 struct MainUserView: View {
+    // View Model
     @StateObject private var mvm = MainViewModel.shared
 
-    // For Popups
+    // For Sheets
     @State private var selectReceipt: Bool = false
     @State private var showScannedReceipt: Bool = false
     @State private var showSettings: Bool = false
@@ -41,50 +42,15 @@ struct MainUserView: View {
                 background
                     .ignoresSafeArea()
 
-                // Foreground
+                // Content
                 UserItemListView()
-                // Upper toolbar
+                // Top toolbar
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
-                        HStack(spacing: 15) {
-                            Image("icon")
-                                .frame(maxWidth: 10)
-                                .padding(20)
-                            Text("EatThat!")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(onBackground)
-                        }
+                        IconBrand
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        // Scan Receipts
-                        Image(systemName: "plus.app")
-                            .foregroundColor(onBackground)
-                            .onTapGesture {
-                                self.selectReceipt = true
-                            }
-                            .confirmationDialog(Text("Scan Receipt"), isPresented: $selectReceipt) {
-                                Button {
-                                    mvm.source = .camera
-                                    mvm.showReceiptSelector()
-                                } label: {
-                                    Text("Scan Receipt")
-                                }
-                                Button  {
-                                    mvm.source = .library
-                                    mvm.showReceiptSelector()
-                                } label: {
-                                    Text("Choose From Library")
-                                }
-                            }
-                        
-                        // For now a testing button
-                        Image(systemName: "slider.horizontal.3")
-                            .foregroundColor(onBackground)
-                            .onTapGesture {
-                                showSettings.toggle()
-                            }
-                           .padding()
+                        ToolbarButtons
                     }
                 }
                 // Receipt Selector
@@ -106,9 +72,12 @@ struct MainUserView: View {
                 )
                 // User prompt confirmation of Receipt photo
                 ScannedReceiptPopover(showPopover: $showScannedReceipt)
-                    .padding(.top, 45)
+                    .padding([.top], 2)
                     .offset(y: showScannedReceipt ? 0 : UIScreen.main.bounds.height)
-                    .animation(.spring(response: 0.5, dampingFraction: 1.0, blendDuration: 1.0))
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)))
+                    
                 // Progress Dialog
                 ProgressDialog(show: $showProgressDialog, message: $progressMessage)
             }
@@ -133,61 +102,11 @@ struct MainUserView: View {
                                )
                         )
             }
+            // Settings
             .sheet(isPresented: $showSettings,
                    content: {
                 SettingsView(show: $showSettings)
             })
-
-        }
-        
-    }
-        
-}
-
-struct ScannedReceiptPopover: View {
-    @Binding var showPopover: Bool
-    @StateObject private var mvm = MainViewModel.shared
-    @StateObject private var pvm = ProduceViewModel.shared
-
-    var body: some View {
-        ZStack {
-            ZStack (alignment: .topLeading){
-                // Background
-                Color.gray
-                    .ignoresSafeArea()
-                // Foreground
-                Button {
-                    showPopover.toggle()
-                } label: {
-                    Image(systemName: "xmark")
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
-                        .padding(20)
-                }
-            }
-            VStack {
-                // Receipt
-                Image (uiImage: mvm.receipt ?? UIImage(named: "placeholder")!)
-                    .resizable()
-                    .frame(width: 300, height: 300, alignment: .bottom)
-                    .background(.gray)
-                // Confirmation
-                if let receipt = mvm.receipt{
-                    Button {
-                        if !mvm.analyzeImage(receipt: receipt) {
-                            // Handle error, show popup TODO
-                            mvm.imageAnalysisError()
-                        }
-                        showPopover.toggle()
-                    } label: {
-                        Text("Confirm Image")
-                            .foregroundColor(.white)
-                            .frame(width: 300, height: 100)
-                            .cornerRadius(25)
-                    }
-                    
-                }
-            }
         }
     }
 }
@@ -197,3 +116,127 @@ struct MainUserView_Previews: PreviewProvider {
         MainUserView()
     }
 }
+
+// MARK: ENUMS
+
+extension MainUserView {
+    enum MainViewStates {
+        case home
+    }
+}
+
+
+// MARK: FUNCTION
+
+extension MainUserView {
+    
+    private var IconBrand: some View {
+        HStack(spacing: 15) {
+            Image("icon")
+                .frame(maxWidth: 10)
+                .padding(20)
+            Text("EatThat!")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(onBackground)
+        }
+    }
+    
+    private var ToolbarButtons: some View {
+        HStack {
+            // Scan Receipts
+            Image(systemName: "plus.app")
+                .foregroundColor(onBackground)
+                .onTapGesture {
+                    self.selectReceipt.toggle()
+                }
+                .confirmationDialog(Text("Scan Receipt"), isPresented: $selectReceipt) {
+                    Button {
+                        mvm.source = .camera
+                        mvm.showReceiptSelector()
+                    } label: {
+                        Text("Scan Receipt")
+                    }
+                    Button  {
+                        mvm.source = .library
+                        mvm.showReceiptSelector()
+                    } label: {
+                        Text("Choose From Library")
+                    }
+                }
+            // Settings
+            Image(systemName: "slider.horizontal.3")
+                .foregroundColor(onBackground)
+                .onTapGesture {
+                    print("Debug >>> Toggling settings")
+                    showSettings.toggle()
+                }
+                .padding()
+        }
+    }
+}
+
+struct ScannedReceiptPopover: View {
+    @Binding var showPopover: Bool
+    @StateObject private var mvm = MainViewModel.shared
+    @StateObject private var pvm = ProduceViewModel.shared
+    
+    // Color Palette
+    private let background: Color = Color.DarkPalette.background
+    private let onBackground: Color = Color.DarkPalette.onBackground
+    private let primary: Color = Color.DarkPalette.primary
+    private let secondary: Color = Color.DarkPalette.secondary
+
+    var body: some View {
+        ZStack {
+            ZStack (alignment: .topLeading){
+                // Background
+                primary
+                    .ignoresSafeArea()
+                // Foreground
+                BackButton(show: $showPopover)
+                    .font(.largeTitle)
+                    .foregroundColor(onBackground)
+                    .frame(width: 100, height: 100)
+            }
+            VStack {
+                // Receipt
+                Image (uiImage: mvm.receipt ?? UIImage(named: "placeholder")!)
+                    .resizable()
+                    .frame(width: 300, height: 300, alignment: .center)
+                    .background(
+                        Rectangle()
+                            .fill(secondary)
+                            .frame(width: 315, height: 315)
+                            .cornerRadius(5)
+                    )
+                    .padding([.bottom], 50)
+
+                // Confirmation
+                if let receipt = mvm.receipt{
+                    Button {
+                        if !mvm.analyzeImage(receipt: receipt) {
+                            // Handle error, show popup TODO
+                            mvm.imageAnalysisError()
+                        }
+                        withAnimation {
+                            showPopover.toggle()
+                        }
+                    } label: {
+                        Text("Confirm Image")
+                            .foregroundColor(onBackground)
+                            .background(
+                                Rectangle()
+                                    .fill(secondary)
+                                    .frame(width: 300, height: 50, alignment: .bottom)
+                                    .cornerRadius(15)
+                            )
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+

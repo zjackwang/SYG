@@ -21,7 +21,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    BackButton(showSheet: $show)
+                    BackButton(show: $show)
                 }
             }
         }

@@ -14,7 +14,7 @@ struct UserItemView: View {
     @State private var showEatPopup = false
 
     private let onPrimary: Color = Color.DarkPalette.onPrimary
-
+    private let animationDuration = 0.45
     let columns = [
                 GridItem(.flexible()),
                 GridItem(.flexible()),
@@ -37,6 +37,11 @@ struct UserItemView: View {
                         dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.dayTimeInterval),
                         showPopup: $showEatPopup
                     )
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: animationDuration)) {
+                                showEatPopup.toggle()
+                            }
+                        }
                 }
             }
             
@@ -46,8 +51,11 @@ struct UserItemView: View {
                     message: item?.dateToRemind?.getFormattedDate(format: TimeConstants.reminderDateFormat) ?? "unknown"
                 )
                     .transition(.move(edge: .trailing))
-                // TODO: change to withAnimation
-                    .animation(.spring(response: 0.3, dampingFraction: 1.0, blendDuration: 1.0))
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: animationDuration)) {
+                            showEatPopup.toggle()
+                        }
+                    }
             }
             
         }
