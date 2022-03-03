@@ -59,22 +59,12 @@ struct OnboardingView: View {
                     MainUserView()
                         // Our core data managed object context into env.
                         .environment(\.managedObjectContext, ScannedItemViewModel.shared.container.viewContext)
-                        // Log
                         .onAppear {
-                            UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-                            
-                            // TODO: make async
-                            //  show spinning loading when fetching
-                            // fetch items
+                            // TODO: make async & show spinning loading when fetching
+                            // Fetch items
                             let _ = pvm.getAllItemsInfo()
-                            
-                            // request access for notifications if not given already
+                            // Request access for notifications if not given already
                             EatByReminderManager.instance.requestAuthorization()
-                            
-                            // MARK: DEV TESTING
-                            ScannedItemViewModel.shared.resetContainer()
-                            EatByReminderManager.instance.cancelAllNotifications()
-                            UIApplication.shared.applicationIconBadgeNumber = 0
                         }
                         .transition(transition)
                 }
@@ -130,8 +120,10 @@ extension OnboardingView {
             Spacer()
             HStack(spacing: 15) {
                 Image("icon")
-                    .frame(maxWidth: 10)
-                    .padding(20)
+                    .frame(width: 50, height: 50)
+                    .background(background)
+                    .cornerRadius(15)
+                    .padding([.top], 7)
                 Text("EatThat!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -147,6 +139,7 @@ extension OnboardingView {
             Text("Save your groceries by scanning your grocery receipt and get reminded on when to eat your purchased items!\nSwipe to delete from your list once eaten.")
                 .fontWeight(.medium)
                 .foregroundColor(onPrimary)
+                .padding([.leading, .trailing], 10)
             Spacer()
             Spacer()
         }
