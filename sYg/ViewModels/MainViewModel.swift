@@ -126,18 +126,8 @@ class MainViewModel: ObservableObject {
             // Must have scanned a name
             if let name = item.valueObject["Name"]?.valueString {
                 var dateToRemind: Date = dateOfPurchase
-//                let produceInfo: ProduceItem? = pvm.getProduceInfo(for: name)
-//                if let produceInfo = produceInfo {
-//                    // perfect match
-//                    dateToRemind += produceInfo.DaysInFridge * 24 * 60 * 60
-//                } else {
                 // find best match
                 dateToRemind += itemMatcher.getExpirationTimeInterval(for: name)
-//                }
-
-                // DEBUGGING
-                print("name: \(name)")
-                print("- date to remind: \(dateToRemind)")
                 
                 scannedItems.append(
                     UserItem(
@@ -147,7 +137,6 @@ class MainViewModel: ObservableObject {
                     )
                 )
             } else {
-                // TODO: Msg saying not all were scanned (Manual entry?)
                 continue
             }
         }
@@ -220,7 +209,6 @@ class MainViewModel: ObservableObject {
             case .success(let data):
                 DispatchQueue.main.async {
                     // Update UI
-                    // TODO prob don't need this in future views (TESTING)
                     self?.workingLocation = String(decoding: data, as: UTF8.self)
                     self?.receipt = nil
                 }
@@ -247,10 +235,6 @@ class MainViewModel: ObservableObject {
                         
                         switch result {
                         case .success(let data):
-                            // DEBUGGING
-//                            print(self?.decodeAnalyzedReceiptDataToJSON(data))
-                            // DONE DEBUGGING
-                            
                             let analyzedReceiptResponse = self?.decodeAnalyzedReceipt(data)
                             
                             // Bad JSON or Bad response
@@ -269,7 +253,6 @@ class MainViewModel: ObservableObject {
                             status = analyzedReceipt.status
                             if status == "succeeded" {
                                 print("Succeeded")
-//                                print(analyzedReceipt)
                                 DispatchQueue.main.async {
                                     self?.scannedReceipt = analyzedReceipt
                                     self?.imageAnalyzedSuccesfully()

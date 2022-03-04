@@ -20,14 +20,10 @@ enum Category: String {
 }
 
 /*
- * Concept: Given a string - scanned item name, return expiration timeinterval
- *  how?
- *    - get the category of the scanned item
- *    - get the correct item view model
- *          - how to get correct item view model? pass in? hm... TODO Create a itemViewModel factory also 
- *    - match scanned item to item view model items
+ * Given a string - scanned item name, return expiration timeinterval
  */
 class ItemMatcher {
+
     /*
      * MARK: Initialization
      */
@@ -36,24 +32,13 @@ class ItemMatcher {
     private init() {}
     
     private var pvm = ProduceViewModel.shared
-    
-    /*
-     *
-     */
+
     func getExpirationTimeInterval(for scannedItem: String) -> TimeInterval {
         let category = matchItemCategory(for: scannedItem)
         
         switch category {
         case .produce:
             return self.matchScannedItemProduce(for: scannedItem)
-//        case .dairy:
-//
-//        case .meatPoultrySeafood:
-//            <#code#>
-//        case .condiments:
-//            <#code#>
-//        case .drinks:
-//            <#code#>
         default:
             return self.matchScannedItemProduce(for: scannedItem)
         }
@@ -65,36 +50,18 @@ class ItemMatcher {
      * Output: Enum ItemCategory, one of the categories defined
      */
     private func matchItemCategory(for scannedItem: String) -> Category {
-        // TODO, observe tropes for each category on receipt
         return .produce
     }
-    
-    
-    /*
-     * Matching scanned item name to a produce item
-     *  Considerations
-     *   - Convert all lower case
-     *   - Match each produce item to name
-     *      -> Which ever match has most letters wins out (specification)
-     *      -> Split string by " " and match all each one (could be out of order)
-     *   - How to handle abbreviations?
-     *      -> Manually handle them?
-     *          => Separate DB... make it manually for now
-     *      -> For now, then email HEB guy
-     */
     
     /*
      * Match one scanned item to item and exp date in produce DB
      * Input: String, item name; ProduceViewModel, interface to produce DB
      * Output: TimeInterval, Days til expiration/eat-by
      */
-    
-    // TODO use factory to get the viewmodel instead of passing it
     private func matchScannedItemProduce(for scannedItem: String) -> TimeInterval {
         let produceItems = pvm.getAllItemsInfo()
         
         // Capitalize words
-//        let capitalizedItems: [String.SubSequence] = scannedItem.lowercased().capitalized.split(separator: " ")
         let capitalizedItem: String = scannedItem.lowercased().capitalized
         
         /*
@@ -107,7 +74,6 @@ class ItemMatcher {
         let closestMatch = linearMatcher(for: capitalizedItem, produceItems: produceItems)
         
         guard let closestMatch = closestMatch else {
-            // TODO: default 4 days. could be customizable in settings
             return 4 * 24 * 60 * 60
         }
         
@@ -127,12 +93,4 @@ class ItemMatcher {
         
         return closestMatch
     }
-    
-    /*
-     * Create one for each category
-     */
-    
-//    private func matchScannedItemDairy(for scannedItem: String, using produceViewModel: ProduceViewModel) -> TimeInterval {
-
-    
 }

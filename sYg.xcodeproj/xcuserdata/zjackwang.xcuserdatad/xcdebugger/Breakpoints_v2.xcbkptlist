@@ -206,8 +206,8 @@
             filePath = "sYg/ViewModels/MainViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
             landmarkName = "encodeAnalyzedReceiptToString(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "sYg/Tools/LocalNotifications/EatByReminderManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "scheduleReminder(for:at:)"
             landmarkType = "7">
          </BreakpointContent>

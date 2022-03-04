@@ -60,7 +60,6 @@ struct OnboardingView: View {
                         // Our core data managed object context into env.
                         .environment(\.managedObjectContext, ScannedItemViewModel.shared.container.viewContext)
                         .onAppear {
-                            // TODO: make async & show spinning loading when fetching
                             // Fetch items
                             let _ = pvm.getAllItemsInfo()
                             // Request access for notifications if not given already
@@ -72,7 +71,9 @@ struct OnboardingView: View {
             //buttons
             VStack {
                 Spacer()
-                bottomButton
+                if onboardingState != .signedIn {
+                    bottomButton
+                }
             }
             .padding(30)
         }
@@ -161,7 +162,7 @@ extension OnboardingView {
                 .frame(height: 55)
                 .padding(.horizontal)
                 .background(onPrimary)
-                .foregroundColor(onBackground)
+                .foregroundColor(background)
                 .cornerRadius(20)
             Spacer()
             Spacer()

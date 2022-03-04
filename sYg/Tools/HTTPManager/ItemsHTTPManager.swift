@@ -10,6 +10,7 @@ import SwiftUI
 
 
 class ItemsHTTPManager <T: URLSessionProtocol>: HTTPManager<T> {
+    
     /*
      * INPUT: name: String name of the item (optional)
      *        isCut: Boolean, whether the item is cut or not (optional)

@@ -49,24 +49,6 @@ class EatByReminderManager: NSObject {
         }
     }
     
-    
-//    /*
-//     * Do we have permissions?
-//     * Output: [Bool] authorizationStatus, whether alerts, sounds, and badges are enabled
-//     */
-//    func getAuthorizationStatuses() -> [Bool] {
-//        var authorizationStatus: [Bool] = []
-//        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: {
-//            settings in
-//
-//            authorizationStatus.append(settings.alertSetting == UNNotificationSetting.enabled)
-//            authorizationStatus.append(settings.soundSetting == UNNotificationSetting.enabled)
-//            authorizationStatus.append(settings.badgeSetting == UNNotificationSetting.enabled)
-//        })
-//        return authorizationStatus
-//    }
-    
-    
     /*
      * Schedule one or more new notifications for a list of scanned items
      * Input: [ScannedItem] items - the list of to-be-eaten items
@@ -109,43 +91,11 @@ class EatByReminderManager: NSObject {
      * Pre-conditions: item MUST exist in core data
      */
     func removeScheduledReminderByName(for item: ScannedItem) {
-        print("DEBUG >>> Removing item \(item.debugDescription)")
-        
         do {
             try removeScheduledReminder(for: item)
         } catch (let error) {
             print("FAULT: \((error as! EatByReminderError).localizedDescription)")
         }
-    }
-    
-    /*
-     * Delete a scheduled notification when item has been eaten AND no other item is scheduled
-     *  for that date
-     * Input: String identifier, the id of the item eaten and taken off notification schedule
-     * Pre-conditions: id must exist in requests
-     */
-//    func removeScheduledReminderID(for identifier: String) {
-//        do {
-//            try removeScheduledReminder(for: identifier)
-//        } catch (let error) {
-//            print("FAULT: \((error as! EatByReminderError).localizedDescription)")
-//        }
-//    }
-    
-    /*
-     * Update existing request to a different date
-     * Note: synchronized
-     * Input: String oldIdentifier, the old date id
-     *        String newIdentiifer, the new date id
-     */
-    func updateRequestDate(oldIdentifier: String, newIdentifier: String) {
-        // Lock
-        mutex.lock()
-
-        // TODO: TODO
-
-        // Unlock
-        mutex.unlock()
     }
     
     /*
@@ -174,9 +124,6 @@ class EatByReminderManager: NSObject {
             throw EatByReminderError("ScannedItem does not have a reminder date.")
         }
         let formattedDateToEat = dateToEat.getFormattedDate(format: TimeConstants.reminderDateFormat)
-        print("DEBUG >>> Requests outstanding: \(existingRequestDateDict.debugDescription)")
-        print("DEBUG >>> Date to schedule: \(formattedDateToEat.debugDescription)")
-        
         var request: UNNotificationRequest?
         
         // Request date doesn't exist
@@ -424,31 +371,5 @@ class EatByReminderManager: NSObject {
     private func updateScheduledReminder(for identifier: String, updatedRequest: UNNotificationRequest) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         UNUserNotificationCenter.current().add(updatedRequest)
-    }
-    
-    /*
-     * MARK: TESTING
-     */
-    func getNumExistingRequests() -> Int {
-        print("DEBUG >>> fetching number of existing requests")
-
-        let reqs = retrieveExistingRequests()
-        return reqs.capacity
-    }
-    
-    func scheduleReminderSecFromNow(timeFromNow: TimeInterval) {
-        let testDate = Date(timeIntervalSinceNow: timeFromNow)
-        let scannedItem = ScannedItemViewModel.shared.createScannedItem(name: "TEST1", dateToRemind: testDate)
-        
-        do {
-            let _ = try scheduleReminder(for: scannedItem)
-        } catch (let error) {
-            print("FAULT: could not schedule item \(scannedItem.description) bc error \((error as! EatByReminderError).localizedDescription)")
-        }
-    }
-
-    func cancelAllNotifications() {
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 }

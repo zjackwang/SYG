@@ -15,7 +15,6 @@ struct BackButton: View {
         Image(systemName: "arrowshape.turn.up.left")
             .font(.headline)
             .onTapGesture {
-                print("Debug >>> Toggling sheet")
                 show.toggle()
             }
     }

@@ -86,7 +86,6 @@ class ProduceViewModel: ObservableObject {
                 switch result {
                 case .success(let produceItems):
                     // Add to cache
-                    // TODO: Add isCut?
                     ProduceItemCache.shared.cache(produceItems[0], for: name)
                     self?.items.append(produceItems[0])
                     print("Produce items cached")
@@ -103,7 +102,6 @@ class ProduceViewModel: ObservableObject {
     }
     
     /*
-     * TODO: Should fire off interrupt to main thread (popup) 
      * What happens when API Request returns failure?
      */
     func handleError(error: Error) {

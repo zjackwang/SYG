@@ -67,18 +67,6 @@ struct MainUserView: View {
                             Text(cameraError.message)
                         }
                 )
-                .onTapGesture {
-                    // Testing
-                    let date: Date = Date(timeIntervalSinceNow: 5)
-                    let sivm = ScannedItemViewModel.shared
-                    let scannedItems: [ScannedItem] = [
-                        sivm.addRandomScannedItem(dateToRemind: date),
-                        sivm.addRandomScannedItem(dateToRemind: date),
-                        sivm.addRandomScannedItem(dateToRemind: date)
-                    ]
-                    
-                    EatByReminderManager.instance.bulkScheduleReminders(for: scannedItems)
-                }
                 // User prompt confirmation of Receipt photo
                 ScannedReceiptPopover(showPopover: $showScannedReceipt)
                     .padding([.top], 2)
@@ -178,7 +166,6 @@ extension MainUserView {
             Image(systemName: "slider.horizontal.3")
                 .foregroundColor(onBackground)
                 .onTapGesture {
-                    print("Debug >>> Toggling settings")
                     showSettings.toggle()
                 }
                 .padding()
@@ -226,7 +213,6 @@ struct ScannedReceiptPopover: View {
                 if let receipt = mvm.receipt{
                     Button {
                         if !mvm.analyzeImage(receipt: receipt) {
-                            // Handle error, show popup TODO
                             mvm.imageAnalysisError()
                         }
                         withAnimation {
