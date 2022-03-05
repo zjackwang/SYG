@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("name") var name: String?
     @Binding var show: Bool
-    
     var body: some View {
         NavigationView {
             List {
@@ -28,6 +26,16 @@ struct SettingsView: View {
     }
 }
 
+class SettingsViewModel {
+    // Singleton
+    static let shared = SettingsViewModel()
+    private init() {}
+    
+    // User Defaults
+    @AppStorage("name") var currentUserName: String = ""
+    @AppStorage("signed_in") var isUserSignedIn: Bool = false
+}
+
 extension SettingsView {
     
     private var InfoSection: some View {
@@ -36,7 +44,7 @@ extension SettingsView {
                 Text("Name:")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text(name ?? "?")
+                Text(SettingsViewModel.shared.currentUserName)
             }
             HStack {
                 Text("Scanned Items:")

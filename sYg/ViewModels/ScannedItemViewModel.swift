@@ -27,7 +27,7 @@ class ScannedItemViewModel: ObservableObject {
             if let error = error {
                 fatalError("Error: \(error.localizedDescription)")
             } else {
-                print("Successfully loaded scanned items container! :)")
+                print("INIT: Successfully loaded scanned items container! :)")
             }
         }
         
@@ -35,7 +35,7 @@ class ScannedItemViewModel: ObservableObject {
             result in
             switch(result) {
             case .failure(let error):
-                print("Error requesting saved items: \(error.localizedDescription)")
+                print("FAULT: Error requesting saved items: \(error.localizedDescription)")
             case .success(_):
                 break
             }
@@ -81,7 +81,7 @@ class ScannedItemViewModel: ObservableObject {
      * Add list of newly scanned items to persistent container
      * Input: List of UserItem objs
      */
-    func addScannedItems(userItems: [UserItem], completionHandler: @escaping ([(Result<ScannedItem, Error>, String)]) -> () = { _ in }) {
+    func addScannedItems(userItems: [UserItem], completionHandler: @escaping ([(Result<ScannedItem, Error>, String)]?) -> () = { _ in }) {
         var results: [(Result<ScannedItem, Error>, String)] = []
         for userItem in userItems {
             addScannedItem(userItem: userItem) {
@@ -94,7 +94,7 @@ class ScannedItemViewModel: ObservableObject {
                 }
             }
         }
-        completionHandler(results)
+        completionHandler(results.count > 0 ? results : nil)
     }
     
     /*
@@ -178,7 +178,6 @@ class ScannedItemViewModel: ObservableObject {
             completionHandler(.failure(ReceiptScanningError("ERROR removing item!")))
             return
         }
-//        for index in offsets {
         let item = scannedItems[index]
         print("INFO: Removing item \(item.debugDescription)")
         
@@ -191,7 +190,7 @@ class ScannedItemViewModel: ObservableObject {
         
         container.viewContext.delete(item)
         scannedItems.remove(at: index)
-//        }
+
         saveScannedItems {
             result in
             switch (result) {

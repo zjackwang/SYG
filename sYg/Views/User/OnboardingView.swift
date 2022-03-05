@@ -35,11 +35,10 @@ struct OnboardingView: View {
     private let surface: Color = Color.DarkPalette.surface
     private let onBackground: Color = Color.DarkPalette.onBackground
     private let onPrimary: Color = Color.DarkPalette.onPrimary
-
     
-    // App storage
-    @AppStorage("name") var currentUserName: String?
-    @AppStorage("signed_in") var currentUserSignedIn: Bool = false
+//    // App storage
+//    @AppStorage("signed_in") var isUserSignedIn: Bool = false
+//    @AppStorage("name") var currentUserName: String = ""
     
     // View models
     @StateObject var pvm = ProduceViewModel.shared
@@ -195,17 +194,19 @@ extension OnboardingView {
                     showAlert(title: "Your name must be at least 3 characters long.")
                     return
                 }
+                signIn()
                 onboardingState = .signedIn
             case .signedIn:
-                signIn()
+//                signIn()
+                break
             }
         }
     }
     
     func signIn() {
-        currentUserName = name
+        SettingsViewModel.shared.currentUserName = name
         withAnimation(.spring()) {
-            currentUserSignedIn = true
+            SettingsViewModel.shared.isUserSignedIn = true
         }
     }
     

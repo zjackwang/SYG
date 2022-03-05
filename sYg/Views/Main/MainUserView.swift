@@ -55,6 +55,7 @@ struct MainUserView: View {
                     ReceiptSelector(receipt: $mvm.receipt, sourceType: mvm.source == .library ? .photoLibrary : .camera, showPopover: $showScannedReceipt)
                         .ignoresSafeArea()
                 }
+                // TODO Merge with other error?
                 .alert("Scanning Error",
                        isPresented: $mvm.showCameraAlert,
                        presenting: mvm.cameraError,
@@ -81,16 +82,20 @@ struct MainUserView: View {
             }
             // Confirmation of successful scan + item matching
             .alert(isPresented: $mvm.showConfirmationAlert) {
-                var message: Text?
-                if let error = mvm.error {
-                    message = Text("Error: \(error.localizedDescription)")
+                var msgString: String?
+                if let error = mvm.error as? ReceiptScanningError {
+                    msgString = "Error: \(error.localizedDescription)"
+                } else if let error = mvm.error {
+                    msgString = "Error: \(error.localizedDescription)"
                 } else {
-                    message = Text("Success!")
+                    msgString = "Successfully scanned!"
                 }
+                
+                print(msgString ?? "")
                 
                 return Alert(
                         title: Text("Scanning Result"),
-                        message: message!,
+                        message: Text(msgString ?? ""),
                         dismissButton:
                                 .default(
                                     Text("Ok"),
@@ -212,9 +217,7 @@ struct ScannedReceiptPopover: View {
                 // Confirmation
                 if let receipt = mvm.receipt{
                     Button {
-                        if !mvm.analyzeImage(receipt: receipt) {
-                            mvm.imageAnalysisError()
-                        }
+                        mvm.analyzeImage(receipt: receipt) 
                         withAnimation {
                             showPopover.toggle()
                         }

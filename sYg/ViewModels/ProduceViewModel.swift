@@ -36,7 +36,7 @@ class ProduceViewModel: ObservableObject {
         } else {
             let group = DispatchGroup()
             group.enter()
-            print("INFO: Fetching all produce items from remote")
+            print("INIT: Fetching all produce items from remote")
             // get all items from API
             var returnedItems: [ProduceItem]?
             itemsHTTPManager.fetchProduceItem(for: nil) { [weak self]

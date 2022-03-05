@@ -36,8 +36,7 @@ class AzureHTTPManager <T: URLSessionProtocol>: HTTPManager<T> {
             case .success:
                 if let httpResponse = response as? HTTPURLResponse,
                    let operationLocation = httpResponse.value(forHTTPHeaderField: "operation-location")  {
-                    // return operation location somehow, to be used by get... in completion block...
-                    print("Azure form recognizer image POST request suceeded!\nWorking at \(operationLocation)")
+                    print("HTTP: Azure form recognizer image POST request suceeded!\n\tWorking at \(operationLocation)")
                     completionBlock(.success(Data(operationLocation.utf8)))
                 }
             case .failure(let error):

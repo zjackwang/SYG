@@ -26,7 +26,7 @@ class EatByReminderManager: NSObject {
     private override init() {}
 
     // Track urgent to-eats
-    @AppStorage("numUrgent") private var numUrgentToEats = 0
+    @AppStorage("numUrgent") var numUrgentToEats: Int = 0
     
     public func updateIconBadge() {
         UIApplication.shared.applicationIconBadgeNumber = numUrgentToEats
@@ -45,7 +45,7 @@ class EatByReminderManager: NSObject {
                 print("UNAuthorization Error: \(error.localizedDescription)")
                 completionHandler(.failure(error))
             }
-            print("Successfully authorized user notifications!")
+            print("INIT: Successfully authorized user notifications!")
         }
     }
     

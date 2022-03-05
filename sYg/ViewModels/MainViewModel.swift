@@ -13,6 +13,7 @@ import UIKit
  * Once image is confirmed, sends to Azure for analysis and returns results 
  */
 class MainViewModel: ObservableObject {
+    
     /*
      * MARK: Initialization
      */
@@ -38,11 +39,12 @@ class MainViewModel: ObservableObject {
     
     // Azure variables
     private let azureHTTPManager: AzureHTTPManager = AzureHTTPManager(session: URLSession.shared)
-    private let endpoint: String = "https://\(ProcessInfo.processInfo.environment["Azure_Endpoint"]!).cognitiveservices.azure.com/"
+//    private let endpoint: String = ""
+//    private let key: String = ""
+    private let endpoint: String = "https://\(ProcessInfo.processInfo.environment["Azure_Endpoint"] ?? "").cognitiveservices.azure.com/"
     private let key: String = ProcessInfo.processInfo.environment["Azure_Key"]!
     
     // Returned from Azure
-    @Published var workingLocation: String?
     @Published var scannedReceipt: AnalyzedReceipt?
     
     // Confirmation
@@ -52,6 +54,7 @@ class MainViewModel: ObservableObject {
     // Loading circle
     @Published var showProgressDialog: Bool = false
     @Published var progressMessage = "Working..."
+    
     
     /*
      * MARK: Receipt Analysis Functions
@@ -78,109 +81,111 @@ class MainViewModel: ObservableObject {
      *  - adds to user defaults via scanned items view model
      */
     func imageAnalyzedSuccesfully() {
-        print("Image analyzed successfully. Now adding to user's persistent storage...")
-        // Should have legit receipt
+        print("INFO: Image analyzed successfully. Now validating receipt.")
+        
+        /*
+         * Validate returned receipt
+         */
+        
         guard
-            let scannedReceipt = scannedReceipt
+            let scannedReceipt = scannedReceipt,
+            let analyzeResults = scannedReceipt.analyzeResult
         else {
-            do {
-                print("NO SCANNED RECEIPT")
-                throw ReceiptScanningError("Callback started before receipt fully scanned!")
-            } catch (let error) {
-                handleError(error: error)
-            }
+            handleError(error: ReceiptScanningError("Invalid receipt! Please scan again!"))
+            return
+        }
+        
+        let documentResults = analyzeResults.documentResults
+        let fields: [String: Field] = documentResults[0].fields
+        
+        guard
+            let items = fields["Items"],
+            let itemsArray = items.valueArray
+        else {
+            handleError(error: ReceiptScanningError("Invalid receipt! Please scan again."))
             return
         }
     
-        let results: [DocumentResult]? = scannedReceipt.analyzeResult?.documentResults
-        let fields: [String: Field]? = results?[0].fields
-//            let merchantNameString: String? = fields?["MerchantName"]?.valueString
-        let transactionDateString: String = fields?["TransactionDate"]?.valueDate ?? DateFormatter.localizedString(from: Date.now, dateStyle: .medium, timeStyle: .medium)
-        let itemsArray: [AnalyzedItem]? = fields?["Items"]?.valueArray
+        let transactionDateString: String = fields["TransactionDate"]?.valueDate ?? DateFormatter.localizedString(from: Date.now, dateStyle: .medium, timeStyle: .medium)
         
-        guard
-            let itemsArray = itemsArray
-        else {
-            do {
-                print("NO ITEMS ARRAY")
-                throw ReceiptScanningError("Receipt Scanner response does not contain items array!")
-            } catch (let error) {
-                handleError(error: error)
-            }
-            return
-        }  
+        print("INFO: Receipt validated. Now adding to user's persistent storage...")
+        
+        /*
+         * Matching Items with respective expiration dates
+         */
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "YYYY-MM-DD"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC-6")
+        
         // Reminder date from API
         let dateOfPurchase: Date = dateFormatter.date(from: transactionDateString) ?? Date.now
-        print("transaction date: \(dateOfPurchase)")
-      
+        print("INFO: Transaction date: \(dateOfPurchase)")
+        
         // Get expiration time interval
         let itemMatcher = ItemMatcher.factory
-
         var scannedItems: [UserItem] = []
+        
         for item in itemsArray {
-            // Must have scanned a name
-            if let name = item.valueObject["Name"]?.valueString {
-                var dateToRemind: Date = dateOfPurchase
-                // find best match
-                dateToRemind += itemMatcher.getExpirationTimeInterval(for: name)
-                
-                scannedItems.append(
-                    UserItem(
-                        Name: name,
-                        DateOfPurchase: dateOfPurchase,
-                        DateToRemind: dateToRemind
-                    )
+            let name = item.valueObject["Name"]?.valueString ?? "Unknown"
+            var dateToRemind: Date = dateOfPurchase
+            
+            // find best match
+            dateToRemind += itemMatcher.getExpirationTimeInterval(for: name)
+            
+            scannedItems.append(
+                UserItem(
+                    Name: name,
+                    DateOfPurchase: dateOfPurchase,
+                    DateToRemind: dateToRemind
                 )
-            } else {
-                continue
-            }
+            )
         }
-        print("\(scannedItems.count) items scanned and matched.")
+        
+        /*
+         * SUCCESS!
+         */
+        
+        print("INFO: \(scannedItems.count) items scanned and matched.")
+        
+//        var saveResults: [(Result<ScannedItem, Error>, String)]?
+        
         DispatchQueue.main.async {
             // Add to user's displayed list
             ScannedItemViewModel.shared.addScannedItems(userItems: scannedItems) {
                 results in
-                results.forEach {
-                    result, name in
-                    switch result {
-                    case .failure(let error):
-                        print("Error \(error) saving \(name) to persistent storage")
-                    case .success:
-                        break
+                // Schedule reminders for each added item
+                EatByReminderManager.instance.bulkScheduleReminders(for: ScannedItemViewModel.shared.scannedItems)
+                
+                // Check for error saving items
+                if let results = results {
+                    var errorMsg = "Could not save/schedule these items\n"
+                    for (result, name) in results {
+                        switch result {
+                        case .failure(let error):
+                            errorMsg += "\t\(name): \(error.localizedDescription)"
+                        case .success:
+                            break
+                        }
                     }
+                    self.error = EatByReminderError(errorMsg)
                 }
             }
-            // Schedule reminders for each added item
-            EatByReminderManager.instance.bulkScheduleReminders(for: ScannedItemViewModel.shared.scannedItems)
+            
             self.showProgressDialog.toggle()
             self.showConfirmationAlert.toggle()
-            
         }
     }
-    
-    /*
-     * Callback for the analyzeImage function, upon error
-     *  - popover in mainuser view
-     * INPUT: error
-     */
-    func imageAnalysisError() {
-        
-    }
-    
+
     /*
      * Upload receipt image to Azure for analysis
-     * Upon upload via POST request,
-     * Must continuously send GET request for analyzed result as Azure model works
-     * Azure Endpoint docs: https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/how-to-guides/try-sdk-rest-api?pivots=programming-language-rest-api#analyze-receipts
+     *  Upon upload via POST request,
+     *  Must continuously send GET request for analyzed result as Azure model works
+     *  Azure Endpoint docs: https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/how-to-guides/try-sdk-rest-api?pivots=programming-language-rest-api#analyze-receipts
      * INPUT: UIImage optional, the scanned receipt
-     * OUTPUT: Boolean, whether the subroutine validated the URL
      */
-    func analyzeImage(receipt: UIImage?) -> Bool {
+    func analyzeImage(receipt: UIImage?) {
         DispatchQueue.main.async {
             self.showProgressDialog.toggle()
         }
@@ -188,49 +193,102 @@ class MainViewModel: ObservableObject {
         // Validate URL
         guard let postUrl = URL(string: "\(self.endpoint)formrecognizer/v2.1/prebuilt/receipt/analyze")
         else {
-            print("Invalid URL endpoint!")
-            do {
-                throw ReceiptScanningError("Bad URL endpoint for Receipt Scanner!")
-            } catch (let error){
-                handleError(error: error)
-            }
-            return false
+            handleError(error: ReceiptScanningError("Bad URL endpoint for Receipt Scanner!"))
+            return
         }
         
         // Async pool
-        let group = DispatchGroup()
-        group.enter()
+        var group: DispatchGroup? = DispatchGroup()
         
-        // Upload Receipt via POST
-        azureHTTPManager.post(url: postUrl, image: receipt!, key: self.key) {
+        /*
+         * POST Request
+         *  Uploading receipt
+         *  Asynchronous
+         *  TIMEOUT: 5s
+         */
+        let TIMEOUT: DispatchTime = .now() + 10  // 5s
+        
+        var workingLocation: String?
+        var postError: Error? = ReceiptScanningError("POST request timeout")
+        
+        print("INFO: Image POST Request to Azure")
+        group?.enter()
+        self.azureHTTPManager.post(url: postUrl, image: receipt!, key: self.key) {
             [weak self] result in
             
             switch result {
             case .success(let data):
+                print("INFO: Image POST success")
+                workingLocation = String(decoding: data, as: UTF8.self)
+                
+                // POST finished successfully => no error
+                postError = nil
                 DispatchQueue.main.async {
                     // Update UI
-                    self?.workingLocation = String(decoding: data, as: UTF8.self)
                     self?.receipt = nil
                 }
-                break
             case .failure(let error):
-                self?.handleError(error: error)
-                break
+                print("DEBUG >>> POST error: \(error)")
+                // POST finished unsuccessfully => set error
+                postError = error
             }
-            group.leave()
+            // POST completionHandler finished async
+            group?.leave()
         }
         
-        // GET Request for analyzed receipt
+        // Timeout Check
+        DispatchQueue.main.asyncAfter(deadline: TIMEOUT) {
+            // No GET after TIMEOUT seconds
+            group = nil
+            
+            // If POST did not finish
+            if let postError = postError {
+                self.handleError(error: postError)
+            }
+        }
+        
+        /*
+         * GET Request
+         *  Retrieve receipt analysis.
+         *  Asynchronous, triggers after POST Request
+         *  TIMEOUT: 25 maximum requests
+         *              5s each request
+         */
+        let MAX_TRIES = 25
+        let REQ_INTERVAL: UInt32 = 1000000 // 1000000us = 1s
+        let SUCCESS = "succeeded"
+
         var status: String = ""
         var count = 0
-        group.notify(queue: DispatchQueue.global()) {
-            print("Waiting for working location to update")
-            while self.workingLocation == nil {}
+        group?.notify(queue: DispatchQueue.global()) {
+        
+            // POST returned error
+            if let postError = postError {
+                self.handleError(error: postError)
+                return
+            }
+
+            // Must have valid analysis URL in Azure (redundant)
+            guard
+                let workingLocation = workingLocation
+            else {
+                self.handleError(error: ReceiptScanningError("No Azure working location found"))
+                return
+            }
+            
+            guard
+                let url = URL(string: workingLocation)
+            else {
+                self.handleError(error: ReceiptScanningError("Invalid Azure working location"))
+                return
+            }
+            
             // Loop GET requests, every second. 100 tries allowed
-            while status != "succeeded" && count < 100 {
-                print("Attempting to get results... try \(count)")
+            while status != SUCCESS && count < MAX_TRIES {
+                print("INFO: Attempting to get results... try \(count)")
+                
                 DispatchQueue.global().sync {
-                    self.azureHTTPManager.get(url: URL(string: self.workingLocation!)!, key: self.key) {
+                    self.azureHTTPManager.get(url: url, key: self.key) {
                         [weak self] result in
                         
                         switch result {
@@ -241,38 +299,33 @@ class MainViewModel: ObservableObject {
                             guard
                                 let analyzedReceipt = analyzedReceiptResponse
                             else {
-                                do {
-                                    throw ReceiptScanningError("Bad response from scanning API")
-                                } catch (let error) {
-                                    self?.handleError(error: error)
-                                }
+                                self?.handleError(error: ReceiptScanningError("Bad response from scanning API"))
                                 return
                             }
                             
                             // Update status, exit if successful
                             status = analyzedReceipt.status
-                            if status == "succeeded" {
-                                print("Succeeded")
+                            if status == SUCCESS {
+                                print("INFO: Analysis succeeded")
+                                print("\tAnalyzed receipt: \(analyzedReceipt)")
                                 DispatchQueue.main.async {
                                     self?.scannedReceipt = analyzedReceipt
                                     self?.imageAnalyzedSuccesfully()
                                 }
                                 return
                             }
-                            break
                         case .failure(let error):
-                            self?.handleError(error: error)
-                            break
+                            DispatchQueue.main.async {
+                                print("DEBUG >>> GET error: \(error.localizedDescription)")
+                                self?.handleError(error: error)
+                            }
                         }
-                        
                     }
                     count += 1
                 }
-                usleep(1000000)
+                usleep(REQ_INTERVAL)
             }
         }
-        
-        return true
     }
     
     /* Decode JSON Response. */
@@ -331,10 +384,12 @@ class MainViewModel: ObservableObject {
     }
     
     /*
-     * What happens when API Request returns failure?
+     * Display API Request failure
      */
     private func handleError(error: Error?) {
         DispatchQueue.main.async {
+            self.showConfirmationAlert.toggle()
+            self.showProgressDialog.toggle()
             self.error = error
         }
     }
