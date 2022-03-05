@@ -206,8 +206,8 @@
             filePath = "sYg/ViewModels/MainViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "encodeAnalyzedReceiptToString(_:)"
             landmarkType = "7">
          </BreakpointContent>

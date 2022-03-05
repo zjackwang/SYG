@@ -39,10 +39,8 @@ class MainViewModel: ObservableObject {
     
     // Azure variables
     private let azureHTTPManager: AzureHTTPManager = AzureHTTPManager(session: URLSession.shared)
-//    private let endpoint: String = ""
-//    private let key: String = ""
-    private let endpoint: String = "https://\(ProcessInfo.processInfo.environment["Azure_Endpoint"] ?? "").cognitiveservices.azure.com/"
-    private let key: String = ProcessInfo.processInfo.environment["Azure_Key"]!
+    private let endpoint: String = "https://\(Info.envVars?["Azure_Endpoint"] ?? "").cognitiveservices.azure.com/"
+    private let key: String = Info.envVars?["Azure_Key"] ?? ""
     
     // Returned from Azure
     @Published var scannedReceipt: AnalyzedReceipt?

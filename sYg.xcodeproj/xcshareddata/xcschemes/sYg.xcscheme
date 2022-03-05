@@ -84,12 +84,12 @@
          <EnvironmentVariable
             key = "Azure_Key"
             value = "9a5241847d8543ada6e6b77c3859eaf7"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "Azure_Endpoint"
             value = "sygreceiptrecognizer1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
