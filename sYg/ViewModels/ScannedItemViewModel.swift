@@ -201,7 +201,63 @@ class ScannedItemViewModel: ObservableObject {
             }
         }
     }
+    
+    
+    
+    /*
+     * Creating a scanned item from component attributes
+     */
+    func createScannedItem(name: String, purchaseDate: Date, remindDate: Date) -> ScannedItem {
+        let scannedItem = ScannedItem(context: container.viewContext)
+        scannedItem.name = name
+        scannedItem.dateOfPurchase = purchaseDate
+        scannedItem.dateToRemind = remindDate
         
+        return scannedItem
+    }
+    
+    func updateScannedItem(oldName: String, name: String, purchaseDate: Date, remindDate: Date) -> Bool {
+        // guards
+        let oldItem = scannedItems.first(where: {$0.name == oldName})
+        let oldRemindDate = oldItem?.dateToRemind ?? Date.now
+        
+        // Purchase date cannot be after
+        // 1. today
+        // 2. remind date
+        if purchaseDate > Date.now || purchaseDate > remindDate {
+            return false
+        }
+        
+        // Remind date cannot be before
+        // 1. today
+        // 2. purchase date
+        if purchaseDate < Date.now || purchaseDate <  oldRemindDate {
+            return false
+        }
+       
+        oldItem?.name = name
+        oldItem?.dateOfPurchase = purchaseDate
+        oldItem?.dateToRemind = remindDate
+
+        var returnedError: Error?
+        saveScannedItems {
+            result in
+            switch result {
+            case .failure(let error):
+                returnedError = error
+                return
+            case .success:
+                return
+            }
+        }
+        
+        if let error = returnedError {
+            print("FAULT: \(error.localizedDescription)")
+            return false
+        }
+        return true
+    }
+    
     /*
      * Save any changes to the persistent container
      * Note: Escaping NSError if failure, nothing if success

@@ -62,7 +62,7 @@ extension SettingsView {
                 Text("\(date.getFormattedDate(format: TimeConstants.hourFormat))")
             }
             HStack {
-                Text("Default expiration time interval")
+                Text("Default expiration time interval:")
                     .font(.headline)
                     .fontWeight(.semibold)
                 Text("\(SettingsViewModel.shared.defaultExpirationDays) days from purchase date")

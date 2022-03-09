@@ -174,6 +174,7 @@ extension MainUserView {
                     showSettings.toggle()
                 }
                 .padding()
+            
         }
     }
 }
