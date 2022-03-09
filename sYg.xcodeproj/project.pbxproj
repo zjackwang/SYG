@@ -17,11 +17,11 @@
 		DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */; };
 		DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A592795C92000001DA6 /* UserItem.swift */; };
 		DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB293A5E2795C9D700001DA6 /* UserItemListView.swift */; };
-		DB297ADA27A0FE0100EAA3C3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AD927A0FE0100EAA3C3 /* Settings.swift */; };
 		DB297ADF27A88BAA00EAA3C3 /* UserItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297ADE27A88BAA00EAA3C3 /* UserItemView.swift */; };
 		DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */; };
 		DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AE227A8E81200EAA3C3 /* Cache.swift */; };
 		DB297AE527A9E73F00EAA3C3 /* ItemsHTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB297AE427A9E73F00EAA3C3 /* ItemsHTTPManager.swift */; };
+		DB2C03A527D6EF5D006E058E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2C03A427D6EF5D006E058E /* SettingsViewModel.swift */; };
 		DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */; };
 		DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */; };
 		DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */; };
@@ -70,11 +70,11 @@
 		DB25C1A527C9621600DBEBB2 /* NSLockingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLockingExtension.swift; sourceTree = "<group>"; };
 		DB293A592795C92000001DA6 /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
 		DB293A5E2795C9D700001DA6 /* UserItemListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserItemListView.swift; path = ../../../../../../.Trash/UserItemListView.swift; sourceTree = "<group>"; };
-		DB297AD927A0FE0100EAA3C3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		DB297ADE27A88BAA00EAA3C3 /* UserItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemView.swift; sourceTree = "<group>"; };
 		DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusClockView.swift; sourceTree = "<group>"; };
 		DB297AE227A8E81200EAA3C3 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		DB297AE427A9E73F00EAA3C3 /* ItemsHTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsHTTPManager.swift; sourceTree = "<group>"; };
+		DB2C03A427D6EF5D006E058E /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanningErrors.swift; sourceTree = "<group>"; };
 		DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedItemViewModel.swift; sourceTree = "<group>"; };
 		DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProduceViewModel.swift; path = ../../../../SYG/sYg/sYg/ViewModels/ProduceViewModel.swift; sourceTree = "<group>"; };
@@ -184,6 +184,7 @@
 				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
 				DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */,
 				DBB25C49277CC29600C5F783 /* MainViewModel.swift */,
+				DB2C03A427D6EF5D006E058E /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -332,7 +333,6 @@
 		DB833FD727C08C29004BF14D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				DB297AD927A0FE0100EAA3C3 /* Settings.swift */,
 				DB833FD827C08C39004BF14D /* TimeConstants.swift */,
 			);
 			path = Settings;
@@ -480,6 +480,7 @@
 				DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */,
 				DB623D0E2783AC0400EEEC09 /* HTTPManagerProtocol.swift in Sources */,
 				DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */,
+				DB2C03A527D6EF5D006E058E /* SettingsViewModel.swift in Sources */,
 				DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */,
 				DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */,
 				DB623D102783AF3C00EEEC09 /* AzureHTTPManagerProtocol.swift in Sources */,
@@ -493,7 +494,6 @@
 				DB623D0B2783ABD300EEEC09 /* AzureHTTPManager.swift in Sources */,
 				DBA3AC4A27B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift in Sources */,
 				DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */,
-				DB297ADA27A0FE0100EAA3C3 /* Settings.swift in Sources */,
 				DB623D092783AA7A00EEEC09 /* AnalyzedReceipt.swift in Sources */,
 				DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */,
 				DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */,

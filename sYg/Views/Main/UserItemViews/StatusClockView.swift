@@ -9,10 +9,8 @@ import SwiftUI
 
 struct StatusClockView: View {
     var dateToRemind: Date
-    // reminder settings
-    // default is 2 days
-    var redStatus: TimeInterval = Settings.User.redClockInterval
-    var yellowStatus: TimeInterval = Settings.User.yellowClockInterval
+    
+    var svm = SettingsViewModel.shared
     
     @Binding var showPopup: Bool
     
@@ -28,7 +26,7 @@ struct StatusClockView: View {
         Image(systemName: "clock.arrow.circlepath")
             .font(.system(size: 15))
             .foregroundColor(
-                timeToExpiration <= redStatus ? quaternary : timeToExpiration <= yellowStatus ? tertiary : secondary
+                timeToExpiration <= svm.redClockInterval ? quaternary : timeToExpiration <= svm.yellowClockInterval ? tertiary : secondary
             )
             .shadow(color: background, radius: 3)
     }

@@ -28,6 +28,8 @@ class EatByReminderManager: NSObject {
     // Track urgent to-eats
     @AppStorage("numUrgent") var numUrgentToEats: Int = 0
     
+    private var svm = SettingsViewModel.shared
+    
     public func updateIconBadge() {
         UIApplication.shared.applicationIconBadgeNumber = numUrgentToEats
     }
@@ -55,11 +57,7 @@ class EatByReminderManager: NSObject {
      */
     func bulkScheduleReminders(for items: [ScannedItem]) {
         for item in items {
-            do {
-                let _ = try scheduleReminder(for: item)
-            } catch (let error) {
-                print("FAULT: Could not schedule item \(item.description) bc: \((error as! EatByReminderError).localizedDescription)")
-            }
+            let _ = scheduleReminderAtTime(for: item)
         }
     }
     
@@ -70,7 +68,7 @@ class EatByReminderManager: NSObject {
      * Output: UNNotificationRequest request, the newly scheduled notification request
      * Pre-condition: item MUST have a eat-by reminder date
      */
-    func scheduleReminder(for item: ScannedItem, at time: DateComponents = DateComponents(hour: 8)) -> UNNotificationRequest? {
+    func scheduleReminderAtTime(for item: ScannedItem, at time: DateComponents = DateComponents(hour: 8)) -> UNNotificationRequest? {
         // Default 8:00 AM
         print("INFO: Scheduling reminder at time \(time.description)")
         

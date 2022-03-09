@@ -9,11 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     @Binding var show: Bool
+    
+    var svm = SettingsViewModel.shared
+
     var body: some View {
         NavigationView {
             List {
                 InfoSection
-                ValuesSection
+                ReminderSettings
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Settings")
@@ -26,16 +29,7 @@ struct SettingsView: View {
     }
 }
 
-class SettingsViewModel {
-    // Singleton
-    static let shared = SettingsViewModel()
-    private init() {}
-    
-    // User Defaults
-    @AppStorage("name") var currentUserName: String = ""
-    @AppStorage("signed_in") var isUserSignedIn: Bool = false
-}
-
+// MARK: COMPONENTS
 extension SettingsView {
     
     private var InfoSection: some View {
@@ -59,25 +53,42 @@ extension SettingsView {
         }
     }
     
-    private var ValuesSection: some View {
+    private var ReminderSettings: some View {
         Section {
             HStack {
-                Text("Red Clock Interval:")
+                Text("Reminder hour:")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text("\(Int(Settings.User.redClockInterval / TimeConstants.dayTimeInterval)) days prior")
+                Text("\(date.getFormattedDate(format: TimeConstants.hourFormat))")
             }
             HStack {
-                Text("Yellow Clock Interval:")
+                Text("Default expiration time interval")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text("\(Int(Settings.User.yellowClockInterval / TimeConstants.dayTimeInterval)) days prior")
+                Text("\(SettingsViewModel.shared.defaultExpirationDays) days from purchase date")
+            }
+            HStack {
+                Text("Red Clock Shown:")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                Text("\(SettingsViewModel.shared.redClockDays) days prior")
+            }
+            HStack {
+                Text("Yellow Clock Shown:")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                Text("\(SettingsViewModel.shared.yellowClockDays) days prior")
             }
             
             
         } header: {
-            Text("Values")
+            Text("Reminder Settings")
         }
 
+    }
+
+    private var date: Date {
+        let dateComponent = DateComponents(hour: SettingsViewModel.shared.reminderHour)
+        return Calendar.current.date(from: dateComponent)!
     }
 }
