@@ -39,6 +39,7 @@
 		DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D252784F70900EEEC09 /* DocumentResult.swift */; };
 		DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78D9E62753301900EDA0E1 /* sYgApp.swift */; };
 		DB78D9EB2753301C00EDA0E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */; };
+		DB7BA23227D93F2200759932 /* EditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7BA23127D93F2200759932 /* EditSheetView.swift */; };
 		DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */; };
 		DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB833FD427C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld */; };
 		DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB833FD827C08C39004BF14D /* TimeConstants.swift */; };
@@ -93,6 +94,7 @@
 		DB78D9E32753301900EDA0E1 /* sYg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sYg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB78D9E62753301900EDA0E1 /* sYgApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sYgApp.swift; sourceTree = "<group>"; };
 		DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DB7BA23127D93F2200759932 /* EditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSheetView.swift; sourceTree = "<group>"; };
 		DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMatcherFactory.swift; sourceTree = "<group>"; };
 		DB833FD527C082BB004BF14D /* ScannedItemsDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScannedItemsDataModel.xcdatamodel; sourceTree = "<group>"; };
 		DB833FD827C08C39004BF14D /* TimeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConstants.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				DB293A5E2795C9D700001DA6 /* UserItemListView.swift */,
 				DB297ADE27A88BAA00EAA3C3 /* UserItemView.swift */,
 				DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */,
+				DB7BA23127D93F2200759932 /* EditSheetView.swift */,
 			);
 			path = UserItemViews;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 		DB3B7EF027C0B67200C5D3DE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				DB99D3F127F3EABB00C51B61 /* Cloudkit */,
 				DBD1318727D33445007BBA37 /* EnvVars.swift */,
 				DB25C1A227C9619900DBEBB2 /* Concurrency */,
 				DB25C19B27C59BEB00DBEBB2 /* LocalNotifications */,
@@ -338,6 +342,13 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DB99D3F127F3EABB00C51B61 /* Cloudkit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cloudkit;
+			sourceTree = "<group>";
+		};
 		DBA6EE9F27868F1E002E19AA /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +482,7 @@
 				DB623D1B2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift in Sources */,
 				DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */,
 				DBA3AC4527B6C026008975C4 /* HTTPManager.swift in Sources */,
+				DB7BA23227D93F2200759932 /* EditSheetView.swift in Sources */,
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */,
