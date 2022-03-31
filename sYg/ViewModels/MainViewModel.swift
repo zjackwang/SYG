@@ -136,7 +136,8 @@ class MainViewModel: ObservableObject {
                 UserItem(
                     Name: name,
                     DateOfPurchase: dateOfPurchase,
-                    DateToRemind: dateToRemind
+                    DateToRemind: dateToRemind,
+                    Category: .unknown
                 )
             )
         }
@@ -149,6 +150,7 @@ class MainViewModel: ObservableObject {
         
 //        var saveResults: [(Result<ScannedItem, Error>, String)]?
         
+        // TODO: Bring up confirmation first. USERITEM
         DispatchQueue.main.async {
             // Add to user's displayed list
             ScannedItemViewModel.shared.addScannedItems(userItems: scannedItems) {

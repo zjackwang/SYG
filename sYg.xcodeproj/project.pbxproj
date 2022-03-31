@@ -43,6 +43,14 @@
 		DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */; };
 		DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB833FD427C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld */; };
 		DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB833FD827C08C39004BF14D /* TimeConstants.swift */; };
+		DB99D3F327F3F02A00C51B61 /* CloudKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F227F3F02A00C51B61 /* CloudKitUtility.swift */; };
+		DB99D3F527F3F0AD00C51B61 /* CloudKitableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F427F3F0AD00C51B61 /* CloudKitableProtocol.swift */; };
+		DB99D3F827F3F1BC00C51B61 /* CloudItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F727F3F1BC00C51B61 /* CloudItem.swift */; };
+		DB99D3FA27F3F3B300C51B61 /* CloudKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F927F3F3B300C51B61 /* CloudKitViewModel.swift */; };
+		DB99D3FC27F4B30000C51B61 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */; };
+		DB99D3FE27F4BEB500C51B61 /* ConfirmButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3FD27F4BEB500C51B61 /* ConfirmButton.swift */; };
+		DB99D40327F5F3B200C51B61 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D40227F5F3B200C51B61 /* Category.swift */; };
+		DB99D40627F5F83900C51B61 /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D40527F5F83900C51B61 /* EditViewModel.swift */; };
 		DBA3AC4527B6C026008975C4 /* HTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC4427B6C026008975C4 /* HTTPManager.swift */; };
 		DBA3AC4727B6C09B008975C4 /* HTTPManager - HTTPManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC4627B6C09B008975C4 /* HTTPManager - HTTPManagerProtocol.swift */; };
 		DBA3AC4A27B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC4927B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift */; };
@@ -98,6 +106,14 @@
 		DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMatcherFactory.swift; sourceTree = "<group>"; };
 		DB833FD527C082BB004BF14D /* ScannedItemsDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScannedItemsDataModel.xcdatamodel; sourceTree = "<group>"; };
 		DB833FD827C08C39004BF14D /* TimeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConstants.swift; sourceTree = "<group>"; };
+		DB99D3F227F3F02A00C51B61 /* CloudKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUtility.swift; sourceTree = "<group>"; };
+		DB99D3F427F3F0AD00C51B61 /* CloudKitableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitableProtocol.swift; sourceTree = "<group>"; };
+		DB99D3F727F3F1BC00C51B61 /* CloudItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudItem.swift; sourceTree = "<group>"; };
+		DB99D3F927F3F3B300C51B61 /* CloudKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitViewModel.swift; sourceTree = "<group>"; };
+		DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
+		DB99D3FD27F4BEB500C51B61 /* ConfirmButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmButton.swift; sourceTree = "<group>"; };
+		DB99D40227F5F3B200C51B61 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		DB99D40527F5F83900C51B61 /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
 		DBA3AC4427B6C026008975C4 /* HTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPManager.swift; sourceTree = "<group>"; };
 		DBA3AC4627B6C09B008975C4 /* HTTPManager - HTTPManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPManager - HTTPManagerProtocol.swift"; sourceTree = "<group>"; };
 		DBA3AC4927B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AzureHTTPManager - AzureHTTPManagerProtocol.swift"; sourceTree = "<group>"; };
@@ -185,6 +201,7 @@
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DB99D40427F5F82C00C51B61 /* Edit */,
 				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
 				DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */,
 				DBB25C49277CC29600C5F783 /* MainViewModel.swift */,
@@ -209,6 +226,7 @@
 		DB45EA76277BF7A8001BA6C2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DB99D3F627F3F18E00C51B61 /* CloudModels */,
 				DB623D222784F53B00EEEC09 /* ReceiptModels */,
 				DB623D212784F52500EEEC09 /* DBModels */,
 				DBB25C4B277CC3AE00C5F783 /* Selector.swift */,
@@ -296,6 +314,7 @@
 		DB78D9E52753301900EDA0E1 /* sYg */ = {
 			isa = PBXGroup;
 			children = (
+				DB99D40127F5F3A800C51B61 /* Enums */,
 				DBB4990A27D030A400E08D8F /* Info.plist */,
 				DB3B7EF027C0B67200C5D3DE /* Tools */,
 				DB833FD727C08C29004BF14D /* Settings */,
@@ -345,8 +364,35 @@
 		DB99D3F127F3EABB00C51B61 /* Cloudkit */ = {
 			isa = PBXGroup;
 			children = (
+				DB99D3F227F3F02A00C51B61 /* CloudKitUtility.swift */,
+				DB99D3F427F3F0AD00C51B61 /* CloudKitableProtocol.swift */,
 			);
 			path = Cloudkit;
+			sourceTree = "<group>";
+		};
+		DB99D3F627F3F18E00C51B61 /* CloudModels */ = {
+			isa = PBXGroup;
+			children = (
+				DB99D3F727F3F1BC00C51B61 /* CloudItem.swift */,
+			);
+			path = CloudModels;
+			sourceTree = "<group>";
+		};
+		DB99D40127F5F3A800C51B61 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				DB99D40227F5F3B200C51B61 /* Category.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		DB99D40427F5F82C00C51B61 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				DB99D3F927F3F3B300C51B61 /* CloudKitViewModel.swift */,
+				DB99D40527F5F83900C51B61 /* EditViewModel.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 		DBA6EE9F27868F1E002E19AA /* User */ = {
@@ -372,6 +418,7 @@
 			children = (
 				DB293A5B2795C98600001DA6 /* UserItemViews */,
 				DBA6EEA227868F58002E19AA /* MainUserView.swift */,
+				DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -382,6 +429,7 @@
 				DBFFD78827CDE39600584484 /* PopOvers.swift */,
 				DBFFD79327CE8A2E00584484 /* ProgressDialog.swift */,
 				DBFFD79527CEC6DE00584484 /* BackButton.swift */,
+				DB99D3FD27F4BEB500C51B61 /* ConfirmButton.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -477,27 +525,33 @@
 				DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */,
 				DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */,
 				DB45EA78277BF7B5001BA6C2 /* ProduceItem.swift in Sources */,
+				DB99D3FE27F4BEB500C51B61 /* ConfirmButton.swift in Sources */,
 				DB297AE527A9E73F00EAA3C3 /* ItemsHTTPManager.swift in Sources */,
 				DBD1318827D33445007BBA37 /* EnvVars.swift in Sources */,
 				DB623D1B2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift in Sources */,
 				DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */,
+				DB99D3FC27F4B30000C51B61 /* ConfirmationView.swift in Sources */,
 				DBA3AC4527B6C026008975C4 /* HTTPManager.swift in Sources */,
 				DB7BA23227D93F2200759932 /* EditSheetView.swift in Sources */,
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
+				DB99D3FA27F3F3B300C51B61 /* CloudKitViewModel.swift in Sources */,
 				DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */,
 				DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */,
 				DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */,
 				DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */,
 				DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */,
 				DB623D0E2783AC0400EEEC09 /* HTTPManagerProtocol.swift in Sources */,
+				DB99D3F327F3F02A00C51B61 /* CloudKitUtility.swift in Sources */,
 				DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */,
 				DB2C03A527D6EF5D006E058E /* SettingsViewModel.swift in Sources */,
 				DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */,
 				DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */,
+				DB99D3F827F3F1BC00C51B61 /* CloudItem.swift in Sources */,
 				DB623D102783AF3C00EEEC09 /* AzureHTTPManagerProtocol.swift in Sources */,
 				DB09F81027CB432D0022C034 /* UrgentToEatView.swift in Sources */,
 				DBA6EEA327868F58002E19AA /* MainUserView.swift in Sources */,
+				DB99D3F527F3F0AD00C51B61 /* CloudKitableProtocol.swift in Sources */,
 				DB297ADF27A88BAA00EAA3C3 /* UserItemView.swift in Sources */,
 				DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */,
 				DBA3AC4727B6C09B008975C4 /* HTTPManager - HTTPManagerProtocol.swift in Sources */,
@@ -512,7 +566,9 @@
 				DB2108D027D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift in Sources */,
 				DBFFD78F27CE76DA00584484 /* OnboardingView.swift in Sources */,
 				DB293A5A2795C92000001DA6 /* UserItem.swift in Sources */,
+				DB99D40627F5F83900C51B61 /* EditViewModel.swift in Sources */,
 				DB623D172783B18000EEEC09 /* URLSessionDataTaskProtocol.swift in Sources */,
+				DB99D40327F5F3B200C51B61 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

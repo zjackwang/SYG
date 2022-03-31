@@ -45,9 +45,6 @@ struct UserItemView: View {
                         }
                 }
             }
-//            .onLongPressGesture(perform: {
-//                showEdit.toggle()
-//            })
             
             PopOverScreen(
                 title: "Eat By: ",
@@ -60,14 +57,6 @@ struct UserItemView: View {
                     }
                 }
                 .opacity(showEatPopup ? 1.0 : 0.0)
-            
-//            EditSheetView(
-//                show: $showEdit,
-//                nameText: item?.name ?? "unknown",
-//                purchaseDate: item?.dateOfPurchase ?? Date.now,
-//                remindDate: item?.dateToRemind ?? Date.now,
-//                oldItem: item)
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .listRowBackground(background)

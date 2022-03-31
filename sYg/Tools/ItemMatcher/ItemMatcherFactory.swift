@@ -8,18 +8,6 @@
 import Foundation
 
 /*
- * Categories of grocery items
- *  => only produce for now
- */
-enum Category: String {
-    case produce
-    case dairy
-    case meatPoultrySeafood
-    case condiments
-    case drinks
-}
-
-/*
  * Given a string - scanned item name, return expiration timeinterval
  */
 class ItemMatcher {

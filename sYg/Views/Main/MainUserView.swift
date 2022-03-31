@@ -55,7 +55,7 @@ struct MainUserView: View {
                     ReceiptSelector(receipt: $mvm.receipt, sourceType: mvm.source == .library ? .photoLibrary : .camera, showPopover: $showScannedReceipt)
                         .ignoresSafeArea()
                 }
-                // TODO Merge with other error?
+                // TODO: Merge with other error?
                 .alert("Scanning Error",
                        isPresented: $mvm.showCameraAlert,
                        presenting: mvm.cameraError,
@@ -79,6 +79,8 @@ struct MainUserView: View {
                 // Progress Dialog
                 ProgressDialog(show: $mvm.showProgressDialog, message: $mvm.progressMessage)
                     .ignoresSafeArea()
+                
+                // Confirmation
             }
             // Confirmation of successful scan + item matching
             .alert(isPresented: $mvm.showConfirmationAlert) {
@@ -129,7 +131,7 @@ extension MainUserView {
 }
 
 
-// MARK: FUNCTION
+// MARK: Components
 
 extension MainUserView {
     
@@ -223,16 +225,8 @@ struct ScannedReceiptPopover: View {
                             showPopover.toggle()
                         }
                     } label: {
-                        Text("Confirm Image")
-                            .foregroundColor(onBackground)
-                            .background(
-                                Rectangle()
-                                    .fill(secondary)
-                                    .frame(width: 300, height: 50, alignment: .bottom)
-                                    .cornerRadius(15)
-                            )
+                        ConfirmButtonLabel(text: "Confirm Image", height: 50, width: 300)
                     }
-                    
                 }
             }
         }

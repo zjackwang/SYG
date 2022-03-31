@@ -5,7 +5,6 @@
 //  Created by Jack Wang on 12/28/21.
 //
 
-import Foundation
 
 struct ProduceItem: Hashable, Codable {
     let Category: String
@@ -16,6 +15,7 @@ struct ProduceItem: Hashable, Codable {
     let DaysOnShelf: Double
     let DaysInFreezer: Double
     let Notes: String
+    
 }
 
 extension ProduceItem {
@@ -23,3 +23,4 @@ extension ProduceItem {
         return lhs.Item == rhs.Item && lhs.IsCut == rhs.IsCut && lhs.DaysInFridge == rhs.DaysInFridge
     }
 }
+

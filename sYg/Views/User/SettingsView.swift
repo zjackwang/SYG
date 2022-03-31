@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var show: Bool
+    @Binding var show: Bool // TODO: Back button needed?
     
     var svm = SettingsViewModel.shared
 

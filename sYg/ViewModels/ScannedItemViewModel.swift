@@ -165,7 +165,7 @@ class ScannedItemViewModel: ObservableObject {
     }
     
     /*
-     * Delete a scanned item entity via ScannedItem Object from teh persistent container
+     * Delete a scanned item entity via ScannedItem Object from the persistent container
      *
      * Input: IndexSet for entities to be deleted from scannedItems list
      *        Closure completionHandler,
@@ -271,5 +271,19 @@ class ScannedItemViewModel: ObservableObject {
                 completionHandler(.failure(error))
             }
         }
+    }
+    
+    // MARK: TESTING
+    
+    // NOTE: Does not schedule 
+    func addSampleItems() {
+        addScannedItems(userItems: UserItem.samples)
+    }
+    
+    func removeAllItems() {
+        for item in scannedItems {
+            container.viewContext.delete(item)
+        }
+        scannedItems = []
     }
 }
