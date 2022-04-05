@@ -37,5 +37,21 @@ class CategoryConverter {
             return "Drinks"
         }
     }
+    
+    static func fromRawValue(for rawValue: String) -> Category {
+        if rawValue == "Produce" {
+            return Category.produce
+        } else if rawValue == "Dairy" {
+            return Category.dairy
+        } else if rawValue == "Meat, Poultry, Seafood" {
+            return Category.meatPoultrySeafood
+        } else if rawValue == "Condiments" {
+            return Category.condiments
+        } else if rawValue == "Drinks" {
+            return Category.drinks
+        } else {
+            return Category.unknown
+        }
+    }
 }
 

@@ -5,6 +5,7 @@
 //  Created by Jack Wang on 4/3/22.
 //
 
+import SwiftUI
 import Combine
 
 class ConfirmationViewModel: ObservableObject {
@@ -20,6 +21,10 @@ class ConfirmationViewModel: ObservableObject {
     }
     
  
+    func deleteItem(item: UserItem) {
+        itemsToConfirm.removeAll(where: { $0.id == item.id })
+    }
+    
     // Once EditSheetView exits (saves), should get all info into user item
     //  and update the confirmation list of user items
     //  how to detect the sheet view exiting?

@@ -149,7 +149,6 @@ struct MainUserView: View {
                 }
                 .store(in: &cancellables)
             
-            var icloudname: String = ""
             CloudKitUtility.discoverUserIdentity()
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
@@ -161,10 +160,9 @@ struct MainUserView: View {
                     }
                     
                 } receiveValue: { name in
-                    icloudname = name
+                    print(name)
                 }
                 .store(in: &cancellables)
-            print("NAME: \(icloudname)")
         }
     }
 }

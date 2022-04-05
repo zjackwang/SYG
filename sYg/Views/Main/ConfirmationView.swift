@@ -31,13 +31,22 @@ struct ConfirmationView: View {
                     ForEach(cvm.itemsToConfirm, id: \.self) {
                         item in
                         ToConfirmItemRow(item: item)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button("Edit") {
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                                Button(role: .destructive) {
+                                    cvm.deleteItem(item: item)
+                                } label: {
+                                    Label("Delete", systemImage: "trash.fill")
+                                }
+                            })
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                Button{
                                     editID = item.id
                                     // set attributes in the edit view model
                                     evm.setItemFields(nameFromAnalysis: item.NameFromAnalysis, name: item.Name, purchaseDate: item.DateOfPurchase, remindDate: item.DateToRemind, category: item.Category)
                                     // Edit sheet for this item
                                     showEdit.toggle()
+                                } label: {
+                                    Label("Edit", systemImage: "pencil.circle")
                                 }
                                 .tint(.green)
                             }

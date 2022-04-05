@@ -14,7 +14,7 @@ class EditViewModel: ObservableObject {
     // Saved items
     @Published var scannedItems: [ScannedItem] = []
     
-    private var nameFromAnalysis: String = ""
+    @Published var nameFromAnalysis: String = ""
     @Published var nameText: String = ""
     @Published var nameTextIsValid: Bool = false
     @Published var nameTextCount: Int = 0
@@ -65,6 +65,7 @@ class EditViewModel: ObservableObject {
     }
     
     func setItemFields(nameFromAnalysis: String, name: String, purchaseDate: Date, remindDate: Date, category: Category) {
+        self.nameFromAnalysis = nameFromAnalysis
         self.nameText = name
         self.nameTextCount = name.count
         self.purchaseDate = purchaseDate

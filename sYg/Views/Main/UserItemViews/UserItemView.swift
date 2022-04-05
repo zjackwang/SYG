@@ -34,6 +34,7 @@ struct UserItemView: View {
                         .padding(.trailing, 20)
                         .foregroundColor(onPrimary)
                     
+                    // TODO: Refresh here 
                     StatusClockView(
                         dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.dayTimeInterval),
                         showPopup: $showEatPopup

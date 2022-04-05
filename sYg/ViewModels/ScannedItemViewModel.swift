@@ -106,6 +106,7 @@ class ScannedItemViewModel: ObservableObject {
      */
     func addScannedItem(userItem: UserItem, completionHandler: @escaping (Result<ScannedItem, Error>) -> () = { _ in }) {
         let scannedItem = ScannedItem(context: container.viewContext)
+        scannedItem.nameFromAnalysis = userItem.NameFromAnalysis
         scannedItem.name = userItem.Name
         scannedItem.dateOfPurchase = userItem.DateOfPurchase
         scannedItem.dateToRemind = userItem.DateToRemind
@@ -126,19 +127,26 @@ class ScannedItemViewModel: ObservableObject {
     }
     
     /*
-     * Delete a scanned item entity via ScannedItem Object from the persistent container and return its identifier
+     * Delete a scanned item entity via offset from the persistent container and return its identifier
      * Input: IndexSet for entities to be deleted from scannedItems list
-     *        completionHandler, returning identifier of removed item
      * Output: String identifier, a formatted version of the eat by date
      */
-    func removeScannedItem(at offsets: IndexSet) -> String? {
-        guard let index = offsets.first else {
-            print("FAULT: Invalid IndexSet for removal-index was not first!")
-            return nil
-        }
-        let item = scannedItems[index]
-        print("INFO: Removing from container item \(item.debugDescription)")
-        
+//    func removeScannedItem(at offsets: IndexSet) -> String? {
+//        guard let index = offsets.first else {
+//            print("FAULT: Invalid IndexSet for removal-index was not first!")
+//            return nil
+//        }
+//        let item = scannedItems[index]
+//        print("INFO: Removing from container item \(item.debugDescription)")
+//
+//        return removeScannedItem(index: index)
+//    }
+    /*
+     * Delete a scanned item entity via ScannedItem Object from the persistent container and return its identifier
+     * Input: ScannedItem item, item to be removed
+     * Output: String identifier, a formatted version of the eat by date
+     */
+    func removeScannedItem(item: ScannedItem) -> String? {
         guard
             let identifier = item.dateToRemind?.getFormattedDate(format: "yyyy-MM-dd")
         else {
@@ -146,6 +154,8 @@ class ScannedItemViewModel: ObservableObject {
             return nil
         }
         
+        guard let index = scannedItems.firstIndex(of: item) else { return nil }
+        scannedItems.remove(at: index)
         container.viewContext.delete(item)
 
         var isFailure = false
@@ -163,7 +173,7 @@ class ScannedItemViewModel: ObservableObject {
         if isFailure {
             return nil
         }
-        self.scannedItems.remove(at: index)
+        
         return identifier
     }
     
@@ -219,28 +229,26 @@ class ScannedItemViewModel: ObservableObject {
         return scannedItem
     }
     
-    func updateScannedItem(oldName: String, name: String, purchaseDate: Date, remindDate: Date) -> Bool {
+    
+    /*
+     * Update stored scanned item via UserItem struct returned from edit view
+     */
+    func updateScannedItem(item: UserItem) -> Bool {
         // guards
-        let oldItem = scannedItems.first(where: {$0.name == oldName})
-        let oldRemindDate = oldItem?.dateToRemind ?? Date.now
-        
-        // Purchase date cannot be after
-        // 1. today
-        // 2. remind date
-        if purchaseDate > Date.now || purchaseDate > remindDate {
+        print(item)
+        print(scannedItems)
+        guard
+            let oldItem = scannedItems.first(where: {$0.nameFromAnalysis  == item.NameFromAnalysis}),
+            let index = scannedItems.firstIndex(of: oldItem)
+
+        else {
             return false
         }
-        
-        // Remind date cannot be before
-        // 1. today
-        // 2. purchase date
-        if purchaseDate < Date.now || purchaseDate <  oldRemindDate {
-            return false
-        }
-       
-        oldItem?.name = name
-        oldItem?.dateOfPurchase = purchaseDate
-        oldItem?.dateToRemind = remindDate
+        print(oldItem)
+        oldItem.name = item.Name
+        oldItem.dateOfPurchase = item.DateOfPurchase
+        oldItem.dateToRemind = item.DateToRemind
+        scannedItems[index] = oldItem
 
         var returnedError: Error?
         saveScannedItems {

@@ -86,7 +86,6 @@ class CloudKitViewModel: ObservableObject {
                     } receiveValue: { success in
                     }
                     .store(in: &cancellables)
-
             } else {
                 // Not in cloud storage, add entire item
                 guard let cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeInFridge, daysOnShelf: nil, daysInFreezer: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil) else { continue }
