@@ -9,6 +9,7 @@ import Foundation
 
 struct UserItem: Identifiable, Codable {
     var id: String = UUID().uuidString
+    let NameFromAnalysis: String
     var Name: String
     var DateOfPurchase: Date
     var DateToRemind: Date
@@ -19,6 +20,7 @@ extension UserItem {
     
     init(from item: UserItem) {
         self.id = item.id
+        self.NameFromAnalysis = item.NameFromAnalysis
         self.Name = item.Name
         self.DateOfPurchase = item.DateOfPurchase
         self.DateToRemind = item.DateToRemind
@@ -65,14 +67,14 @@ extension UserItem: Hashable {
 
 extension UserItem {
     static let samples = [
-        UserItem(Name: "Apple", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow: 24 * 60 * 60), Category: .unknown),
-        UserItem(Name: "Banana", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
+        UserItem(NameFromAnalysis: "Apple", Name: "Apple", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow: 24 * 60 * 60), Category: .unknown),
+        UserItem(NameFromAnalysis: "Banana", Name: "Banana", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
                                                                                 3 * 24 * 60 * 60), Category: .produce),
-        UserItem(Name: "Clementine", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
+        UserItem(NameFromAnalysis: "Clementine", Name: "Clementine", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
                                                                                     7 * 24 * 60 * 60), Category: .produce),
-        UserItem(Name: "Grapefruit", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
+        UserItem(NameFromAnalysis: "Grapefruit", Name: "Grapefruit", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
                                                                                     14 * 24 * 60 * 60), Category: .produce),
-        UserItem(Name: "Dragonfruit", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
+        UserItem(NameFromAnalysis: "Dragonfruit", Name: "Dragonfruit", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
                                                                                     60 * 24 * 60 * 60), Category: .produce)
     ]
 }

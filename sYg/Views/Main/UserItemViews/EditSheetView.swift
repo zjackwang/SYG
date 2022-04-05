@@ -24,7 +24,6 @@ import Combine
 
 struct EditSheetView: View {
     @Binding var show: Bool
-    @Binding var id: String
 
     @StateObject private var vm = EditViewModel.shared
     
@@ -47,8 +46,8 @@ struct EditSheetView: View {
                 }
                 Button {
                     // save form
+                    vm.confirmed = true 
                     show.toggle()
-                    vm.updateUserItem(for: id)
                 } label: {
                     Text("Save")
                 }
@@ -59,6 +58,7 @@ struct EditSheetView: View {
     }
 }
 
+// MARK: COMPONENTS 
 extension EditSheetView {
     private var nameField: some View {
         TextField("Enter new item name", text: $vm.nameText)

@@ -6,37 +6,38 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ConfirmationView: View {
     @StateObject private var ckvm = CloudKitViewModel.shared
-    @StateObject private var vm = EditViewModel.shared
+    @StateObject private var sivm = ScannedItemViewModel.shared
+    @StateObject private var mvm = MainViewModel.shared
+    @StateObject private var evm = EditViewModel.shared
+    @StateObject private var cvm = ConfirmationViewModel.shared
+    
+    @Binding var show: Bool
     
     @State var showEdit = false
     @State var editID = ""
-    @State var showAlert = false
-    @State var alertText = ""
+    @State var cancellables = Set<AnyCancellable>()
     
     var body: some View {
-        
         ZStack {
             background
-                .opacity(0.75)
             VStack {
                 Spacer()
-                Text("Scanned Items Results")
-                    .font(.title)
-                    .foregroundColor(titleColor)
-                    .padding([.top], 50)
-                    
+                title
                 List {
-                    ForEach(vm.itemsToConfirm, id: \.self) {
+                    ForEach(cvm.itemsToConfirm, id: \.self) {
                         item in
-                        ScannedItemRow(item: item)
+                        ToConfirmItemRow(item: item)
                             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                 Button("Edit") {
+                                    editID = item.id
+                                    // set attributes in the edit view model
+                                    evm.setItemFields(nameFromAnalysis: item.NameFromAnalysis, name: item.Name, purchaseDate: item.DateOfPurchase, remindDate: item.DateToRemind, category: item.Category)
                                     // Edit sheet for this item
                                     showEdit.toggle()
-                                    editID = item.id
                                 }
                                 .tint(.green)
                             }
@@ -45,20 +46,22 @@ struct ConfirmationView: View {
                 .listStyle(.plain)
 
                 Button {
-                    // TODO: send over to main view model for saving to core data 
+                    ckvm.updateCloudDatabase(confirmedItems: cvm.itemsToConfirm)
+                    mvm.addConfirmedUserItems(confirmedItems: cvm.itemsToConfirm)
+                    show.toggle()
                 } label: {
                     ConfirmButtonLabel(text: "Confirm", height: 50, width: 300)
                 }
                 .padding([.bottom], 50)
-
             }
-            .overlay(EditSheetView(show: $showEdit, id: $editID))
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Edit Alert"), message: Text(alertText), dismissButton: .default(Text("Ok"), action: {
-                    showAlert.toggle()
-                }))
-            }
+            .overlay(overlay)
         }
+        .onAppear(perform: {
+            // create publisher and subscribe to edits
+            addEditViewSubscriber()
+        })
+        .opacity(show ? 1.0 : 0.0)
+        .navigationBarHidden(show)
     }
     
 }
@@ -73,20 +76,24 @@ extension ConfirmationView {
         Color.DarkPalette.onPrimary
     }
     
-    struct ScannedItemRow: View {
+    private var title: some View {
+        Text("Scanned Items Results")
+            .font(.title)
+            .foregroundColor(titleColor)
+            .padding([.top], 50)
+    }
+    
+    private var overlay: some View {
+        Group {
+            Spacer()
+            EditSheetView(show: $showEdit)
+            
+        }
+    }
+    
+    struct ToConfirmItemRow: View {
         @State var item: UserItem
-        
-        // Controls
-        @State private var editName: Bool = false
-        @State private var editCategory: Bool = false
-        @State private var editDateOfPurchase: Bool = false
-        @State private var editDateToRemind: Bool = false
 
-        @State private var newName: String = ""
-        @State private var newCategory: String = ""
-        @State private var newDateOfPurchase: Date = Date.now
-        @State private var newDateToRemind: Date = Date.now
-        
         // UI
         let columns = [
                     GridItem(.flexible()),
@@ -104,10 +111,6 @@ extension ConfirmationView {
                     .fontWeight(.semibold)
                     .padding(.leading, 10)
                     .foregroundColor(textColor)
-                    .opacity(editName ? 0.0: 1.0)
-                    .onLongPressGesture {
-                        editName.toggle()
-                    }
                 
                 Text(CategoryConverter.rawValue(given: item.Category))
                     .font(.subheadline)
@@ -136,23 +139,37 @@ extension ConfirmationView {
     }
 }
 
-
+// MARK: Functions
+extension ConfirmationView {
+    func addEditViewSubscriber() {
+        evm.$confirmed
+            .sink { isConfirmed in
+                if isConfirmed {
+                    cvm.updateUserItem(for: editID)
+                }
+            }
+            .store(in: &cancellables)
+    }
+}
 struct DisplayConfirmationView: View {
     @State var showView = false
 
     var body: some View {
-        VStack {
-            Button {
-                ScannedItemViewModel.shared.removeAllItems()
-                ScannedItemViewModel.shared.addSampleItems()
-                showView.toggle()
-            } label: {
-                Text("Show View")
+        ZStack {
+            VStack {
+                Button {
+                    ScannedItemViewModel.shared.removeAllItems()
+                    ScannedItemViewModel.shared.addSampleItems()
+                    showView.toggle()
+                } label: {
+                    Text("Show View")
+                }
             }
+                
+            ConfirmationView(show: $showView)
         }
-        .sheet(isPresented: $showView) {
-            ConfirmationView()
-        }
+        
+        
     }
 }
 struct ConfirmationSheetView_Previews: PreviewProvider {

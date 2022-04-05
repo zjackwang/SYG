@@ -24,6 +24,7 @@ class MainViewModel: ObservableObject {
     // View models
     private var sivm = ScannedItemViewModel.shared
     private var pvm = ProduceViewModel.shared
+    private var cvm = ConfirmationViewModel.shared
     
     // Receipt to display for confirmation
     @Published var receipt: UIImage?
@@ -45,18 +46,21 @@ class MainViewModel: ObservableObject {
     // Returned from Azure
     @Published var scannedReceipt: AnalyzedReceipt?
     
-    // Confirmation
-    @Published var showConfirmationAlert: Bool = false
-    @Published var error: Error?
-    
     // Loading circle
     @Published var showProgressDialog: Bool = false
     @Published var progressMessage = "Working..."
+
+    // Confirmation View
+    @Published var showConfirmationView: Bool = false
+    
+    // Confirmation of success
+    @Published var showConfirmationAlert: Bool = false
+    @Published var error: Error?
     
     
-    /*
-     * MARK: Receipt Analysis Functions
-     */
+    
+    // MARK: Receipt Analysis Functions
+     
     
     /*
      * Brings up camera to scan receipt
@@ -106,7 +110,7 @@ class MainViewModel: ObservableObject {
     
         let transactionDateString: String = fields["TransactionDate"]?.valueDate ?? DateFormatter.localizedString(from: Date.now, dateStyle: .medium, timeStyle: .medium)
         
-        print("INFO: Receipt validated. Now adding to user's persistent storage...")
+        print("INFO: Receipt validated. Now calculating expiration dates...")
         
         /*
          * Matching Items with respective expiration dates
@@ -134,6 +138,7 @@ class MainViewModel: ObservableObject {
             
             scannedItems.append(
                 UserItem(
+                    NameFromAnalysis: name,
                     Name: name,
                     DateOfPurchase: dateOfPurchase,
                     DateToRemind: dateToRemind,
@@ -141,39 +146,44 @@ class MainViewModel: ObservableObject {
                 )
             )
         }
+        print("INFO: \(scannedItems.count) items scanned and matched.")
+        
+        DispatchQueue.main.async {
+            self.cvm.setItemsToConfirm(itemsToConfirm: scannedItems)
+            self.showProgressDialog.toggle()
+            self.showConfirmationView.toggle()
+        }
+    }
+    
+    func addConfirmedUserItems(confirmedItems: [UserItem]) {
+        print("INFO: \(confirmedItems.count) confirmed. Scheduling now")
+        // Add to user's displayed list
+        sivm.addScannedItems(userItems: confirmedItems) {
+            results in
+            // Schedule reminders for each added item
+            EatByReminderManager.instance.bulkScheduleReminders(for: ScannedItemViewModel.shared.scannedItems)
+            
+            // Check for error saving items
+            if let results = results {
+                var errorMsg = "Could not save/schedule these items\n"
+                for (result, name) in results {
+                    switch result {
+                    case .failure(let error):
+                        errorMsg += "\t\(name): \(error.localizedDescription)"
+                    case .success:
+                        break
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.error = EatByReminderError(errorMsg)
+                }
+            }
+        }
         
         /*
          * SUCCESS!
          */
-        
-        print("INFO: \(scannedItems.count) items scanned and matched.")
-        
-//        var saveResults: [(Result<ScannedItem, Error>, String)]?
-        
-        // TODO: Bring up confirmation first. USERITEM
         DispatchQueue.main.async {
-            // Add to user's displayed list
-            ScannedItemViewModel.shared.addScannedItems(userItems: scannedItems) {
-                results in
-                // Schedule reminders for each added item
-                EatByReminderManager.instance.bulkScheduleReminders(for: ScannedItemViewModel.shared.scannedItems)
-                
-                // Check for error saving items
-                if let results = results {
-                    var errorMsg = "Could not save/schedule these items\n"
-                    for (result, name) in results {
-                        switch result {
-                        case .failure(let error):
-                            errorMsg += "\t\(name): \(error.localizedDescription)"
-                        case .success:
-                            break
-                        }
-                    }
-                    self.error = EatByReminderError(errorMsg)
-                }
-            }
-            
-            self.showProgressDialog.toggle()
             self.showConfirmationAlert.toggle()
         }
     }

@@ -27,6 +27,8 @@
 		DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */; };
 		DB45EA78277BF7B5001BA6C2 /* ProduceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA77277BF7B5001BA6C2 /* ProduceItem.swift */; };
 		DB45EA7A277BF81C001BA6C2 /* ProduceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */; };
+		DB518A3C27F9E3D900ABA7B6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB518A3B27F9E3D900ABA7B6 /* CloudKit.framework */; };
+		DB518A3F27FA4E6800ABA7B6 /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB518A3E27FA4E6800ABA7B6 /* ConfirmationViewModel.swift */; };
 		DB623D092783AA7A00EEEC09 /* AnalyzedReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D082783AA7A00EEEC09 /* AnalyzedReceipt.swift */; };
 		DB623D0B2783ABD300EEEC09 /* AzureHTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D0A2783ABD300EEEC09 /* AzureHTTPManager.swift */; };
 		DB623D0E2783AC0400EEEC09 /* HTTPManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D0D2783AC0400EEEC09 /* HTTPManagerProtocol.swift */; };
@@ -89,6 +91,10 @@
 		DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProduceViewModel.swift; path = ../../../../SYG/sYg/sYg/ViewModels/ProduceViewModel.swift; sourceTree = "<group>"; };
 		DB45EA77277BF7B5001BA6C2 /* ProduceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItem.swift; sourceTree = "<group>"; };
 		DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceListView.swift; sourceTree = "<group>"; };
+		DB518A3927F9E3D400ABA7B6 /* sYgRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sYgRelease.entitlements; sourceTree = "<group>"; };
+		DB518A3B27F9E3D900ABA7B6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		DB518A3D27F9F41C00ABA7B6 /* sYgDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sYgDebug.entitlements; sourceTree = "<group>"; };
+		DB518A3E27FA4E6800ABA7B6 /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
 		DB623D082783AA7A00EEEC09 /* AnalyzedReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzedReceipt.swift; sourceTree = "<group>"; };
 		DB623D0A2783ABD300EEEC09 /* AzureHTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureHTTPManager.swift; sourceTree = "<group>"; };
 		DB623D0D2783AC0400EEEC09 /* HTTPManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPManagerProtocol.swift; sourceTree = "<group>"; };
@@ -137,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB518A3C27F9E3D900ABA7B6 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +249,14 @@
 			path = Scanning;
 			sourceTree = "<group>";
 		};
+		DB518A3A27F9E3D900ABA7B6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB518A3B27F9E3D900ABA7B6 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DB623D072783AA0700EEEC09 /* HTTPManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +315,7 @@
 			children = (
 				DB78D9E52753301900EDA0E1 /* sYg */,
 				DB78D9E42753301900EDA0E1 /* Products */,
+				DB518A3A27F9E3D900ABA7B6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -314,6 +330,8 @@
 		DB78D9E52753301900EDA0E1 /* sYg */ = {
 			isa = PBXGroup;
 			children = (
+				DB518A3D27F9F41C00ABA7B6 /* sYgDebug.entitlements */,
+				DB518A3927F9E3D400ABA7B6 /* sYgRelease.entitlements */,
 				DB99D40127F5F3A800C51B61 /* Enums */,
 				DBB4990A27D030A400E08D8F /* Info.plist */,
 				DB3B7EF027C0B67200C5D3DE /* Tools */,
@@ -391,6 +409,7 @@
 			children = (
 				DB99D3F927F3F3B300C51B61 /* CloudKitViewModel.swift */,
 				DB99D40527F5F83900C51B61 /* EditViewModel.swift */,
+				DB518A3E27FA4E6800ABA7B6 /* ConfirmationViewModel.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -517,6 +536,7 @@
 				DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */,
 				DBFFD79627CEC6DE00584484 /* BackButton.swift in Sources */,
 				DBFFD79927CFEC4800584484 /* ColorExtension.swift in Sources */,
+				DB518A3F27FA4E6800ABA7B6 /* ConfirmationViewModel.swift in Sources */,
 				DB623D152783B15400EEEC09 /* URLSessionProtocol.swift in Sources */,
 				DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */,
 				DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */,
@@ -697,6 +717,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = sYg/sYgDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"sYg/Preview Content\"";
@@ -733,6 +754,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = sYg/sYgRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"sYg/Preview Content\"";

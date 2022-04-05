@@ -7,6 +7,9 @@
 
 import CoreData
 
+/*
+ * Owns core data local persistence container 
+ */
 class ScannedItemViewModel: ObservableObject {
     
     /*

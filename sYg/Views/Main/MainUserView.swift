@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MainUserView: View {
     // View Model
@@ -17,6 +18,9 @@ struct MainUserView: View {
     @State private var selectReceipt: Bool = false
     @State private var showScannedReceipt: Bool = false
     @State private var showSettings: Bool = false
+    
+    // iCloud
+    @State private var cancellables = Set<AnyCancellable>()
     
     private let columns = [
                 GridItem(.flexible()),
@@ -43,12 +47,8 @@ struct MainUserView: View {
                 UserItemListView()
                 // Top toolbar
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        IconBrand
-                    }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        ToolbarButtons
-                    }
+                    ToolbarItemGroup(placement: .navigationBarLeading) { IconBrand }
+                    ToolbarItemGroup(placement: .navigationBarTrailing) { ToolbarButtons }
                 }
                 // Receipt Selector
                 .sheet(isPresented: $mvm.showSelector) {} content: {
@@ -81,6 +81,8 @@ struct MainUserView: View {
                     .ignoresSafeArea()
                 
                 // Confirmation
+                ConfirmationView(show: $mvm.showConfirmationView)
+                    .ignoresSafeArea()
             }
             // Confirmation of successful scan + item matching
             .alert(isPresented: $mvm.showConfirmationAlert) {
@@ -112,6 +114,57 @@ struct MainUserView: View {
                    content: {
                 SettingsView(show: $showSettings)
             })
+        }
+        .onAppear {
+            // Request access for notifications if not given already
+            EatByReminderManager.instance.requestAuthorization()
+            
+            CloudKitUtility.getiCloudStatus()
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .failure(let error ):
+                        print(error.localizedDescription)
+                    case .finished:
+                        break
+                    }
+                } receiveValue: { success in
+                        print("Is signed in to icloud account!")
+                }
+                .store(in: &cancellables)
+
+            
+            // Request access to icloud
+            CloudKitUtility.requestApplicationPermission()
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print(error)
+                    }
+                } receiveValue: { success in
+                    print("Successfully enabled iCloud in EatThat!")
+                }
+                .store(in: &cancellables)
+            
+            var icloudname: String = ""
+            CloudKitUtility.discoverUserIdentity()
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print(error)
+                    }
+                    
+                } receiveValue: { name in
+                    icloudname = name
+                }
+                .store(in: &cancellables)
+            print("NAME: \(icloudname)")
         }
     }
 }

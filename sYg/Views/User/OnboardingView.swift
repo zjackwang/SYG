@@ -61,8 +61,7 @@ struct OnboardingView: View {
                         .onAppear {
                             // Fetch items
                             let _ = pvm.getAllItemsInfo()
-                            // Request access for notifications if not given already
-                            EatByReminderManager.instance.requestAuthorization()
+                            
                         }
                         .transition(transition)
                 }

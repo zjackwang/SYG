@@ -14,9 +14,7 @@ class EditViewModel: ObservableObject {
     // Saved items
     @Published var scannedItems: [ScannedItem] = []
     
-    // Unsaved unconfirmed items. subject to change
-    @Published var itemsToConfirm: [UserItem] = UserItem.samples //[]
-    
+    private var nameFromAnalysis: String = ""
     @Published var nameText: String = ""
     @Published var nameTextIsValid: Bool = false
     @Published var nameTextCount: Int = 0
@@ -26,6 +24,9 @@ class EditViewModel: ObservableObject {
     @Published var remindDate: Date = Date.now
     
     @Published var showConfirmButton: Bool = false
+    
+    // Let listeners know when edits have finished
+    @Published var confirmed: Bool = false
     
     var cancellables = Set<AnyCancellable>()
     
@@ -63,6 +64,15 @@ class EditViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    func setItemFields(nameFromAnalysis: String, name: String, purchaseDate: Date, remindDate: Date, category: Category) {
+        self.nameText = name
+        self.nameTextCount = name.count
+        self.purchaseDate = purchaseDate
+        self.remindDate = remindDate
+        self.category = category
+        self.confirmed = false
+    }
+    
     /*
      * Save
      *  - Name
@@ -71,24 +81,18 @@ class EditViewModel: ObservableObject {
      *  - Remind Date
      */
     func saveEditsToUserItem() -> UserItem {
-        return UserItem(Name: nameText, DateOfPurchase: purchaseDate, DateToRemind: remindDate, Category: category)
-    }
-    
-    /*
-     * String id: id of item to be updated
-     * UserItem newItem: new item with updated info
-     */
-    func updateUserItem(for id: String) {
-        let i = itemsToConfirm.firstIndex(where: {$0.id == id})
-        guard let i = i else { return }
-
-        itemsToConfirm[i] = saveEditsToUserItem()
+        print(self.nameText)
+        print(self.purchaseDate)
+        print(self.remindDate)
+        print(self.category)
+        return UserItem(NameFromAnalysis: self.nameFromAnalysis, Name: self.nameText, DateOfPurchase: self.purchaseDate, DateToRemind: self.remindDate, Category: self.category)
     }
     
     func resetFields(for id: String) {
-        nameText = ""
-        category = .produce
-        purchaseDate = Date.now
-        remindDate = Date.now
+        self.nameText = ""
+        self.category = .produce
+        self.purchaseDate = Date.now
+        self.remindDate = Date.now
+        self.confirmed = false
     }
 }
