@@ -96,8 +96,6 @@ struct MainUserView: View {
                     msgString = mvm.confirmationText
                 }
                 
-                print(msgString ?? "")
-                
                 return Alert(
                         title: Text(mvm.confirmationTitle),
                         message: Text(msgString ?? ""),

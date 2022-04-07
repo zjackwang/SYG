@@ -27,6 +27,7 @@ struct CloudItem: Hashable, CloudKitableProtocol {
     var daysInFreezer: [Double]?
     
     let category: String?
+    let storage: String?
     let notes: String?
     
     
@@ -42,13 +43,15 @@ struct CloudItem: Hashable, CloudKitableProtocol {
         self.daysOnShelf = record["daysOnShelf"] as? [Double] ?? []
         self.daysInFreezer = record["daysInFreezer"] as? [Double] ?? []
         
+        
         self.category = record["category"]
+        self.storage = record["storage"]
         self.notes = record["notes"]
         
         self.record = record
     }
     
-    init?(name: String, daysInFridge: TimeInterval, daysOnShelf: TimeInterval?, daysInFreezer: TimeInterval?, category: String, notes: String?) {
+    init?(name: String, daysInFridge: TimeInterval, daysOnShelf: TimeInterval?, daysInFreezer: TimeInterval?, category: String, storage: String, notes: String?) {
         // blank record
         let record = CKRecord(recordType: CloudItem.recordType)
         record["name"] = name
@@ -63,6 +66,7 @@ struct CloudItem: Hashable, CloudKitableProtocol {
         }
         
         record["category"] = category
+        record["storage"] = storage
         record["notes"] = notes
         
         self.init(record: record)

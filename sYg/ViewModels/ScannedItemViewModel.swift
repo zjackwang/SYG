@@ -110,6 +110,8 @@ class ScannedItemViewModel: ObservableObject {
         scannedItem.name = userItem.Name
         scannedItem.dateOfPurchase = userItem.DateOfPurchase
         scannedItem.dateToRemind = userItem.DateToRemind
+        scannedItem.category = CategoryConverter.rawValue(given: userItem.Category)
+        scannedItem.storage = StorageConverter.rawValue(given: userItem.Storage)
         scannedItems.append(scannedItem)
         
         saveScannedItems(completionHandler: completionHandler)
@@ -233,19 +235,21 @@ class ScannedItemViewModel: ObservableObject {
     /*
      * Update stored scanned item via UserItem struct returned from edit view
      */
-    func updateScannedItem(item: UserItem) -> Error? {
+    func updateScannedItem(newItem: UserItem) -> Result<ScannedItem, Error> {
         // guards
         guard
-            let oldItem = scannedItems.first(where: {$0.nameFromAnalysis  == item.NameFromAnalysis}),
-            let index = scannedItems.firstIndex(of: oldItem)
-
+            let item = scannedItems.first(where: {$0.nameFromAnalysis  == newItem.NameFromAnalysis}),
+            let index = scannedItems.firstIndex(of: item)
         else {
-            return EatByReminderError("Could not find stored item")
+            return .failure(EatByReminderError("Could not find stored item"))
         }
-        oldItem.name = item.Name
-        oldItem.dateOfPurchase = item.DateOfPurchase
-        oldItem.dateToRemind = item.DateToRemind
-        scannedItems[index] = oldItem
+        
+        item.name = newItem.Name
+        item.dateOfPurchase = newItem.DateOfPurchase
+        item.dateToRemind = newItem.DateToRemind
+        item.category = CategoryConverter.rawValue(given: newItem.Category)
+        item.storage = StorageConverter.rawValue(given: newItem.Storage)
+        scannedItems[index] = item
 
         var returnedError: Error?
         saveScannedItems {
@@ -260,9 +264,9 @@ class ScannedItemViewModel: ObservableObject {
         
         if let error = returnedError {
             print("FAULT: \(error.localizedDescription)")
-            return error
+            return .failure(error)
         }
-        return nil
+        return .success(item)
     }
     
     /*

@@ -14,6 +14,7 @@ struct UserItem: Identifiable, Codable {
     var DateOfPurchase: Date
     var DateToRemind: Date
     var Category: Category // Filled out by user or auto-populated
+    var Storage: Storage
 }
 
 extension UserItem {
@@ -25,6 +26,7 @@ extension UserItem {
         self.DateOfPurchase = item.DateOfPurchase
         self.DateToRemind = item.DateToRemind
         self.Category = item.Category
+        self.Storage = item.Storage
     }
     
     func updateName(newName: String) -> UserItem {
@@ -50,6 +52,12 @@ extension UserItem {
         newItem.Category = newCategory
         return newItem
     }
+    
+    func updateStorage(newStorage: Storage) -> UserItem {
+        var newItem = UserItem(from: self)
+        newItem.Storage = newStorage
+        return newItem
+    }
 }
 
 extension UserItem: Hashable {
@@ -67,14 +75,14 @@ extension UserItem: Hashable {
 
 extension UserItem {
     static let samples = [
-        UserItem(NameFromAnalysis: "Apple", Name: "Apple", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow: 24 * 60 * 60), Category: .unknown),
+        UserItem(NameFromAnalysis: "Apple", Name: "Apple", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow: 24 * 60 * 60), Category: .unknown, Storage: .fridge),
         UserItem(NameFromAnalysis: "Banana", Name: "Banana", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
-                                                                                3 * 24 * 60 * 60), Category: .produce),
+                                                                                3 * 24 * 60 * 60), Category: .produce, Storage: .fridge),
         UserItem(NameFromAnalysis: "Clementine", Name: "Clementine", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
-                                                                                    7 * 24 * 60 * 60), Category: .produce),
+                                                                                    7 * 24 * 60 * 60), Category: .produce, Storage: .fridge),
         UserItem(NameFromAnalysis: "Grapefruit", Name: "Grapefruit", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
-                                                                                    14 * 24 * 60 * 60), Category: .produce),
+                                                                                    14 * 24 * 60 * 60), Category: .produce, Storage: .fridge),
         UserItem(NameFromAnalysis: "Dragonfruit", Name: "Dragonfruit", DateOfPurchase: Date(), DateToRemind: Date(timeIntervalSinceNow:
-                                                                                    60 * 24 * 60 * 60), Category: .produce)
+                                                                                    60 * 24 * 60 * 60), Category: .produce, Storage: .fridge)
     ]
 }

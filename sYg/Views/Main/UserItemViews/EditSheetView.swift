@@ -27,6 +27,8 @@ struct EditSheetView: View {
 
     @StateObject private var vm = EditViewModel.shared
     
+    @State var cancellables = Set<AnyCancellable>()
+    
     var body: some View {
         ZStack {
             Form {
@@ -35,7 +37,7 @@ struct EditSheetView: View {
                 
                 nameField
                 categoryPicker
-                
+                storagePicker
                 purDatePicker
                 remindDatePicker
                 
@@ -80,14 +82,38 @@ extension EditSheetView {
             )
     }
     
+    // TODO: STILL NOT UPDATING UPON EVERY APPEAR
     private var categoryPicker: some View {
-        Picker("Category", selection: $vm.category) {
-            Text("Produce").tag(Category.produce)
-            Text("Meats, Poultry, Seafood").tag(Category.meatPoultrySeafood)
-            Text("Dairy").tag(Category.dairy)
-            Text("Drinks").tag(Category.drinks)
-            Text("Condiments").tag(Category.condiments)
+        return Picker("Category", selection: $vm.categorySelection) {
+            Text("Produce").tag("Produce")
+            Text("Dairy").tag("Dairy")
+            Text("Meat, Poultry, Seafood").tag("Meat, Poultry, Seafood")
+            Text("Condiments").tag("Condiments")
+            Text("Drinks").tag("Drinks")
         }
+        .onAppear(perform: {
+            vm.$category
+                .sink { category in
+                    vm.categorySelection = CategoryConverter.rawValue(given: category)
+                }
+                .store(in: &cancellables)
+        })
+        .pickerStyle(.segmented)
+    }
+    
+    private var storagePicker: some View {
+        Picker("Storage", selection: $vm.storageSelection) {
+            Text("Fridge").tag("Fridge")
+            Text("Freezer").tag("Freezer")
+            Text("Shelf").tag("Shelf")
+        }
+        .onAppear(perform: {
+            vm.$storage
+                .sink { storage in
+                    vm.storageSelection = StorageConverter.rawValue(given: storage)
+                }
+                .store(in: &cancellables)
+        })
         .pickerStyle(.segmented)
     }
     

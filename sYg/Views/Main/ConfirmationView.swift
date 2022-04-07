@@ -42,7 +42,7 @@ struct ConfirmationView: View {
                                 Button{
                                     editID = item.id
                                     // set attributes in the edit view model
-                                    evm.setItemFields(nameFromAnalysis: item.NameFromAnalysis, name: item.Name, purchaseDate: item.DateOfPurchase, remindDate: item.DateToRemind, category: item.Category)
+                                    evm.setItemFields(nameFromAnalysis: item.NameFromAnalysis, name: item.Name, purchaseDate: item.DateOfPurchase, remindDate: item.DateToRemind, category: item.Category, storage: item.Storage)
                                     // Edit sheet for this item
                                     showEdit.toggle()
                                 } label: {
@@ -69,6 +69,7 @@ struct ConfirmationView: View {
             evm.viewToEdit = .confirmationView
             // create publisher and subscribe to edits
             addEditViewSubscriber()
+            testAddPickerSubscriber()
         })
         .opacity(show ? 1.0 : 0.0)
         .navigationBarHidden(show)
@@ -97,7 +98,6 @@ extension ConfirmationView {
         Group {
             Spacer()
             EditSheetView(show: $showEdit)
-            
         }
     }
     
@@ -153,11 +153,21 @@ extension ConfirmationView {
 extension ConfirmationView {
     func addEditViewSubscriber() {
         evm.$confirmed
-            .sink { isConfirmed in
-                if evm.viewToEdit == .confirmationView,
+            .combineLatest(evm.$viewToEdit)
+            .sink { (isConfirmed, viewToEdit) in
+                if viewToEdit == .confirmationView,
                    isConfirmed {
+                    print("DEBUGG >>> CONFIRM EDIT IN CONFIRMATION VIEW")
                     cvm.updateUserItem(for: editID)
                 }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func testAddPickerSubscriber() {
+        evm.$category
+            .sink { category in
+                print(CategoryConverter.rawValue(given: category))
             }
             .store(in: &cancellables)
     }

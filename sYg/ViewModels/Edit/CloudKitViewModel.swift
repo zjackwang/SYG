@@ -88,7 +88,7 @@ class CloudKitViewModel: ObservableObject {
                     .store(in: &cancellables)
             } else {
                 // Not in cloud storage, add entire item
-                guard let cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeInFridge, daysOnShelf: nil, daysInFreezer: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil) else { continue }
+                guard let cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeInFridge, daysOnShelf: nil, daysInFreezer: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), storage: StorageConverter.rawValue(given: confirmedItem.Storage),notes: nil) else { continue }
                 print("INFO: Adding new cloud item \(cloudItem)")
                 CloudKitUtility.add(item: cloudItem)
                     .receive(on: DispatchQueue.main)

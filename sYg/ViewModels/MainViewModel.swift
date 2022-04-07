@@ -144,7 +144,8 @@ class MainViewModel: ObservableObject {
                     Name: name,
                     DateOfPurchase: dateOfPurchase,
                     DateToRemind: dateToRemind,
-                    Category: .unknown
+                    Category: .unknown,
+                    Storage: .unknown
                 )
             )
         }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB0172D527FF35E3005F1129 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0172D427FF35E3005F1129 /* Storage.swift */; };
 		DB09F81027CB432D0022C034 /* UrgentToEatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB09F80F27CB432D0022C034 /* UrgentToEatView.swift */; };
 		DB2108D027D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2108CF27D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift */; };
 		DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB0172D427FF35E3005F1129 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		DB09F80F27CB432D0022C034 /* UrgentToEatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrgentToEatView.swift; sourceTree = "<group>"; };
 		DB2108CF27D14102003CDB09 /* EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EatByReminderManager-UNUserNotificationDelegateProtocol Extension.swift"; sourceTree = "<group>"; };
 		DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionEvaluator.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				DB99D40227F5F3B200C51B61 /* Category.swift */,
+				DB0172D427FF35E3005F1129 /* Storage.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				DB623D152783B15400EEEC09 /* URLSessionProtocol.swift in Sources */,
 				DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */,
 				DB25C19F27C5A56E00DBEBB2 /* Date - DateFormatExtension.swift in Sources */,
+				DB0172D527FF35E3005F1129 /* Storage.swift in Sources */,
 				DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */,
 				DBFFD78927CDE39600584484 /* PopOvers.swift in Sources */,
 				DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */,

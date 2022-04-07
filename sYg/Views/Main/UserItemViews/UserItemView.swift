@@ -68,7 +68,7 @@ struct UserItemView: View {
 //struct UserItemView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationView {
-//            UserItemView(background: Color.DarkPalette.background)
+//            UserItemView( background: Color.DarkPalette.background)
 //                .background(Color.DarkPalette.background)
 //                
 //        }

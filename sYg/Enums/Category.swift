@@ -11,7 +11,7 @@ import Foundation
  * Categories of grocery items
  *  => only produce for now
  */
-enum Category: String, Codable {
+enum Category: String, Codable, CaseIterable {
     case unknown
     case produce
     case dairy

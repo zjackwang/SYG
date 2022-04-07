@@ -97,6 +97,23 @@ class EatByReminderManager: NSObject {
     }
     
     /*
+     * Update an item's scheduled notification by deleting the old one and replacing
+     *  it with the new notification
+     * Input: ScannedItem item
+     *        Date newDate
+     * Pre-conditions: item MUST exist in core data
+     */
+    func updateScheduledNotification(for item: ScannedItem, at newDate: Date) {
+        removeScheduledReminderByName(for: item)
+        let _ = scheduleReminderAtTime(for: item, at: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: newDate)
+)
+    }
+    
+    func getAllScheduledNotifications() -> [UNNotificationRequest]{
+        return retrieveExistingRequests()
+    }
+    
+    /*
      * MARK: Internal Functions
      */
     
