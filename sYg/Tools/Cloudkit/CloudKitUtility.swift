@@ -13,7 +13,6 @@ import Combine
  * CloudKit interface
  */
 class CloudKitUtility {
-    
     enum CloudKitError: LocalizedError {
         case iCloudAccountNotFound
         case iCloudAccountNotDetermined
@@ -133,7 +132,7 @@ extension CloudKitUtility {
 
 // MARK: CRUD Public Functions
 extension CloudKitUtility {
-    
+
     static func fetch<T: CloudKitableProtocol>(
         predicate: NSPredicate,
         recordType: CKRecord.RecordType,
@@ -201,6 +200,7 @@ extension CloudKitUtility {
             item in
             returnedItems.append(item)
         }
+        
         
         // Query Completion
         addQueryResultBlock(operation: operation) {

@@ -18,8 +18,7 @@ class CloudKitViewModel: ObservableObject {
     private var error: Error?
 
     init() {
-        print(fetchItems())
-        
+        fetchItems()
     }
     
     /*
@@ -27,19 +26,18 @@ class CloudKitViewModel: ObservableObject {
      *  Gets all recorded items from iCloud
      *
      */
-    func fetchItems() -> [CloudItem]{
-        var items: [CloudItem] = []
+    func fetchItems() {
         let predicate = NSPredicate(value: true)
         CloudKitUtility.fetch(predicate: predicate, recordType: CloudItem.recordType, sortDescriptors: nil, resultsLimit: nil)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: {
+                [weak self]
                 returnedItems in
-                items = returnedItems
+                self?.items = returnedItems
             }
             .store(in: &cancellables)
-        return items
     }
     
     /*
@@ -59,10 +57,10 @@ class CloudKitViewModel: ObservableObject {
          * 2. Add to cloud using utility
          */
         
-        let items: [CloudItem] = self.fetchItems()
+        print("Items: \(self.items)")
         
         var itemsDict: [String: CloudItem] = [:]
-        for item in items {
+        for item in self.items {
             itemsDict[item.name] = item
         }
         
@@ -72,6 +70,7 @@ class CloudKitViewModel: ObservableObject {
             if let cloudItem = itemsDict[confirmedItem.NameFromAnalysis] {
                 // Add time in fridge to list of fridge exp times
                 guard let updatedCloudItem = cloudItem.updateFridgeDays(newDays: timeInFridge) else { continue }
+                print("INFO: Updating cloud item")
                 CloudKitUtility.update(item: updatedCloudItem)
                     .receive(on: DispatchQueue.main)
                     .sink {
@@ -82,6 +81,7 @@ class CloudKitViewModel: ObservableObject {
                                 break
                             case .failure(let error):
                                 self?.error = error
+                                print(error)
                         }
                     } receiveValue: { success in
                     }
@@ -89,7 +89,7 @@ class CloudKitViewModel: ObservableObject {
             } else {
                 // Not in cloud storage, add entire item
                 guard let cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeInFridge, daysOnShelf: nil, daysInFreezer: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil) else { continue }
-                print("Adding new cloud item \(cloudItem)")
+                print("INFO: Adding new cloud item \(cloudItem)")
                 CloudKitUtility.add(item: cloudItem)
                     .receive(on: DispatchQueue.main)
                     .sink {
@@ -99,12 +99,14 @@ class CloudKitViewModel: ObservableObject {
                             case .finished:
                                 break
                             case .failure(let error):
-                            print(error)
+                                print(error)
                                 self?.error = error
                         }
                     } receiveValue: { success in
                     }
                     .store(in: &cancellables)
+                // Update local store
+                items.append(cloudItem)
             }
         }
     }

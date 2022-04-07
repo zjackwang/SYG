@@ -70,7 +70,9 @@ struct CloudItem: Hashable, CloudKitableProtocol {
     
     func updateFridgeDays(newDays: Double) -> CloudItem? {
         let record = record
-        record["daysInFridge"] = newDays
+        guard var daysInFridge = record["daysInFridge"] as? [Double] else { return nil }
+        daysInFridge.append(newDays)
+        record["daysInFridge"] = daysInFridge
         return CloudItem(record: record)
     }
     
