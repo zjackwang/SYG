@@ -29,5 +29,8 @@ class SettingsViewModel {
     var yellowClockInterval: TimeInterval {
         return Double(yellowClockDays) * TimeConstants.dayTimeInterval
     }
+    var expiredClockInterval: TimeInterval {
+        return Double(0)
+    }
 
 }

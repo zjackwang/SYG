@@ -55,6 +55,8 @@ class MainViewModel: ObservableObject {
     
     // Confirmation of success
     @Published var showConfirmationAlert: Bool = false
+    @Published var confirmationTitle: String = ""
+    @Published var confirmationText: String = ""
     @Published var error: Error?
     
     
@@ -165,17 +167,23 @@ class MainViewModel: ObservableObject {
             
             // Check for error saving items
             if let results = results {
-                var errorMsg = "Could not save/schedule these items\n"
+                var errors: [(String, Error)] = []
                 for (result, name) in results {
                     switch result {
                     case .failure(let error):
-                        errorMsg += "\t\(name): \(error.localizedDescription)"
+                        errors.append((name, error))
                     case .success:
                         break
                     }
                 }
-                DispatchQueue.main.async {
-                    self.error = EatByReminderError(errorMsg)
+                if !errors.isEmpty {
+                    DispatchQueue.main.async {
+                        var errorMsg = "Could not save/schedule these items\n"
+                        for (name, error) in errors {
+                            errorMsg += "\t\(name): \(error.localizedDescription)"
+                        }
+                        self.error = EatByReminderError(errorMsg)
+                    }
                 }
             }
         }
@@ -184,6 +192,8 @@ class MainViewModel: ObservableObject {
          * SUCCESS!
          */
         DispatchQueue.main.async {
+            self.confirmationTitle = "Scanning Result"
+            self.confirmationText = "Successfully scanned!"
             self.showConfirmationAlert.toggle()
         }
     }
@@ -264,7 +274,7 @@ class MainViewModel: ObservableObject {
          *  TIMEOUT: 25 maximum requests
          *              5s each request
          */
-        let MAX_TRIES = 25
+        let MAX_TRIES = 50
         let REQ_INTERVAL: UInt32 = 1000000 // 1000000us = 1s
         let SUCCESS = "succeeded"
 
@@ -293,7 +303,7 @@ class MainViewModel: ObservableObject {
                 return
             }
             
-            // Loop GET requests, every second. 100 tries allowed
+            // Loop GET requests, every second. 50 tries allowed
             while status != SUCCESS && count < MAX_TRIES {
                 print("INFO: Attempting to get results... try \(count)")
                 
@@ -335,6 +345,9 @@ class MainViewModel: ObservableObject {
                 }
                 usleep(REQ_INTERVAL)
             }
+        }
+        if count >= MAX_TRIES {
+            self.handleError(error: ReceiptScanningError("Request TIMEOUT"))
         }
     }
     

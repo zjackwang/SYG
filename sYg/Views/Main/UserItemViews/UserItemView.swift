@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserItemView: View {
-    var item: ScannedItem?
+    @Binding var item: ScannedItem
     let background: Color
     
     @State private var showEdit = false
@@ -20,23 +20,24 @@ struct UserItemView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible()),
             ]
+    
     var body: some View {
+        
         ZStack {
             LazyVGrid(columns: columns, spacing: 30) {
-                Text(item?.name ?? "unknown")
+                Text(item.name ?? "unknown")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .padding(.leading, 10)
                     .foregroundColor(onPrimary)
                 HStack {
-                    Text(item?.dateOfPurchase ?? Date.now, format: .dateTime.day().month().year())
+                    Text(item.dateOfPurchase ?? Date.now, format: .dateTime.day().month().year())
                         .font(.subheadline)
                         .padding(.trailing, 20)
                         .foregroundColor(onPrimary)
                     
-                    // TODO: Refresh here 
                     StatusClockView(
-                        dateToRemind: item?.dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.dayTimeInterval),
+                        dateToRemind: $item.dateToRemind,
                         showPopup: $showEatPopup
                     )
                         .onTapGesture {
@@ -49,7 +50,7 @@ struct UserItemView: View {
             
             PopOverScreen(
                 title: "Eat By: ",
-                message: item?.dateToRemind?.getFormattedDate(format: TimeConstants.reminderDateFormat) ?? "unknown"
+                message: item.dateToRemind?.getFormattedDate(format: TimeConstants.reminderDateFormat) ?? "unknown"
             )
                 .transition(.move(edge: .trailing))
                 .onTapGesture {
@@ -64,12 +65,12 @@ struct UserItemView: View {
     }
 }
 
-struct UserItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            UserItemView(background: Color.DarkPalette.background)
-                .background(Color.DarkPalette.background)
-                
-        }
-    }
-}
+//struct UserItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            UserItemView(background: Color.DarkPalette.background)
+//                .background(Color.DarkPalette.background)
+//                
+//        }
+//    }
+//}

@@ -228,23 +228,20 @@ class ScannedItemViewModel: ObservableObject {
         
         return scannedItem
     }
-    
+           
     
     /*
      * Update stored scanned item via UserItem struct returned from edit view
      */
-    func updateScannedItem(item: UserItem) -> Bool {
+    func updateScannedItem(item: UserItem) -> Error? {
         // guards
-        print(item)
-        print(scannedItems)
         guard
             let oldItem = scannedItems.first(where: {$0.nameFromAnalysis  == item.NameFromAnalysis}),
             let index = scannedItems.firstIndex(of: oldItem)
 
         else {
-            return false
+            return EatByReminderError("Could not find stored item")
         }
-        print(oldItem)
         oldItem.name = item.Name
         oldItem.dateOfPurchase = item.DateOfPurchase
         oldItem.dateToRemind = item.DateToRemind
@@ -256,17 +253,16 @@ class ScannedItemViewModel: ObservableObject {
             switch result {
             case .failure(let error):
                 returnedError = error
-                return
             case .success:
-                return
+                break
             }
         }
         
         if let error = returnedError {
             print("FAULT: \(error.localizedDescription)")
-            return false
+            return error
         }
-        return true
+        return nil
     }
     
     /*

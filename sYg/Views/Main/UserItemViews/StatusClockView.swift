@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatusClockView: View {
-    var dateToRemind: Date
+    @Binding var dateToRemind: Date?
     
     var svm = SettingsViewModel.shared
     
@@ -22,22 +22,38 @@ struct StatusClockView: View {
 
     let today: Date = Date.now
     var body: some View {
-        let timeToExpiration: TimeInterval = today.distance(to: dateToRemind)
         Image(systemName: "clock.arrow.circlepath")
             .font(.system(size: 15))
             .foregroundColor(
                 timeToExpiration <= svm.redClockInterval ? quaternary : timeToExpiration <= svm.yellowClockInterval ? tertiary : secondary
             )
             .shadow(color: background, radius: 3)
+            .overlay(
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundColor(.orange)
+                    .font(.system(size: 10))
+                    .position(x: 15, y: 0)
+                    .opacity(timeToExpiration < svm.expiredClockInterval ? 1.0 : 0.0)
+            )
     }
+}
+
+// MARK: Components
+
+extension StatusClockView {
+    private var timeToExpiration: TimeInterval {
+        today.distance(to: dateToRemind ?? Date.init(timeIntervalSinceNow: 3 * TimeConstants.dayTimeInterval))
+    }
+    
 }
 
 struct StatusClockViewDisplay: View {
     @State var showPopup: Bool = false
+    @State var date: Date? = Date(timeIntervalSinceNow: 10000)
     
     var body: some View {
         ZStack {
-            StatusClockView(dateToRemind: Date(timeIntervalSinceNow: 10000), showPopup: $showPopup)
+            StatusClockView(dateToRemind: $date, showPopup: $showPopup)
         }
     }
 }

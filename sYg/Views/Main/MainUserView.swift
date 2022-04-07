@@ -13,6 +13,7 @@ import Combine
 struct MainUserView: View {
     // View Model
     @StateObject private var mvm = MainViewModel.shared
+    @StateObject private var sivm = ScannedItemViewModel.shared
 
     // For Sheets
     @State private var selectReceipt: Bool = false
@@ -44,7 +45,7 @@ struct MainUserView: View {
                     .ignoresSafeArea()
 
                 // Content
-                UserItemListView()
+                UserItemListView(scannedItems: $sivm.scannedItems)
                 // Top toolbar
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) { IconBrand }
@@ -84,7 +85,7 @@ struct MainUserView: View {
                 ConfirmationView(show: $mvm.showConfirmationView)
                     .ignoresSafeArea()
             }
-            // Confirmation of successful scan + item matching
+            // User confirmation alert 
             .alert(isPresented: $mvm.showConfirmationAlert) {
                 var msgString: String?
                 if let error = mvm.error as? ReceiptScanningError {
@@ -92,13 +93,13 @@ struct MainUserView: View {
                 } else if let error = mvm.error {
                     msgString = "Error: \(error.localizedDescription)"
                 } else {
-                    msgString = "Successfully scanned!"
+                    msgString = mvm.confirmationText
                 }
                 
                 print(msgString ?? "")
                 
                 return Alert(
-                        title: Text("Scanning Result"),
+                        title: Text(mvm.confirmationTitle),
                         message: Text(msgString ?? ""),
                         dismissButton:
                                 .default(

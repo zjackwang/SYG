@@ -66,6 +66,7 @@ struct ConfirmationView: View {
             .overlay(overlay)
         }
         .onAppear(perform: {
+            evm.viewToEdit = .confirmationView
             // create publisher and subscribe to edits
             addEditViewSubscriber()
         })
@@ -153,7 +154,8 @@ extension ConfirmationView {
     func addEditViewSubscriber() {
         evm.$confirmed
             .sink { isConfirmed in
-                if isConfirmed {
+                if evm.viewToEdit == .confirmationView,
+                   isConfirmed {
                     cvm.updateUserItem(for: editID)
                 }
             }

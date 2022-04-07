@@ -9,6 +9,11 @@ import SwiftUI
 import Combine
 
 class EditViewModel: ObservableObject {
+    enum ViewToEdit {
+        case confirmationView
+        case userItemListView
+    }
+    
     static let shared = EditViewModel()
     
     // Saved items
@@ -27,6 +32,7 @@ class EditViewModel: ObservableObject {
     
     // Let listeners know when edits have finished
     @Published var confirmed: Bool = false
+    @Published var viewToEdit: ViewToEdit = .confirmationView
     
     var cancellables = Set<AnyCancellable>()
     
