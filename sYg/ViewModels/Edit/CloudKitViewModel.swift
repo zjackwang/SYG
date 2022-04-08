@@ -57,7 +57,7 @@ class CloudKitViewModel: ObservableObject {
          * 2. Add to cloud using utility
          */
         
-        print("Items: \(self.items)")
+        print("INFO: saved items:\n\(self.items)")
         
         var itemsDict: [String: CloudItem] = [:]
         for item in self.items {
@@ -65,11 +65,29 @@ class CloudKitViewModel: ObservableObject {
         }
         
         for confirmedItem in confirmedItems {
-            let timeInFridge = confirmedItem.DateToRemind.timeIntervalSince(confirmedItem.DateOfPurchase)
+            let timeTilExpire = confirmedItem.DateToRemind.timeIntervalSince(confirmedItem.DateOfPurchase)
             
             if let cloudItem = itemsDict[confirmedItem.NameFromAnalysis] {
-                // Add time in fridge to list of fridge exp times
-                guard let updatedCloudItem = cloudItem.updateFridgeDays(newDays: timeInFridge) else { continue }
+                // Add time til exp to appropriate exp times list
+                var updatedCloudItem: CloudItem?
+                switch confirmedItem.Storage {
+                case .fridge:
+                    updatedCloudItem = cloudItem.updateFridgeDays(newDays: timeTilExpire)
+                case .freezer:
+                    updatedCloudItem = cloudItem.updateFreezerDays(newDays: timeTilExpire)
+                case .shelf:
+                    updatedCloudItem = cloudItem.updateShelfDays(newDays: timeTilExpire)
+                case .unknown:
+                    break
+                }
+                
+                guard let updatedCloudItem = updatedCloudItem,
+                      let updatedCloudItem = updatedCloudItem.updateCategory(category: confirmedItem.Category)
+                else {
+                    print("FAULT: Could not update \(confirmedItem.Name)")
+                    continue
+                }
+                
                 print("INFO: Updating cloud item")
                 CloudKitUtility.update(item: updatedCloudItem)
                     .receive(on: DispatchQueue.main)
@@ -88,7 +106,26 @@ class CloudKitViewModel: ObservableObject {
                     .store(in: &cancellables)
             } else {
                 // Not in cloud storage, add entire item
-                guard let cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeInFridge, daysOnShelf: nil, daysInFreezer: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), storage: StorageConverter.rawValue(given: confirmedItem.Storage),notes: nil) else { continue }
+                
+                var cloudItem: CloudItem?
+                switch confirmedItem.Storage {
+                case .fridge:
+                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeTilExpire,  daysInFreezer: nil, daysOnShelf: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
+                case .freezer:
+                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: nil,  daysInFreezer: timeTilExpire, daysOnShelf: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
+                case .shelf:
+                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: nil,  daysInFreezer: nil, daysOnShelf: timeTilExpire, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
+                case .unknown:
+                    break
+                }
+                
+                guard let cloudItem = cloudItem,
+                      let cloudItem = cloudItem.updateCategory(category: confirmedItem.Category)
+                else {
+                    print("FAULT: Could not create cloud item")
+                    continue
+                }
+                
                 print("INFO: Adding new cloud item \(cloudItem)")
                 CloudKitUtility.add(item: cloudItem)
                     .receive(on: DispatchQueue.main)

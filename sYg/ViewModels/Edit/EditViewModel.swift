@@ -93,9 +93,7 @@ class EditViewModel: ObservableObject {
      *  - Remind Date
      */
     func saveEditsToUserItem() -> UserItem {
-        print("DEBUGGIN >>> SAVING EDITS") 
-        print(self.categorySelection)
-        print(self.storageSelection)
+        print("DEBUGGING >>> SAVING EDITS")
         self.category = CategoryConverter.fromRawValue(for: self.categorySelection)
         self.storage = StorageConverter.fromRawValue(for: self.storageSelection)
         let item = UserItem(NameFromAnalysis: self.nameFromAnalysis, Name: self.nameText, DateOfPurchase: self.purchaseDate, DateToRemind: self.remindDate, Category: self.category, Storage: self.storage)

@@ -254,8 +254,8 @@
             filePath = "sYg/Models/CloudModels/CloudItem.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "init?(record:)"
             landmarkType = "7">
          </BreakpointContent>
