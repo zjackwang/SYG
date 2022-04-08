@@ -56,7 +56,6 @@ class CloudKitViewModel: ObservableObject {
          *      purchase date and remind date
          * 2. Add to cloud using utility
          */
-        
         print("INFO: saved items:\n\(self.items)")
         
         var itemsDict: [String: CloudItem] = [:]
@@ -106,7 +105,6 @@ class CloudKitViewModel: ObservableObject {
                     .store(in: &cancellables)
             } else {
                 // Not in cloud storage, add entire item
-                
                 var cloudItem: CloudItem?
                 switch confirmedItem.Storage {
                 case .fridge:

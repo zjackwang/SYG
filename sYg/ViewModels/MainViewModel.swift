@@ -155,6 +155,10 @@ class MainViewModel: ObservableObject {
             self.cvm.setItemsToConfirm(itemsToConfirm: scannedItems)
             self.showProgressDialog.toggle()
             self.showConfirmationView.toggle()
+            self.confirmationTitle = "Read Me!"
+            self.confirmationText = "Help EatThat! be more accurate by editing your purchase/expiration dates to the correct times and setting the category and the place of storage. Swipe right to edit and swipe left to remove unwanted items. \nThanks! 🥳🥑"
+            self.showConfirmationAlert.toggle()
+            
         }
     }
     

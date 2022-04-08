@@ -172,6 +172,7 @@ extension ConfirmationView {
             .store(in: &cancellables)
     }
 }
+
 struct DisplayConfirmationView: View {
     @State var showView = false
 

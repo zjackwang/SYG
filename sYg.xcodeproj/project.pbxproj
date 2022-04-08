@@ -152,6 +152,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB17C4CF28006C5B009C5EDB /* ScanningItems */ = {
+			isa = PBXGroup;
+			children = (
+				DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */,
+				DB7BA23127D93F2200759932 /* EditSheetView.swift */,
+			);
+			path = ScanningItems;
+			sourceTree = "<group>";
+		};
 		DB25C19B27C59BEB00DBEBB2 /* LocalNotifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,7 +186,6 @@
 				DB293A5E2795C9D700001DA6 /* UserItemListView.swift */,
 				DB297ADE27A88BAA00EAA3C3 /* UserItemView.swift */,
 				DB297AE027A88C2700EAA3C3 /* StatusClockView.swift */,
-				DB7BA23127D93F2200759932 /* EditSheetView.swift */,
 			);
 			path = UserItemViews;
 			sourceTree = "<group>";
@@ -438,9 +446,9 @@
 		DBA6EEA127868F2F002E19AA /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				DB17C4CF28006C5B009C5EDB /* ScanningItems */,
 				DB293A5B2795C98600001DA6 /* UserItemViews */,
 				DBA6EEA227868F58002E19AA /* MainUserView.swift */,
-				DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -723,7 +731,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = sYg/sYgDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sYg/Preview Content\"";
 				DEVELOPMENT_TEAM = S6Z9UYN7ZL;
 				ENABLE_PREVIEWS = YES;
@@ -743,7 +751,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = S6Z9UYN7ZL.com.zjackwang.EatThat;
 				PRODUCT_NAME = sYg;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -760,7 +768,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = sYg/sYgRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sYg/Preview Content\"";
 				DEVELOPMENT_TEAM = S6Z9UYN7ZL;
 				ENABLE_PREVIEWS = YES;
@@ -780,7 +788,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = S6Z9UYN7ZL.com.zjackwang.EatThat;
 				PRODUCT_NAME = sYg;
 				SWIFT_EMIT_LOC_STRINGS = YES;
