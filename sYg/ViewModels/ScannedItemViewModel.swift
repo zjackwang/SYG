@@ -7,6 +7,13 @@
 
 import CoreData
 
+// TODO: Manually added item
+//  1. need new category "cooked food"
+//  2. no "nameFromAnalysis". everything else filled out
+//  3. need to schedule notification
+//  4. use existing edit view
+//  5. add to core data
+
 /*
  * Owns core data local persistence container 
  */

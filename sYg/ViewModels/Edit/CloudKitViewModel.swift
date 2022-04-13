@@ -9,6 +9,18 @@ import SwiftUI
 import CloudKit
 import Combine
 
+/*
+ * TODO: Create PushNotificationsViewModel
+ *      - Schedule Notification
+ *      - Remove Notification
+ *          - One notification per day for all exp items that day (grouped)
+ *      - Edit Notification
+ *      - Get all Notificaitons
+ */
+
+/*
+ * Owns interface to iCloud data storage
+ */
 class CloudKitViewModel: ObservableObject {
     static var shared = CloudKitViewModel()
     

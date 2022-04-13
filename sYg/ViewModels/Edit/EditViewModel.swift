@@ -12,12 +12,15 @@ class EditViewModel: ObservableObject {
     enum ViewToEdit {
         case confirmationView
         case userItemListView
+        case manualAddView
     }
     
     static let shared = EditViewModel()
     
     // used to update reminder
     @Published var scannedItemToEdit: ScannedItem?
+    
+    @Published var title: String = "Edit Item Info"
     
     @Published var nameFromAnalysis: String = ""
     @Published var nameText: String = ""

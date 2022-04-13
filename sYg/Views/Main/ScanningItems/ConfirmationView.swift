@@ -44,6 +44,7 @@ struct ConfirmationView: View {
                                     // set attributes in the edit view model
                                     evm.setItemFields(nameFromAnalysis: item.NameFromAnalysis, name: item.Name, purchaseDate: item.DateOfPurchase, remindDate: item.DateToRemind, category: item.Category, storage: item.Storage)
                                     // Edit sheet for this item
+                                    evm.title = "Edit Item Info"
                                     showEdit.toggle()
                                 } label: {
                                     Label("Edit", systemImage: "pencil.circle")

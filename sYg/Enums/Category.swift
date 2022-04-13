@@ -18,6 +18,7 @@ enum Category: String, Codable, CaseIterable {
     case meatPoultrySeafood
     case condiments
     case drinks
+    case cooked
 }
 
 class CategoryConverter {
@@ -35,6 +36,8 @@ class CategoryConverter {
             return "Condiments"
         case .drinks:
             return "Drinks"
+        case .cooked:
+            return "Cooked"
         }
     }
     
@@ -49,6 +52,8 @@ class CategoryConverter {
             return Category.condiments
         } else if rawValue == "Drinks" {
             return Category.drinks
+        } else if rawValue == "Cooked" {
+            return Category.cooked
         } else {
             return Category.unknown
         }

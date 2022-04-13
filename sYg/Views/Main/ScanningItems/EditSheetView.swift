@@ -32,7 +32,7 @@ struct EditSheetView: View {
     var body: some View {
         ZStack {
             Form {
-                Text("Edit Item Info")
+                Text(vm.title)
                     .font(.title)
                 
                 nameField
@@ -90,6 +90,7 @@ extension EditSheetView {
             Text("Meat, Poultry, Seafood").tag("Meat, Poultry, Seafood")
             Text("Condiments").tag("Condiments")
             Text("Drinks").tag("Drinks")
+            Text("Cooked").tag("Cooked")
         }
         .onAppear(perform: {
             vm.$category

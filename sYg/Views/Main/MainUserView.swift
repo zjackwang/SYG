@@ -14,12 +14,14 @@ struct MainUserView: View {
     // View Model
     @StateObject private var mvm = MainViewModel.shared
     @StateObject private var sivm = ScannedItemViewModel.shared
+    @StateObject private var evm = EditViewModel.shared
 
     // For Sheets
     @State private var selectReceipt: Bool = false
     @State private var showScannedReceipt: Bool = false
     @State private var showSettings: Bool = false
-    
+    @State private var showEdit: Bool = false
+     
     // iCloud
     @State private var cancellables = Set<AnyCancellable>()
     
@@ -84,6 +86,8 @@ struct MainUserView: View {
                 // Confirmation
                 ConfirmationView(show: $mvm.showConfirmationView)
                     .ignoresSafeArea()
+                
+                EditSheetView(show: $showEdit)
             }
             // User confirmation alert 
             .alert(isPresented: $mvm.showConfirmationAlert) {
@@ -113,6 +117,8 @@ struct MainUserView: View {
                    content: {
                 SettingsView(show: $showSettings)
             })
+            // Manual edit
+//            .overlay()
         }
         .onAppear {
             // Request access for notifications if not given already
@@ -162,6 +168,8 @@ struct MainUserView: View {
                     print(name)
                 }
                 .store(in: &cancellables)
+            
+            addSubscriberToEdit()
         }
     }
 }
@@ -180,6 +188,51 @@ extension MainUserView {
     }
 }
 
+// MARK: Functions
+
+extension MainUserView {
+    
+    private func addSubscriberToEdit() {
+        evm.$confirmed
+            .combineLatest(evm.$viewToEdit)
+            .sink {
+                (isSuccessful, viewToEdit) in
+                
+                if isSuccessful,
+                   viewToEdit == .manualAddView {
+
+                    let newItem = evm.saveEditsToUserItem()
+
+                    print("DEBUGGING >>> CONFIRM MANUAL ADD IN LIST VIEW")
+                    mvm.confirmationTitle = "Add Result"
+
+                    sivm.addScannedItem(userItem: newItem) {
+                        result in
+                        switch result {
+                        case .success(let item):
+                            // Schedule notification
+                            let returnedRequest = EatByReminderManager.instance.scheduleReminderAtTime(for: item)
+                            mvm.confirmationText = "Edit Saved!"
+                            print("INFO: Successfully saved item")
+                            
+                            // DEBUG
+                            print("DEBUGGING: NEWLY SCHEDULED REQUEST")
+                            print(returnedRequest)
+                        case .failure(let error):
+                            mvm.error = error
+                            print("FAULT: Item not added")
+                        }
+                    }
+                    mvm.showConfirmationAlert.toggle()
+                    
+                    // DEBUG
+                    print("DEBUGGING: ALL SCHEDULED NOTIFIACATIONS ***")
+                    print(EatByReminderManager.instance.getAllScheduledNotifications())
+                }
+            }
+            .store(in: &cancellables)
+    }
+}
 
 // MARK: Components
 
@@ -217,6 +270,15 @@ extension MainUserView {
                         mvm.showReceiptSelector()
                     } label: {
                         Text("Choose From Library")
+                    }
+                    
+                    // Manual add
+                    Button {
+                        evm.viewToEdit = .manualAddView
+                        evm.title = "Add New Item"
+                        showEdit.toggle()
+                    } label: {
+                        Text("Add Item Manually")
                     }
                 }
             // Settings
