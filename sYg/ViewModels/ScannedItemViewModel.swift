@@ -7,13 +7,6 @@
 
 import CoreData
 
-// TODO: Manually added item
-//  1. need new category "cooked food"
-//  2. no "nameFromAnalysis". everything else filled out
-//  3. need to schedule notification
-//  4. use existing edit view
-//  5. add to core data
-
 /*
  * Owns core data local persistence container 
  */
@@ -113,6 +106,7 @@ class ScannedItemViewModel: ObservableObject {
      */
     func addScannedItem(userItem: UserItem, completionHandler: @escaping (Result<ScannedItem, Error>) -> () = { _ in }) {
         let scannedItem = ScannedItem(context: container.viewContext)
+        scannedItem.id = UUID()
         scannedItem.nameFromAnalysis = userItem.NameFromAnalysis
         scannedItem.name = userItem.Name
         scannedItem.dateOfPurchase = userItem.DateOfPurchase

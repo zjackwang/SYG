@@ -87,12 +87,15 @@ struct MainUserView: View {
                 ConfirmationView(show: $mvm.showConfirmationView)
                     .ignoresSafeArea()
                 
+                // Manual edit
                 EditSheetView(show: $showEdit)
             }
             // User confirmation alert 
             .alert(isPresented: $mvm.showConfirmationAlert) {
                 var msgString: String?
                 if let error = mvm.error as? ReceiptScanningError {
+                    msgString = "Error: \(error.localizedDescription)"
+                } else if let error = mvm.error as? EatByReminderError {
                     msgString = "Error: \(error.localizedDescription)"
                 } else if let error = mvm.error {
                     msgString = "Error: \(error.localizedDescription)"
@@ -117,12 +120,12 @@ struct MainUserView: View {
                    content: {
                 SettingsView(show: $showSettings)
             })
-            // Manual edit
-//            .overlay()
         }
         .onAppear {
             // Request access for notifications if not given already
             EatByReminderManager.instance.requestAuthorization()
+            
+            print(EatByReminderManager.instance.getAllScheduledNotifications())
             
             CloudKitUtility.getiCloudStatus()
                 .receive(on: DispatchQueue.main)
@@ -191,7 +194,7 @@ extension MainUserView {
 // MARK: Functions
 
 extension MainUserView {
-    
+    // TODO: FIX... doesn't schedule remidner 
     private func addSubscriberToEdit() {
         evm.$confirmed
             .combineLatest(evm.$viewToEdit)
@@ -204,30 +207,33 @@ extension MainUserView {
                     let newItem = evm.saveEditsToUserItem()
 
                     print("DEBUGGING >>> CONFIRM MANUAL ADD IN LIST VIEW")
-                    mvm.confirmationTitle = "Add Result"
 
                     sivm.addScannedItem(userItem: newItem) {
                         result in
-                        switch result {
-                        case .success(let item):
-                            // Schedule notification
-                            let returnedRequest = EatByReminderManager.instance.scheduleReminderAtTime(for: item)
-                            mvm.confirmationText = "Edit Saved!"
-                            print("INFO: Successfully saved item")
+                            switch result {
+                            case .success(let item):
+                                // Schedule notification
+                                let returnedRequest = EatByReminderManager.instance.scheduleReminderAtTime(for: item)
+                                print("INFO: Successfully saved item")
+                                print(returnedRequest)
+                            case .failure(let error):
+                                mvm.error = error
+                                print("FAULT: Item not added")
                             
-                            // DEBUG
-                            print("DEBUGGING: NEWLY SCHEDULED REQUEST")
-                            print(returnedRequest)
-                        case .failure(let error):
-                            mvm.error = error
-                            print("FAULT: Item not added")
+                            DispatchQueue.main.async {
+                                mvm.confirmationText = "Edit Saved!"
+                                mvm.confirmationTitle = "Add Result"
+                                mvm.showConfirmationAlert.toggle()
+                                
+                                // DEBUG
+                                print("DEBUGGING: ALL SCHEDULED NOTIFICATIONS ***")
+                                print(EatByReminderManager.instance.getAllScheduledNotifications())
+                            }
                         }
                     }
-                    mvm.showConfirmationAlert.toggle()
+          
                     
-                    // DEBUG
-                    print("DEBUGGING: ALL SCHEDULED NOTIFIACATIONS ***")
-                    print(EatByReminderManager.instance.getAllScheduledNotifications())
+                   
                 }
             }
             .store(in: &cancellables)
