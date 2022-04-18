@@ -22,6 +22,10 @@ struct CloudItem: Hashable, CloudKitableProtocol {
      */
     
     let name: String
+    var daysInFridgeDisplayed: Double
+    var daysOnShelfDisplayed: Double
+    var daysInFreezerDisplayed: Double
+    
     var daysInFridge: [Double]
     var daysOnShelf: [Double]
     var daysInFreezer: [Double]
@@ -42,6 +46,10 @@ struct CloudItem: Hashable, CloudKitableProtocol {
         self.daysInFreezer = record["daysInFreezer"] as? [Double] ?? []
         self.daysOnShelf = record["daysOnShelf"] as? [Double] ?? []
         
+        self.daysInFridgeDisplayed = record["daysInFridgeDisplayed"] ?? 4 * TimeConstants.dayTimeInterval
+        self.daysInFreezerDisplayed = record["daysInFreezerDisplayed"] ?? 30 * TimeConstants.dayTimeInterval
+        self.daysOnShelfDisplayed = record["daysOnShelfDisplayed"] ?? 1 * TimeConstants.dayTimeInterval
+        
         self.category = record["category"] ?? "Unknown"
         self.categoryList = record["categoryList"] as? [String] ?? []
         self.notes = record["notes"] ?? ""
@@ -52,10 +60,22 @@ struct CloudItem: Hashable, CloudKitableProtocol {
     /*
      * Initializer for new cloud item
      */
-    init?(name: String, daysInFridge: TimeInterval?, daysInFreezer: TimeInterval?, daysOnShelf: TimeInterval?, category: String, notes: String?) {
+    init?(name: String, daysInFridgeDisplayed: TimeInterval?, daysInFreezerDisplayed: TimeInterval?, daysOnShelfDisplayed: TimeInterval?, daysInFridge: TimeInterval?, daysInFreezer: TimeInterval?, daysOnShelf: TimeInterval?, category: String, notes: String?) {
         // blank record
         let record = CKRecord(recordType: CloudItem.recordType)
         record["name"] = name
+        
+        if let daysInFridgeDisplayed = daysInFridgeDisplayed {
+            record["daysInFridgeDisplayed"] = daysInFridgeDisplayed
+        }
+        
+        if let daysInFreezerDisplayed = daysInFreezerDisplayed {
+            record["daysInFreezerDisplayed"] = daysInFreezerDisplayed
+        }
+        
+        if let daysOnShelfDisplayed = daysOnShelfDisplayed {
+            record["daysOnShelfDisplayed"] = daysOnShelfDisplayed
+        }
         
         if let daysInFridge = daysInFridge {
             record["daysInFridge"] = [daysInFridge]
@@ -74,6 +94,8 @@ struct CloudItem: Hashable, CloudKitableProtocol {
         
         self.init(record: record)
     }
+    
+    // TODO: update displayed date as well 
     
     func updateFridgeDays(newDays: Double) -> CloudItem? {
         let record = record

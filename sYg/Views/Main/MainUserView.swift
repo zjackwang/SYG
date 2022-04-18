@@ -213,9 +213,8 @@ extension MainUserView {
                             switch result {
                             case .success(let item):
                                 // Schedule notification
-                                let returnedRequest = EatByReminderManager.instance.scheduleReminderAtTime(for: item)
+                                let _ = EatByReminderManager.instance.scheduleReminderAtTime(for: item)
                                 print("INFO: Successfully saved item")
-                                print(returnedRequest)
                             case .failure(let error):
                                 mvm.error = error
                                 print("FAULT: Item not added")

@@ -10,15 +10,6 @@ import CloudKit
 import Combine
 
 /*
- * TODO: Create PushNotificationsViewModel
- *      - Schedule Notification
- *      - Remove Notification
- *          - One notification per day for all exp items that day (grouped)
- *      - Edit Notification
- *      - Get all Notificaitons
- */
-
-/*
  * Owns interface to iCloud data storage
  */
 class CloudKitViewModel: ObservableObject {
@@ -120,11 +111,11 @@ class CloudKitViewModel: ObservableObject {
                 var cloudItem: CloudItem?
                 switch confirmedItem.Storage {
                 case .fridge:
-                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: timeTilExpire,  daysInFreezer: nil, daysOnShelf: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
+                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridgeDisplayed: timeTilExpire, daysInFreezerDisplayed: nil, daysOnShelfDisplayed: nil, daysInFridge: timeTilExpire,  daysInFreezer: nil, daysOnShelf: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
                 case .freezer:
-                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: nil,  daysInFreezer: timeTilExpire, daysOnShelf: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
+                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridgeDisplayed: nil, daysInFreezerDisplayed: timeTilExpire, daysOnShelfDisplayed: nil, daysInFridge: nil,  daysInFreezer: timeTilExpire, daysOnShelf: nil, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
                 case .shelf:
-                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridge: nil,  daysInFreezer: nil, daysOnShelf: timeTilExpire, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
+                    cloudItem = CloudItem(name: confirmedItem.NameFromAnalysis, daysInFridgeDisplayed: nil, daysInFreezerDisplayed: nil, daysOnShelfDisplayed: timeTilExpire, daysInFridge: nil,  daysInFreezer: nil, daysOnShelf: timeTilExpire, category: CategoryConverter.rawValue(given: confirmedItem.Category), notes: nil)
                 case .unknown:
                     break
                 }
