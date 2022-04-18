@@ -318,7 +318,7 @@ extension EatByReminderManager {
      * Output: UNMutableNotificationContent content
      */
     private func createNotificationContentForItem(item: String) -> UNMutableNotificationContent {
-        let title = "Eat Yo Shit"
+        let title = "Eat Your Stuff!"
         let body = "\(item).\nDon't let it rot and die!!! - 🥺🥦\n"
         let sound: UNNotificationSound = .default
         
@@ -336,7 +336,7 @@ extension EatByReminderManager {
      * Output: UNMutableNotificationContent content
      */
     private func createNotificationContentForItems(items: [String]) -> UNMutableNotificationContent {
-        let title = "Eat Yo Shit"
+        let title = "Eat Your Stuff"
         var body = "You have items to eat.\nDon't let them rot and die!!! - 🥺🥦\n"
         
         for item in items {
