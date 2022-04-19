@@ -26,6 +26,10 @@ class MainViewModel: ObservableObject {
     private var pvm = ProduceViewModel.shared
     private var cvm = ConfirmationViewModel.shared
     
+    // Receipt popovers
+    @Published var selectReceipt: Bool = false
+    @Published var showScannedReceipt: Bool = false
+    
     // Receipt to display for confirmation
     @Published var receipt: UIImage?
     
@@ -53,16 +57,44 @@ class MainViewModel: ObservableObject {
     // Confirmation View
     @Published var showConfirmationView: Bool = false
     
-    // Confirmation of success
+    // DEPRECATED Confirmation of success
     @Published var showConfirmationAlert: Bool = false
     @Published var confirmationTitle: String = ""
     @Published var confirmationText: String = ""
+    
+    // Alerts on MainView
+    @Published var showAlert: Bool = false
+    @Published var alertTitle: String = ""
+    @Published var alertText: String = ""
     @Published var error: Error?
     
+    // For editing items on MainView
+    @Published var showEdit: Bool = false 
     
+}
+
+// MARK: User functions
+extension MainViewModel {
     
-    // MARK: Receipt Analysis Functions
-     
+    func showError(error: Error) {
+        self.handleError(error: error)
+    }
+    
+    /*
+     * Display API Request failure
+     */
+    private func handleError(error: Error?) {
+        DispatchQueue.main.async {
+            self.showAlert.toggle()
+            self.showProgressDialog.toggle()
+            self.error = error
+        }
+    }
+}
+
+// MARK: Receipt Analysis Functions
+
+extension MainViewModel {
     
     /*
      * Brings up camera to scan receipt
@@ -74,8 +106,7 @@ class MainViewModel: ObservableObject {
             }
             showSelector = true
         } catch {
-            showCameraAlert = true
-            cameraError = Selector.CameraErrorType(error: error as! Selector.SelectorError)
+            handleError(error: error)
         }
     }
     
@@ -155,9 +186,9 @@ class MainViewModel: ObservableObject {
             self.cvm.setItemsToConfirm(itemsToConfirm: scannedItems)
             self.showProgressDialog.toggle()
             self.showConfirmationView.toggle()
-            self.confirmationTitle = "Read Me!"
-            self.confirmationText = "Help EatThat! be more accurate by editing your purchase/expiration dates to the correct times and setting the category and the place of storage. Swipe right to edit and swipe left to remove unwanted items. \nThanks! 🥳🥑"
-            self.showConfirmationAlert.toggle()
+            self.alertTitle = "Read Me!"
+            self.alertText = "Help EatThat! be more accurate by editing your purchase/expiration dates to the correct times and setting the category and the place of storage. Swipe right to edit and swipe left to remove unwanted items. \nThanks! 🥳🥑"
+            self.showAlert.toggle()
             
         }
     }
@@ -197,9 +228,9 @@ class MainViewModel: ObservableObject {
          * SUCCESS!
          */
         DispatchQueue.main.async {
-            self.confirmationTitle = "Scanning Result"
-            self.confirmationText = "Successfully scanned!"
-            self.showConfirmationAlert.toggle()
+            self.alertTitle = "Scanning Result"
+            self.alertText = "Successfully scanned!"
+            self.showAlert.toggle()
         }
     }
 
@@ -355,7 +386,11 @@ class MainViewModel: ObservableObject {
             self.handleError(error: ReceiptScanningError("Request TIMEOUT"))
         }
     }
-    
+}
+
+// MARK: JSON Functions
+
+extension MainViewModel {
     /* Decode JSON Response. */
     private func decodeAnalyzedReceipt(_ jsonData: Data?) -> AnalyzedReceipt? {
         var analyzedReceiptObj: AnalyzedReceipt?
@@ -409,16 +444,5 @@ class MainViewModel: ObservableObject {
         }
         
         return analyzedReceiptString
-    }
-    
-    /*
-     * Display API Request failure
-     */
-    private func handleError(error: Error?) {
-        DispatchQueue.main.async {
-            self.showConfirmationAlert.toggle()
-            self.showProgressDialog.toggle()
-            self.error = error
-        }
     }
 }

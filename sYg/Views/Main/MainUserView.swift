@@ -15,6 +15,7 @@ struct MainUserView: View {
     @StateObject private var mvm = MainViewModel.shared
     @StateObject private var sivm = ScannedItemViewModel.shared
     @StateObject private var evm = EditViewModel.shared
+    @StateObject var givm = GenericItemViewModel.shared
 
     // For Sheets
     @State private var selectReceipt: Bool = false
@@ -118,7 +119,7 @@ struct MainUserView: View {
             // Settings
             .sheet(isPresented: $showSettings,
                    content: {
-                SettingsView(show: $showSettings)
+                SettingsView()
             })
         }
         .onAppear {
@@ -194,7 +195,6 @@ extension MainUserView {
 // MARK: Functions
 
 extension MainUserView {
-    // TODO: FIX... doesn't schedule remidner 
     private func addSubscriberToEdit() {
         evm.$confirmed
             .combineLatest(evm.$viewToEdit)
@@ -297,57 +297,3 @@ extension MainUserView {
         }
     }
 }
-
-struct ScannedReceiptPopover: View {
-    @Binding var showPopover: Bool
-    @StateObject private var mvm = MainViewModel.shared
-    @StateObject private var pvm = ProduceViewModel.shared
-    
-    // Color Palette
-    private let background: Color = Color.DarkPalette.background
-    private let onBackground: Color = Color.DarkPalette.onBackground
-    private let primary: Color = Color.DarkPalette.primary
-    private let secondary: Color = Color.DarkPalette.secondary
-
-    var body: some View {
-        ZStack {
-            ZStack (alignment: .topLeading){
-                // Background
-                primary
-                    .ignoresSafeArea()
-                // Foreground
-                BackButton(show: $showPopover)
-                    .font(.largeTitle)
-                    .foregroundColor(onBackground)
-                    .frame(width: 100, height: 100)
-            }
-            VStack {
-                // Receipt
-                Image (uiImage: mvm.receipt ?? UIImage(named: "placeholder")!)
-                    .resizable()
-                    .frame(width: 300, height: 300, alignment: .center)
-                    .background(
-                        Rectangle()
-                            .fill(secondary)
-                            .frame(width: 315, height: 315)
-                            .cornerRadius(5)
-                    )
-                    .padding([.bottom], 50)
-
-                // Confirmation
-                if let receipt = mvm.receipt{
-                    Button {
-                        mvm.analyzeImage(receipt: receipt) 
-                        withAnimation {
-                            showPopover.toggle()
-                        }
-                    } label: {
-                        ConfirmButtonLabel(text: "Confirm Image", height: 50, width: 300)
-                    }
-                }
-            }
-        }
-    }
-}
-
-

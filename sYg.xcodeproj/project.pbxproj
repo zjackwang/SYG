@@ -58,6 +58,8 @@
 		DBA3AC4A27B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3AC4927B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift */; };
 		DBA4365527D07CB60018A539 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA4365427D07CB60018A539 /* Launch Screen.storyboard */; };
 		DBA6EEA327868F58002E19AA /* MainUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA6EEA227868F58002E19AA /* MainUserView.swift */; };
+		DBA907A5280F59C7003C1804 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA907A4280F59C7003C1804 /* MainView.swift */; };
+		DBA907A7280F5B22003C1804 /* ScannedReceiptPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA907A6280F5B22003C1804 /* ScannedReceiptPopover.swift */; };
 		DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C49277CC29600C5F783 /* MainViewModel.swift */; };
 		DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C4B277CC3AE00C5F783 /* Selector.swift */; };
 		DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */; };
@@ -129,6 +131,8 @@
 		DBA3AC4927B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AzureHTTPManager - AzureHTTPManagerProtocol.swift"; sourceTree = "<group>"; };
 		DBA4365427D07CB60018A539 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		DBA6EEA227868F58002E19AA /* MainUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUserView.swift; sourceTree = "<group>"; };
+		DBA907A4280F59C7003C1804 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		DBA907A6280F5B22003C1804 /* ScannedReceiptPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedReceiptPopover.swift; sourceTree = "<group>"; };
 		DBB25C49277CC29600C5F783 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DBB25C4B277CC3AE00C5F783 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		DBB4990A27D030A400E08D8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 			children = (
 				DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */,
 				DB7BA23127D93F2200759932 /* EditSheetView.swift */,
+				DBA907A6280F5B22003C1804 /* ScannedReceiptPopover.swift */,
 			);
 			path = ScanningItems;
 			sourceTree = "<group>";
@@ -458,6 +463,7 @@
 				DB17C4CF28006C5B009C5EDB /* ScanningItems */,
 				DB293A5B2795C98600001DA6 /* UserItemViews */,
 				DBA6EEA227868F58002E19AA /* MainUserView.swift */,
+				DBA907A4280F59C7003C1804 /* MainView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -598,7 +604,9 @@
 				DB99D3F327F3F02A00C51B61 /* CloudKitUtility.swift in Sources */,
 				DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */,
 				DB2C03A527D6EF5D006E058E /* SettingsViewModel.swift in Sources */,
+				DBA907A5280F59C7003C1804 /* MainView.swift in Sources */,
 				DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */,
+				DBA907A7280F5B22003C1804 /* ScannedReceiptPopover.swift in Sources */,
 				DB7E9B2527B58237001A937A /* ItemMatcherFactory.swift in Sources */,
 				DB99D3F827F3F1BC00C51B61 /* CloudItem.swift in Sources */,
 				DB623D102783AF3C00EEEC09 /* AzureHTTPManagerProtocol.swift in Sources */,

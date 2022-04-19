@@ -14,8 +14,6 @@ class GenericItemViewModel: ObservableObject {
     // MARK: Initialization
     @Published var genericItems: [GenericItem] = []
     
-    @Published var showView: Bool = false
-    
     // Searching
     let searchPrompt: String = "Enter an item name here!"
     @Published var searchText: String = ""

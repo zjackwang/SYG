@@ -55,7 +55,7 @@ struct GenericItemView: View {
                     }
                 }
             }
-            .searchable(text: $givm.searchText, placement: .navigationBarDrawer, prompt: givm.searchPrompt)
+            .searchable(text: $givm.searchText, placement: .toolbar, prompt: givm.searchPrompt)
             .listStyle(.insetGrouped)
         }
     }

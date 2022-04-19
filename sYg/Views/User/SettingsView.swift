@@ -8,24 +8,26 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var show: Bool // TODO: Back button needed?
-    
     var svm = SettingsViewModel.shared
 
     var body: some View {
-        NavigationView {
-            List {
-                InfoSection
-                ReminderSettings
-            }
-            .listStyle(.insetGrouped)
-            .navigationTitle("Settings")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    BackButton(show: $show)
+        
+        List {
+            InfoSection
+            ReminderSettings
+        }
+        .listStyle(.insetGrouped)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    GenericItemView()
+                } label: {
+                    Text("Go to database")
                 }
             }
         }
+        .navigationTitle("Settings")
+    
     }
 }
 
@@ -86,7 +88,8 @@ extension SettingsView {
         }
 
     }
-
+    
+    
     private var date: Date {
         let dateComponent = DateComponents(hour: SettingsViewModel.shared.reminderHour)
         return Calendar.current.date(from: dateComponent)!
