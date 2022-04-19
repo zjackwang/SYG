@@ -27,7 +27,6 @@
 		DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */; };
 		DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */; };
 		DB45EA78277BF7B5001BA6C2 /* ProduceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA77277BF7B5001BA6C2 /* ProduceItem.swift */; };
-		DB45EA7A277BF81C001BA6C2 /* ProduceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */; };
 		DB518A3C27F9E3D900ABA7B6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB518A3B27F9E3D900ABA7B6 /* CloudKit.framework */; };
 		DB518A3F27FA4E6800ABA7B6 /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB518A3E27FA4E6800ABA7B6 /* ConfirmationViewModel.swift */; };
 		DB623D092783AA7A00EEEC09 /* AnalyzedReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D082783AA7A00EEEC09 /* AnalyzedReceipt.swift */; };
@@ -62,6 +61,10 @@
 		DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C49277CC29600C5F783 /* MainViewModel.swift */; };
 		DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C4B277CC3AE00C5F783 /* Selector.swift */; };
 		DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */; };
+		DBC6479F280F03B700AE893E /* GenericItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6479E280F03B700AE893E /* GenericItemView.swift */; };
+		DBC647A2280F0B0400AE893E /* GenericItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC647A1280F0B0400AE893E /* GenericItemViewModel.swift */; };
+		DBC647A4280F0B5600AE893E /* GenericItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC647A3280F0B5600AE893E /* GenericItem.swift */; };
+		DBC647A6280F0D9B00AE893E /* GenericItemListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */; };
 		DBD1318827D33445007BBA37 /* EnvVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD1318727D33445007BBA37 /* EnvVars.swift */; };
 		DBFFD78927CDE39600584484 /* PopOvers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78827CDE39600584484 /* PopOvers.swift */; };
 		DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFFD78C27CE769600584484 /* SettingsView.swift */; };
@@ -92,7 +95,6 @@
 		DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedItemViewModel.swift; sourceTree = "<group>"; };
 		DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProduceViewModel.swift; path = ../../../../SYG/sYg/sYg/ViewModels/ProduceViewModel.swift; sourceTree = "<group>"; };
 		DB45EA77277BF7B5001BA6C2 /* ProduceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItem.swift; sourceTree = "<group>"; };
-		DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceListView.swift; sourceTree = "<group>"; };
 		DB518A3927F9E3D400ABA7B6 /* sYgRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sYgRelease.entitlements; sourceTree = "<group>"; };
 		DB518A3B27F9E3D900ABA7B6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		DB518A3D27F9F41C00ABA7B6 /* sYgDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sYgDebug.entitlements; sourceTree = "<group>"; };
@@ -131,6 +133,10 @@
 		DBB25C4B277CC3AE00C5F783 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		DBB4990A27D030A400E08D8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptSelector.swift; sourceTree = "<group>"; };
+		DBC6479E280F03B700AE893E /* GenericItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemView.swift; sourceTree = "<group>"; };
+		DBC647A1280F0B0400AE893E /* GenericItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemViewModel.swift; sourceTree = "<group>"; };
+		DBC647A3280F0B5600AE893E /* GenericItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItem.swift; sourceTree = "<group>"; };
+		DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemListRowView.swift; sourceTree = "<group>"; };
 		DBD1318727D33445007BBA37 /* EnvVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvVars.swift; sourceTree = "<group>"; };
 		DBFFD78827CDE39600584484 /* PopOvers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOvers.swift; sourceTree = "<group>"; };
 		DBFFD78C27CE769600584484 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -218,6 +224,7 @@
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DBC647A0280F0AF800AE893E /* Help */,
 				DB99D40427F5F82C00C51B61 /* Edit */,
 				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
 				DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */,
@@ -402,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				DB99D3F727F3F1BC00C51B61 /* CloudItem.swift */,
+				DBC647A3280F0B5600AE893E /* GenericItem.swift */,
 			);
 			path = CloudModels;
 			sourceTree = "<group>";
@@ -438,7 +446,8 @@
 		DBA6EEA027868F27002E19AA /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				DB45EA79277BF81C001BA6C2 /* ProduceListView.swift */,
+				DBC6479E280F03B700AE893E /* GenericItemView.swift */,
+				DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */,
 			);
 			path = Help;
 			sourceTree = "<group>";
@@ -451,6 +460,14 @@
 				DBA6EEA227868F58002E19AA /* MainUserView.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		DBC647A0280F0AF800AE893E /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				DBC647A1280F0B0400AE893E /* GenericItemViewModel.swift */,
+			);
+			path = Help;
 			sourceTree = "<group>";
 		};
 		DBFFD79027CE853700584484 /* Misc */ = {
@@ -544,6 +561,7 @@
 			files = (
 				DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */,
 				DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */,
+				DBC6479F280F03B700AE893E /* GenericItemView.swift in Sources */,
 				DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */,
 				DBFFD79627CEC6DE00584484 /* BackButton.swift in Sources */,
 				DBFFD79927CFEC4800584484 /* ColorExtension.swift in Sources */,
@@ -560,12 +578,15 @@
 				DB99D3FE27F4BEB500C51B61 /* ConfirmButton.swift in Sources */,
 				DB297AE527A9E73F00EAA3C3 /* ItemsHTTPManager.swift in Sources */,
 				DBD1318827D33445007BBA37 /* EnvVars.swift in Sources */,
+				DBC647A4280F0B5600AE893E /* GenericItem.swift in Sources */,
+				DBC647A6280F0D9B00AE893E /* GenericItemListRowView.swift in Sources */,
 				DB623D1B2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift in Sources */,
 				DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */,
 				DB99D3FC27F4B30000C51B61 /* ConfirmationView.swift in Sources */,
 				DBA3AC4527B6C026008975C4 /* HTTPManager.swift in Sources */,
 				DB7BA23227D93F2200759932 /* EditSheetView.swift in Sources */,
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
+				DBC647A2280F0B0400AE893E /* GenericItemViewModel.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB99D3FA27F3F3B300C51B61 /* CloudKitViewModel.swift in Sources */,
 				DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */,
@@ -588,7 +609,6 @@
 				DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */,
 				DBA3AC4727B6C09B008975C4 /* HTTPManager - HTTPManagerProtocol.swift in Sources */,
 				DB25C1A427C961CE00DBEBB2 /* UnfairLock.swift in Sources */,
-				DB45EA7A277BF81C001BA6C2 /* ProduceListView.swift in Sources */,
 				DB623D0B2783ABD300EEEC09 /* AzureHTTPManager.swift in Sources */,
 				DBA3AC4A27B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift in Sources */,
 				DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */,
