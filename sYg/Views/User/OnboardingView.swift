@@ -55,7 +55,8 @@ struct OnboardingView: View {
                     addNameSection
                         .transition(transition)
                 case .signedIn:
-                    MainUserView()
+//                    MainUserView()
+                    MainView()
                         // Our core data managed object context into env.
                         .environment(\.managedObjectContext, ScannedItemViewModel.shared.container.viewContext)
                         .onAppear {

@@ -12,7 +12,7 @@ struct BackButton: View {
     @Binding var show: Bool
     
     var body: some View {
-        Image(systemName: "arrowshape.turn.up.left")
+        Image(systemName: "xmark")
             .font(.headline)
             .onTapGesture {
                 show.toggle()

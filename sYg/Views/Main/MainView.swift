@@ -17,6 +17,15 @@ import Combine
  *  - (for now) Adds Items
  *  - Displays Alerts
  */
+
+/*
+ * MARK: Beta 2.2.
+ *   - removed ConfirmationView
+ *   - combined confirmation alerts and scanning alerts
+ *   - replaced settings sheet with settings nav link
+ *   - added generic item list view accessible via nav link in settings view
+ *   - moved addSubscribedToEdit to vm
+ */
 struct MainView: View {
     // View Models
     @StateObject private var mvm = MainViewModel.shared
@@ -47,6 +56,7 @@ struct MainView: View {
                     }
                 // Progress Dialog
                 ProgressDialog(show: $mvm.showProgressDialog, message: $mvm.progressMessage)
+                    .ignoresSafeArea()
                 
                 // User prompt confirmation of Receipt photo
                 ScannedReceiptPopover(showPopover: $mvm.showScannedReceipt)
@@ -56,6 +66,8 @@ struct MainView: View {
                         insertion: .move(edge: .trailing),
                         removal: .move(edge: .leading)))
                 
+                // Manual edit
+                EditSheetView(show: $mvm.showEdit)
             }
             // Top toolbar
             .toolbar {
@@ -92,6 +104,64 @@ struct MainView: View {
             }
         }
         .navigationTitle("Main Page")
+        // TODO: Change Beta2.3. when app start structure changes
+        // MARK: iCloud auth
+        .onAppear {
+            // Request access for notifications if not given already
+            EatByReminderManager.instance.requestAuthorization()
+            
+            // DEBUGGING
+            print(EatByReminderManager.instance.getAllScheduledNotifications())
+            
+            // DEBUGGING
+            CloudKitUtility.getiCloudStatus()
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .failure(let error ):
+                        print(error.localizedDescription)
+                    case .finished:
+                        break
+                    }
+                } receiveValue: { success in
+                        print("Is signed in to icloud account!")
+                }
+                .store(in: &mvm.cancellables)
+
+            
+            // Request access to icloud
+            CloudKitUtility.requestApplicationPermission()
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print(error)
+                    }
+                } receiveValue: { success in
+                    print("Successfully enabled iCloud in EatThat!")
+                }
+                .store(in: &mvm.cancellables)
+            
+            // DEBUGGING
+            CloudKitUtility.discoverUserIdentity()
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print(error)
+                    }
+                    
+                } receiveValue: { name in
+                    print(name)
+                }
+                .store(in: &mvm.cancellables)
+            
+            mvm.addSubscriberToEdit()
+        }
     }
 }
 

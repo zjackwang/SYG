@@ -20,7 +20,7 @@ import SwiftUI
  *  4. Navigate via button in settings view
  *  5.
  */
-struct GenericItemView: View {
+struct GenericItemsView: View {
     @StateObject var givm = GenericItemViewModel.shared
 
     @State var rowNum: Int = 0
@@ -54,25 +54,29 @@ struct GenericItemView: View {
                         .tint(.yellow)
                     }
                 }
+                
             }
-            .searchable(text: $givm.searchText, placement: .toolbar, prompt: givm.searchPrompt)
             .listStyle(.insetGrouped)
+            .navigationTitle("Generic Items")
         }
+        .searchable(text: $givm.searchText, prompt: givm.searchPrompt)
+        .navigationBarTitleDisplayMode(.inline)
     }
+
 }
 
 
 
-struct GenericItemView_Previews: PreviewProvider {
+struct GenericItemsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            GenericItemView()
+            GenericItemsView()
         }
     }
 }
 
 
-extension GenericItemView {
+extension GenericItemsView {
     // TODO:
     private var headers: some View {
         LazyVGrid(columns: columns, spacing: 30) {
@@ -80,17 +84,17 @@ extension GenericItemView {
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.leading, 20)
-                .foregroundColor(onBackground)
+                .foregroundColor(background)
             Text("Name")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.leading, 20)
-                .foregroundColor(onBackground)
+                .foregroundColor(background)
             Text("Frg/Frzr/Slf")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.trailing, 10)
-                .foregroundColor(onBackground)
+                .foregroundColor(background)
         }
     }
 }

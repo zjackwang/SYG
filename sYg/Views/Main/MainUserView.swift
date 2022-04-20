@@ -6,6 +6,7 @@
 //
 //  https://peterfriese.dev/swiftui-listview-part2/
 //
+// MARK: DEPRECATED
 
 import SwiftUI
 import Combine

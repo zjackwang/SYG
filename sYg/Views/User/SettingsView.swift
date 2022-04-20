@@ -20,7 +20,7 @@ struct SettingsView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 NavigationLink {
-                    GenericItemView()
+                    GenericItemsView()
                 } label: {
                     Text("Go to database")
                 }

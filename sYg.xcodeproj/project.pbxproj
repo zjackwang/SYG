@@ -63,7 +63,7 @@
 		DBB25C4A277CC29600C5F783 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C49277CC29600C5F783 /* MainViewModel.swift */; };
 		DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB25C4B277CC3AE00C5F783 /* Selector.swift */; };
 		DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */; };
-		DBC6479F280F03B700AE893E /* GenericItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6479E280F03B700AE893E /* GenericItemView.swift */; };
+		DBC6479F280F03B700AE893E /* GenericItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6479E280F03B700AE893E /* GenericItemsView.swift */; };
 		DBC647A2280F0B0400AE893E /* GenericItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC647A1280F0B0400AE893E /* GenericItemViewModel.swift */; };
 		DBC647A4280F0B5600AE893E /* GenericItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC647A3280F0B5600AE893E /* GenericItem.swift */; };
 		DBC647A6280F0D9B00AE893E /* GenericItemListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */; };
@@ -137,7 +137,7 @@
 		DBB25C4B277CC3AE00C5F783 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		DBB4990A27D030A400E08D8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DBBDD37E277C09A60030A51E /* ReceiptSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptSelector.swift; sourceTree = "<group>"; };
-		DBC6479E280F03B700AE893E /* GenericItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemView.swift; sourceTree = "<group>"; };
+		DBC6479E280F03B700AE893E /* GenericItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemsView.swift; sourceTree = "<group>"; };
 		DBC647A1280F0B0400AE893E /* GenericItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemViewModel.swift; sourceTree = "<group>"; };
 		DBC647A3280F0B5600AE893E /* GenericItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItem.swift; sourceTree = "<group>"; };
 		DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemListRowView.swift; sourceTree = "<group>"; };
@@ -451,7 +451,7 @@
 		DBA6EEA027868F27002E19AA /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				DBC6479E280F03B700AE893E /* GenericItemView.swift */,
+				DBC6479E280F03B700AE893E /* GenericItemsView.swift */,
 				DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */,
 			);
 			path = Help;
@@ -567,7 +567,7 @@
 			files = (
 				DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */,
 				DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */,
-				DBC6479F280F03B700AE893E /* GenericItemView.swift in Sources */,
+				DBC6479F280F03B700AE893E /* GenericItemsView.swift in Sources */,
 				DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */,
 				DBFFD79627CEC6DE00584484 /* BackButton.swift in Sources */,
 				DBFFD79927CFEC4800584484 /* ColorExtension.swift in Sources */,

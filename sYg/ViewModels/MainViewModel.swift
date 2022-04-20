@@ -7,11 +7,14 @@
 
 import SwiftUI
 import UIKit
+import Combine
 
 /*
  * Encapsulates objs and actions required to get UIKit ImagePicker Functionality
  * Once image is confirmed, sends to Azure for analysis and returns results 
  */
+
+// TODO: Beta 2.3. Split into two vm, mainvm and scannervm 
 class MainViewModel: ObservableObject {
     
     /*
@@ -24,6 +27,7 @@ class MainViewModel: ObservableObject {
     // View models
     private var sivm = ScannedItemViewModel.shared
     private var pvm = ProduceViewModel.shared
+    private var evm = EditViewModel.shared
     private var cvm = ConfirmationViewModel.shared
     
     // Receipt popovers
@@ -69,12 +73,61 @@ class MainViewModel: ObservableObject {
     @Published var error: Error?
     
     // For editing items on MainView
-    @Published var showEdit: Bool = false 
+    @Published var showEdit: Bool = false
+    
+    // iCloud Storage
+    @Published var cancellables = Set<AnyCancellable>()
     
 }
 
-// MARK: User functions
+// MARK: View functions
 extension MainViewModel {
+    
+    func addSubscriberToEdit() {
+        evm.$confirmed
+            .combineLatest(evm.$viewToEdit)
+            .sink {
+                [weak self]
+                (isSuccessful, viewToEdit) in
+                
+                guard let self = self else { return }
+                
+                if isSuccessful,
+                   viewToEdit == .manualAddView {
+
+                    let newItem = self.evm.saveEditsToUserItem()
+
+                    print("DEBUGGING >>> CONFIRM MANUAL ADD IN LIST VIEW")
+
+                    self.sivm.addScannedItem(userItem: newItem) {
+                        result in
+                            switch result {
+                            case .success(let item):
+                                // Schedule notification
+                                let _ = EatByReminderManager.instance.scheduleReminderAtTime(for: item)
+                                print("INFO: Successfully saved item")
+                            case .failure(let error):
+                                self.error = error
+                                print("FAULT: Item not added")
+                            
+                            DispatchQueue.main.async {
+                                self.confirmationText = "Edit Saved!"
+                                self.confirmationTitle = "Add Result"
+                                self.showConfirmationAlert.toggle()
+                                
+                                // DEBUG
+                                print("DEBUGGING: ALL SCHEDULED NOTIFICATIONS ***")
+                                print(EatByReminderManager.instance.getAllScheduledNotifications())
+                            }
+                        }
+                    }
+          
+                    
+                   
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     func showError(error: Error) {
         self.handleError(error: error)
@@ -86,7 +139,7 @@ extension MainViewModel {
     private func handleError(error: Error?) {
         DispatchQueue.main.async {
             self.showAlert.toggle()
-            self.showProgressDialog.toggle()
+//            self.showProgressDialog.toggle()
             self.error = error
         }
     }
