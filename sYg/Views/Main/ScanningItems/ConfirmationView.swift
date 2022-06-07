@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ConfirmationView: View {
-    @StateObject private var ckvm = CloudKitViewModel.shared
+//    @StateObject private var ckvm = CloudKitViewModel.shared
     @StateObject private var sivm = ScannedItemViewModel.shared
     @StateObject private var mvm = MainViewModel.shared
     @StateObject private var evm = EditViewModel.shared
@@ -56,7 +56,8 @@ struct ConfirmationView: View {
                 .listStyle(.plain)
 
                 Button {
-                    ckvm.updateCloudDatabase(confirmedItems: cvm.itemsToConfirm)
+                    // TODO: Change this to use private api
+//                    ckvm.updateCloudDatabase(confirmedItems: cvm.itemsToConfirm)
                     mvm.addConfirmedUserItems(confirmedItems: cvm.itemsToConfirm)
                     show.toggle()
                 } label: {
