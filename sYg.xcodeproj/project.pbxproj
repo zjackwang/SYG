@@ -35,6 +35,7 @@
 		DB3283692850063400F73903 /* GenericItemsHTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3283682850063400F73903 /* GenericItemsHTTPManager.swift */; };
 		DB32836C285007B900F73903 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32836B285007B900F73903 /* Crypto.swift */; };
 		DB32836F2851089B00F73903 /* ProduceItemEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32836E2851089B00F73903 /* ProduceItemEndpointTests.swift */; };
+		DB32837C285390DA00F73903 /* ItemMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32837B285390DA00F73903 /* ItemMatcher.swift */; };
 		DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */; };
 		DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */; };
 		DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */; };
@@ -127,6 +128,7 @@
 		DB3283682850063400F73903 /* GenericItemsHTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemsHTTPManager.swift; sourceTree = "<group>"; };
 		DB32836B285007B900F73903 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		DB32836E2851089B00F73903 /* ProduceItemEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceItemEndpointTests.swift; sourceTree = "<group>"; };
+		DB32837B285390DA00F73903 /* ItemMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMatcher.swift; sourceTree = "<group>"; };
 		DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanningErrors.swift; sourceTree = "<group>"; };
 		DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedItemViewModel.swift; sourceTree = "<group>"; };
 		DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceViewModel.swift; sourceTree = "<group>"; };
@@ -345,6 +347,14 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
+		DB32837D2853E23200F73903 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
 		DB34300727BEC11700CF076A /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,8 +531,9 @@
 		DB7E9B1C27B5686B001A937A /* ItemMatcher */ = {
 			isa = PBXGroup;
 			children = (
+				DB32837D2853E23200F73903 /* Old */,
 				DB7E9B2127B56DAF001A937A /* Protocols */,
-				DB7E9B2427B58237001A937A /* ItemMatcherFactory.swift */,
+				DB32837B285390DA00F73903 /* ItemMatcher.swift */,
 			);
 			path = ItemMatcher;
 			sourceTree = "<group>";
@@ -783,6 +794,7 @@
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */,
+				DB32837C285390DA00F73903 /* ItemMatcher.swift in Sources */,
 				DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */,
 				DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */,
 				DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */,

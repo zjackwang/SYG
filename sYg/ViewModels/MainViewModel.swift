@@ -26,7 +26,6 @@ class MainViewModel: ObservableObject {
     
     // View models
     private var sivm = ScannedItemViewModel.shared
-    private var pvm = ProduceViewModel.shared
     private var evm = EditViewModel.shared
     private var cvm = ConfirmationViewModel.shared
     
@@ -212,15 +211,16 @@ extension MainViewModel {
         print("INFO: Transaction date: \(dateOfPurchase)")
         
         // Get expiration time interval
-        let itemMatcher = ItemMatcher.factory
+        let itemMatcher = ItemMatcher.matcher
         var scannedItems: [UserItem] = []
         
         for item in itemsArray {
             let name = item.valueObject["Name"]?.valueString ?? "Unknown"
             var dateToRemind: Date = dateOfPurchase
             
-            // find best match
-            dateToRemind += itemMatcher.getExpirationTimeInterval(for: name)
+            // Find best match
+            dateToRemind += itemMatcher.getEatByInterval(for: name)
+
             
             scannedItems.append(
                 UserItem(

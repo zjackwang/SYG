@@ -17,17 +17,26 @@ class GenericItemViewModel: ObservableObject {
     // MARK: Initialization
 
     static let shared = GenericItemViewModel()
-    private init() {}
+    
+    private init() {
+        // Fetch generic items to put into memory
+        Task {
+            await fetchAllGenericItemsAsync()
+        }
+    }
 
     // Display or for item name matching
     @Published var genericItems: [GenericItem] = []
     
-    var genericItemsHTTPManager: GenericItemsHTTPManager = GenericItemsHTTPManager(session: URLSession.shared)
+    private var genericItemsHTTPManager: GenericItemsHTTPManager = GenericItemsHTTPManager(session: URLSession.shared)
     
     // Searching
     let searchPrompt: String = "Enter an item name here!"
     @Published var searchText: String = ""
 
+    // For fetching
+    // may have situation where app is fetching, then tries to fetch again.
+    private var isFetching: Bool = false
     
     // For error handling
     private let mvm = MainViewModel.shared
@@ -37,7 +46,10 @@ class GenericItemViewModel: ObservableObject {
     
     func fetchAllGenericItemsAsync() async {
         do {
-            self.genericItems = try await genericItemsHTTPManager.fetchAllGenericItemsAsync()
+            let items = try await genericItemsHTTPManager.fetchAllGenericItemsAsync()
+            DispatchQueue.main.async {
+                self.genericItems = items
+            }
         } catch {
             self.handleError(error: error)
         }
@@ -66,11 +78,7 @@ class GenericItemViewModel: ObservableObject {
      */
     func getAllGenericItemsAsync() async -> [GenericItem] {
         if genericItems.isEmpty {
-            do {
-                genericItems = try await genericItemsHTTPManager.fetchAllGenericItemsAsync()
-            } catch {
-                self.handleError(error: error)
-            }
+            await fetchAllGenericItemsAsync()
         }
         return genericItems
     }
@@ -92,7 +100,7 @@ class GenericItemViewModel: ObservableObject {
     /*
      * Return a list of all generic item names
      */
-    func getGenericItemNames() async -> [String] {
+    func getGenericItemNamesAsync() async -> [String] {
         var itemNames: [String] = []
         do {
             itemNames = try await genericItemsHTTPManager.fetchGenericItemNamesAsync()

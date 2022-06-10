@@ -10,13 +10,13 @@ import Foundation
 /*
  * Given a string - scanned item name, return expiration timeinterval
  */
-class ItemMatcher {
+class ItemMatcherOld {
 
     /*
      * MARK: Initialization
      */
     
-    static let factory = ItemMatcher()
+    static let factory = ItemMatcherOld()
     private init() {}
     
     private var pvm = ProduceViewModel.shared

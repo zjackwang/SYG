@@ -10,7 +10,6 @@ import SwiftUI
 struct ScannedReceiptPopover: View {
     @Binding var showPopover: Bool
     @StateObject private var mvm = MainViewModel.shared
-    @StateObject private var pvm = ProduceViewModel.shared
     
     // Color Palette
     private let background: Color = Color.DarkPalette.background
