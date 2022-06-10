@@ -111,6 +111,19 @@ class GenericItemViewModel: ObservableObject {
     }
     
     /*
+     * Return String, matched generic item, given scannedItem
+     */
+    func getMatchedItemAsync(for scannedItem: String) async -> String? {
+        var matchedItem: String?
+        do {
+            matchedItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItem)
+        } catch {
+            self.handleError(error: error)
+        }
+        return matchedItem
+    }
+    
+    /*
      * Display error on main view if any routine returns one
      */
     func handleError(error: Error) {

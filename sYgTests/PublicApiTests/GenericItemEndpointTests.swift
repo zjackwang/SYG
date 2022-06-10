@@ -114,6 +114,58 @@ class GenericItemEndpointTests: XCTestCase {
         XCTAssertNotNil(returnedItems, "Did not get items back")
     }
     
+    func testSuccessfulFetchMatchedItem() throws {
+        weak var promise = expectation(description: "Matched Item")
+
+        var responseError: Error?
+        let scannedItemName = "Premium Bananas"
+        var returnedMatchedItem: String?
+
+        genericItemsHTTPManager.fetchMatchedItem(for: scannedItemName) { result in
+            switch result {
+            case .failure(let error):
+                responseError = error
+            case .success(let item):
+                returnedMatchedItem = item
+            }
+            guard let p = promise else {
+                return
+            }
+            p.fulfill()
+            promise = nil
+        }
+
+        waitForExpectations(timeout: 10)
+        XCTAssertNil(responseError, "Error: \(responseError!)")
+        XCTAssertNotNil(returnedMatchedItem, "Did not get item back")
+    }
+    
+    func testNotFoundFetchMatchedItem() throws {
+        weak var promise = expectation(description: "Matched Item")
+
+        var responseError: Error?
+        let scannedItemName = "Definitely not in there"
+        var returnedMatchedItem: String?
+
+        genericItemsHTTPManager.fetchMatchedItem(for: scannedItemName) { result in
+            switch result {
+            case .failure(let error):
+                responseError = error
+            case .success(let item):
+                returnedMatchedItem = item
+            }
+            guard let p = promise else {
+                return
+            }
+            p.fulfill()
+            promise = nil
+        }
+
+        waitForExpectations(timeout: 10)
+        XCTAssertNil(responseError, "Error: \(responseError!)")
+        XCTAssertNil(returnedMatchedItem, "Got something back...")
+    }
+    
     // MARK: Async Tests
     func testSuccessfulFetchAllGenericItemsAsync() async throws {
         let returnedItems = try await genericItemsHTTPManager.fetchAllGenericItemsAsync()
@@ -135,5 +187,18 @@ class GenericItemEndpointTests: XCTestCase {
         
         XCTAssertGreaterThanOrEqual(returnedItems.count, 192, "Did not get items back")
     }
+    
+    func testSuccessfulFetchMatchedItemAsync() async throws {
+        let scannedItemName = "Premium Bananas"
+        let returnedMatchedItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItemName)
         
+        XCTAssertNotNil(returnedMatchedItem)
+    }
+    
+    func testNotFoundFetchMatchedItemAsync() async throws {
+        let scannedItemName = "Will Not Exist"
+        let returnedMatchedItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItemName)
+        
+        XCTAssertNil(returnedMatchedItem)
+    }
 }
