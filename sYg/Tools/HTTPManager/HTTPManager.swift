@@ -16,8 +16,10 @@ class HTTPManager<T : URLSessionProtocol> {
     
     enum HTTPError: Error {
         case invalidURL
+        case invalidParams
         case noInternet
         case invalidResponse(Data?, URLResponse?)
+        case customResponse([String: String])
     }
     
     /*
@@ -66,4 +68,5 @@ class HTTPManager<T : URLSessionProtocol> {
         
         task.resume()
     }
+    
 }

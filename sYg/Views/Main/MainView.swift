@@ -76,23 +76,9 @@ struct MainView: View {
             }
             // User confirmation alert
             .alert(isPresented: $mvm.showAlert) {
-                var msgString: String?
-                if let error = mvm.error as? ReceiptScanningError {
-                    msgString = "Error: \(error.localizedDescription)"
-                } else if let error = mvm.error as? EatByReminderError {
-                    msgString = "Error: \(error.localizedDescription)"
-                } else if let error = mvm.error {
-                    msgString = "Error: \(error.localizedDescription)"
-                } else if let error = mvm.error as? Selector.SelectorError {
-                    mvm.alertTitle = "Scanning Error"
-                    msgString = error.errorDescription
-                } else {
-                    msgString = mvm.confirmationText
-                }
-                
                 return Alert(
                         title: Text(mvm.alertTitle),
-                        message: Text(msgString ?? ""),
+                        message: Text(getMessageString(error: mvm.error)),
                         dismissButton:
                                 .default(
                                     Text("Ok"),
@@ -168,6 +154,29 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+    }
+}
+
+// MARK: Functions
+extension MainView {
+    func getMessageString(error: Error?) -> String {
+        var msgString: String = ""
+        if let error = mvm.error as? ReceiptScanningError {
+            msgString = "Error: \(error.localizedDescription)"
+        } else if let error = mvm.error as? EatByReminderError {
+            msgString = "Error: \(error.localizedDescription)"
+        } else if let error = mvm.error as? Selector.SelectorError {
+            mvm.alertTitle = "Scanning Error"
+            msgString = error.errorDescription ?? "Error while imaging receipt"
+        } else if let error = mvm.error as? HTTPManager<URLSession>.HTTPError {
+            msgString = "Error: \(error.localizedDescription)"
+        } else if let error = mvm.error {
+            msgString = "Error: \(error.localizedDescription)"
+        } else {
+            // No error, just alert
+            msgString = mvm.confirmationText
+        }
+        return msgString
     }
 }
 

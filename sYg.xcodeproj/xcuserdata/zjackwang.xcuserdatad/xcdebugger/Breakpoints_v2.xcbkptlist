@@ -272,8 +272,72 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "66"
             endingLineNumber = "66"
-            landmarkName = "body"
-            landmarkType = "24">
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E5C7081A-AE25-4D89-8B39-C5FB45F03814"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sYgTests/PublicApiTests/GenericItemEndpointTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "testSuccessfulFetchGenericItemNames()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E5C7081A-AE25-4D89-8B39-C5FB45F03814 - e04e2ea995c89982"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "sYgTests.GenericItemEndpointTests.testSuccessfulFetchGenericItemNames() throws -&gt; ()"
+                  moduleName = "sYgTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zjackwang/SYG/sYg/sYgTests/PublicApiTests/GenericItemEndpointTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "220">
+               </Location>
+               <Location
+                  uuid = "E5C7081A-AE25-4D89-8B39-C5FB45F03814 - e04e2ea995c899ad"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "sYgTests.GenericItemEndpointTests.testSuccessfulFetchGenericItemNames() throws -&gt; ()"
+                  moduleName = "sYgTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zjackwang/SYG/sYg/sYgTests/PublicApiTests/GenericItemEndpointTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "980">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "880B65A6-E312-4583-B696-B1232472FA92"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sYgTests/PublicApiTests/GenericItemEndpointTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "testSuccessfulFetchGenericItemNames()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

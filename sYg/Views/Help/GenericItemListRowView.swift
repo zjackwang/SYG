@@ -25,12 +25,12 @@ struct GenericItemListRowView: View {
     var body: some View {
         ZStack {
             LazyVGrid(columns: columns) {
-                Text(item.category)
+                Text(item.Category)
                     .font(.headline)
                     .fontWeight(.semibold)
 //                    .padding(.leading, 10)
                     .foregroundColor(onPrimary)
-                Text(item.name)
+                Text(item.Name)
                     .font(.headline)
                     .fontWeight(.semibold)
 //                    .padding(.leading, 10)
@@ -49,9 +49,9 @@ struct GenericItemListRowView: View {
 
 extension GenericItemListRowView {
     private var eatByText: Text {
-        let fridgeTimeInDays = String(format: "%.1f", item.daysInFridge / 24 * 60 * 60)
-        let freezerTimeInDays = String(format: "%.1f", item.daysInFreezer / 24 * 60 * 60)
-        let shelfTimeInDays = String(format: "%.1f", item.daysOnShelf / 24 * 60 * 60)
+        let fridgeTimeInDays = String(format: "%.1f", item.DaysInFridge / 24 * 60 * 60)
+        let freezerTimeInDays = String(format: "%.1f", item.DaysInFreezer / 24 * 60 * 60)
+        let shelfTimeInDays = String(format: "%.1f", item.DaysOnShelf / 24 * 60 * 60)
         
         return Text("\(fridgeTimeInDays) | \(freezerTimeInDays) | \(shelfTimeInDays)")
             .font(.subheadline)
@@ -60,15 +60,15 @@ extension GenericItemListRowView {
     }
 }
     
-struct ShowGenericItemListRowView: View {
-    @State var item: GenericItem = GenericItem()
-    var body: some View {
-        GenericItemListRowView(item: $item)
-    }
-}
-
-struct GenericItemListRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowGenericItemListRowView()
-    }
-}
+//struct ShowGenericItemListRowView: View {
+//    @State var item: GenericItem = GenericItem(Name: "Example", DaysInFridge: 10, DaysInFreezer: 100, DaysOnShelf: 1, Category: "Produce", Subcategory: "Fresh", IsCut: false, IsCooked: false, IsOpened: false, Notes: "", Links: "")
+//    var body: some View {
+//        GenericItemListRowView(item: $item)
+//    }
+//}
+//
+//struct GenericItemListRowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShowGenericItemListRowView()
+//    }
+//}
