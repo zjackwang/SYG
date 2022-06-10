@@ -125,13 +125,13 @@ class GenericItemEndpointTests: XCTestCase {
         let genericItem = "Apple"
         let formParams: [String: String] = [:]
         
-        let returnedItems = try await genericItemsHTTPManager.fetchGenericItem(for: genericItem, formParms: formParams)
+        let returnedItems = try await genericItemsHTTPManager.fetchGenericItemAsync(for: genericItem, formParms: formParams)
 
         XCTAssertGreaterThanOrEqual(returnedItems.count, 1, "Did not get items back")
     }
     
     func testSuccessfulFetchGenericItemNamesAsync() async throws {
-        let returnedItems = try await genericItemsHTTPManager.fetchGenericItemNames()
+        let returnedItems = try await genericItemsHTTPManager.fetchGenericItemNamesAsync()
         
         XCTAssertGreaterThanOrEqual(returnedItems.count, 192, "Did not get items back")
     }
