@@ -9,5 +9,5 @@ import Foundation
 
 struct MatchedItem: Codable {
     let ScannedItemName: String
-    let GsenericItemName: String
+    let GenericItemName: String
 }

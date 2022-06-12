@@ -92,6 +92,7 @@ extension GenericItemsHTTPManager {
         urlRequest.addValue(message, forHTTPHeaderField: "X-Hmac-Message")
         urlRequest.httpMethod = "GET"
         
+        
         // make keyed request with form params
         makeRequest(request: urlRequest) {
             result, response in

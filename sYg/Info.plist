@@ -8,6 +8,8 @@
 	<dict/>
 	<key>LSEnvironment</key>
 	<dict>
+		<key>Private_Api_Secret_Key</key>
+		<string>65b6e8fa0f3443a1accf39c176f2c58f</string>
 		<key>Public_Api_Key</key>
 		<string>658d906acb1711ec83e59522395da1bd</string>
 		<key>Public_Api_Secret_Key</key>

@@ -38,6 +38,9 @@
 		DB32837C285390DA00F73903 /* ItemMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32837B285390DA00F73903 /* ItemMatcher.swift */; };
 		DB32837F2853E52C00F73903 /* MatchedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32837E2853E52C00F73903 /* MatchedItem.swift */; };
 		DB3283852853E5E300F73903 /* UserUpdatedGenericItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3283842853E5E300F73903 /* UserUpdatedGenericItem.swift */; };
+		DB328388285511F200F73903 /* UserSuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB328387285511F200F73903 /* UserSuggestionViewModel.swift */; };
+		DB32838A2855121100F73903 /* UserSuggestionHTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3283892855121100F73903 /* UserSuggestionHTTPManager.swift */; };
+		DB32838C2855125700F73903 /* UserSuggestionAPIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32838B2855125700F73903 /* UserSuggestionAPIEndpointTests.swift */; };
 		DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */; };
 		DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */; };
 		DB45EA74277BF75D001BA6C2 /* ProduceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */; };
@@ -133,6 +136,9 @@
 		DB32837B285390DA00F73903 /* ItemMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMatcher.swift; sourceTree = "<group>"; };
 		DB32837E2853E52C00F73903 /* MatchedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedItem.swift; sourceTree = "<group>"; };
 		DB3283842853E5E300F73903 /* UserUpdatedGenericItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUpdatedGenericItem.swift; sourceTree = "<group>"; };
+		DB328387285511F200F73903 /* UserSuggestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSuggestionViewModel.swift; sourceTree = "<group>"; };
+		DB3283892855121100F73903 /* UserSuggestionHTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSuggestionHTTPManager.swift; sourceTree = "<group>"; };
+		DB32838B2855125700F73903 /* UserSuggestionAPIEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSuggestionAPIEndpointTests.swift; sourceTree = "<group>"; };
 		DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanningErrors.swift; sourceTree = "<group>"; };
 		DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedItemViewModel.swift; sourceTree = "<group>"; };
 		DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProduceViewModel.swift; sourceTree = "<group>"; };
@@ -258,7 +264,7 @@
 		DB32834C284FFBF700F73903 /* sYgTests */ = {
 			isa = PBXGroup;
 			children = (
-				DB3283672850029F00F73903 /* PublicApiTests */,
+				DB3283672850029F00F73903 /* APITests */,
 				DB328355284FFC2800F73903 /* HttpManagerTests */,
 			);
 			path = sYgTests;
@@ -302,13 +308,14 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		DB3283672850029F00F73903 /* PublicApiTests */ = {
+		DB3283672850029F00F73903 /* APITests */ = {
 			isa = PBXGroup;
 			children = (
 				DB32836D2851088B00F73903 /* Old */,
 				DB3283652850022900F73903 /* GenericItemEndpointTests.swift */,
+				DB32838B2855125700F73903 /* UserSuggestionAPIEndpointTests.swift */,
 			);
-			path = PublicApiTests;
+			path = APITests;
 			sourceTree = "<group>";
 		};
 		DB32836A285007A800F73903 /* Security */ = {
@@ -367,6 +374,16 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
+		DB328386285511C900F73903 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DB328342284FEE0200F73903 /* GenericItemViewModel.swift */,
+				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
+				DB328387285511F200F73903 /* UserSuggestionViewModel.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		DB34300727BEC11700CF076A /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,12 +413,11 @@
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DB328386285511C900F73903 /* Data */,
 				DB328371285231FC00F73903 /* Old */,
 				DB328340284FEE0200F73903 /* Help */,
 				DB99D40427F5F82C00C51B61 /* Edit */,
-				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
 				DBB25C49277CC29600C5F783 /* MainViewModel.swift */,
-				DB328342284FEE0200F73903 /* GenericItemViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -455,6 +471,7 @@
 				DB623D0A2783ABD300EEEC09 /* AzureHTTPManager.swift */,
 				DBA3AC4427B6C026008975C4 /* HTTPManager.swift */,
 				DB3283682850063400F73903 /* GenericItemsHTTPManager.swift */,
+				DB3283892855121100F73903 /* UserSuggestionHTTPManager.swift */,
 			);
 			path = HTTPManager;
 			sourceTree = "<group>";
@@ -761,6 +778,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB32838C2855125700F73903 /* UserSuggestionAPIEndpointTests.swift in Sources */,
 				DB3283662850022900F73903 /* GenericItemEndpointTests.swift in Sources */,
 				DB32835A284FFC7000F73903 /* URLSessionMock.swift in Sources */,
 				DB32835D284FFD0500F73903 /* EndPointModel.swift in Sources */,
@@ -777,11 +795,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB328388285511F200F73903 /* UserSuggestionViewModel.swift in Sources */,
 				DB25C1A627C9621600DBEBB2 /* NSLockingExtension.swift in Sources */,
 				DB25C19D27C59C1200DBEBB2 /* EatByReminderManager.swift in Sources */,
 				DBC6479F280F03B700AE893E /* GenericItemsView.swift in Sources */,
 				DBFFD79427CE8A2E00584484 /* ProgressDialog.swift in Sources */,
 				DBFFD79627CEC6DE00584484 /* BackButton.swift in Sources */,
+				DB32838A2855121100F73903 /* UserSuggestionHTTPManager.swift in Sources */,
 				DB328344284FEE0200F73903 /* GenericItemViewModel.swift in Sources */,
 				DB32836C285007B900F73903 /* Crypto.swift in Sources */,
 				DBFFD79927CFEC4800584484 /* ColorExtension.swift in Sources */,

@@ -39,6 +39,20 @@ struct GenericItem: Hashable, Codable {
         IsCut, IsCooked, IsOpened, Notes, Links
     }
     
+    init(name: String, daysInFridge: Double, daysInFreezer: Double, daysOnShelf: Double, category: String, subcategory: String, isCut: Bool?, isCooked: Bool?, isOpened: Bool?, notes: String, links: String) {
+        Name = name
+        DaysInFridge = daysInFridge
+        DaysOnShelf = daysOnShelf
+        DaysInFreezer = daysInFreezer
+        Category = category
+        Subcategory = subcategory
+        IsCut = isCut
+        IsCooked = isCooked
+        IsOpened = isOpened
+        Notes = notes
+        Links = links
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
