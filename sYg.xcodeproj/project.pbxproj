@@ -374,14 +374,14 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
-		DB328386285511C900F73903 /* Data */ = {
+		DB328386285511C900F73903 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
 				DB328342284FEE0200F73903 /* GenericItemViewModel.swift */,
 				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
 				DB328387285511F200F73903 /* UserSuggestionViewModel.swift */,
 			);
-			path = Data;
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		DB34300727BEC11700CF076A /* Errors */ = {
@@ -413,7 +413,7 @@
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				DB328386285511C900F73903 /* Data */,
+				DB328386285511C900F73903 /* Requests */,
 				DB328371285231FC00F73903 /* Old */,
 				DB328340284FEE0200F73903 /* Help */,
 				DB99D40427F5F82C00C51B61 /* Edit */,

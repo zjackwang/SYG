@@ -9,9 +9,9 @@ import Foundation
 
 class UserSuggestionHTTPManager <T: URLSessionProtocol>: HTTPManager<T>  {
     
-    let userSubmittedGenericItemURLString = "https://syg-user-submitted.herokuapp.com/usersubmittedgenericitemset"
-    let userSubmittedMatchedItemURLString = "https://syg-user-submitted.herokuapp.com/usersubmittedmatcheditemset"
-    let userSubmittedGenericItemUpdateURLString = "https://syg-user-submitted.herokuapp.com/userupdatedgenericitemset"
+    private let userSubmittedGenericItemURLString = "https://syg-user-submitted.herokuapp.com/usersubmittedgenericitemset"
+    private let userSubmittedMatchedItemURLString = "https://syg-user-submitted.herokuapp.com/usersubmittedmatcheditemset"
+    private let userSubmittedGenericItemUpdateURLString = "https://syg-user-submitted.herokuapp.com/userupdatedgenericitemset"
     
     private let secretKey: String = Info.envVars?["Private_Api_Secret_Key"] ?? ""
     
@@ -23,7 +23,7 @@ class UserSuggestionHTTPManager <T: URLSessionProtocol>: HTTPManager<T>  {
             throw HTTPError.invalidURL
         }
         
-        try await post(url: url, jsonData: jsonData)
+        try await postAsync(url: url, jsonData: jsonData)
     }
     
     func submitSuggestedMatchedItemAsync(matchedItem: MatchedItem) async throws{
@@ -33,7 +33,7 @@ class UserSuggestionHTTPManager <T: URLSessionProtocol>: HTTPManager<T>  {
             throw HTTPError.invalidURL
         }
         
-        try await post(url: url, jsonData: jsonData)
+        try await postAsync(url: url, jsonData: jsonData)
     }
     
     func submitSuggestedGenericItemUpdateAsync(updatedGenericItem: UserUpdatedGenericItem) async throws {
@@ -43,13 +43,13 @@ class UserSuggestionHTTPManager <T: URLSessionProtocol>: HTTPManager<T>  {
             throw HTTPError.invalidURL
         }
         
-        try await post(url: url, jsonData: jsonData)
+        try await postAsync(url: url, jsonData: jsonData)
     }
     
     /*
      * Send POST request to given url with json payload
      */
-    func post(url: URL, jsonData: Data) async throws {
+    private func postAsync(url: URL, jsonData: Data) async throws {
         // Create URLRequest
         var urlRequest = URLRequest(url: url)
         let (hmacSig, message) = Crypto.generateHMAC(keyString: secretKey)
