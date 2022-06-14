@@ -174,7 +174,7 @@ extension MainView {
             msgString = "Error: \(error.localizedDescription)"
         } else {
             // No error, just alert
-            msgString = mvm.confirmationText
+            msgString = mvm.alertText
         }
         return msgString
     }

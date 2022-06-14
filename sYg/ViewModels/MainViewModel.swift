@@ -27,7 +27,6 @@ class MainViewModel: ObservableObject {
     // View models
     private var sivm = ScannedItemViewModel.shared
     private var evm = EditViewModel.shared
-    private var cvm = ConfirmationViewModel.shared
     
     // Receipt popovers
     @Published var selectReceipt: Bool = false
@@ -57,14 +56,6 @@ class MainViewModel: ObservableObject {
     @Published var showProgressDialog: Bool = false
     @Published var progressMessage = "Working..."
 
-    // Confirmation View
-    @Published var showConfirmationView: Bool = false
-    
-    // DEPRECATED Confirmation of success
-    @Published var showConfirmationAlert: Bool = false
-    @Published var confirmationTitle: String = ""
-    @Published var confirmationText: String = ""
-    
     // Alerts on MainView
     @Published var showAlert: Bool = false
     @Published var alertTitle: String = ""
@@ -110,9 +101,9 @@ extension MainViewModel {
                                 print("FAULT: Item not added")
                             
                             DispatchQueue.main.async {
-                                self.confirmationText = "Edit Saved!"
-                                self.confirmationTitle = "Add Result"
-                                self.showConfirmationAlert.toggle()
+                                self.alertText = "Edit Saved!"
+                                self.alertTitle = "Add Result"
+                                self.showAlert.toggle()
                                 
                                 // DEBUG
                                 print("DEBUGGING: ALL SCHEDULED NOTIFICATIONS ***")
@@ -234,16 +225,8 @@ extension MainViewModel {
             )
         }
         print("INFO: \(scannedItems.count) items scanned and matched.")
-        
-        DispatchQueue.main.async {
-            self.cvm.setItemsToConfirm(itemsToConfirm: scannedItems)
-            self.showProgressDialog.toggle()
-            self.showConfirmationView.toggle()
-            self.alertTitle = "Read Me!"
-            self.alertText = "Help EatThat! be more accurate by editing your purchase/expiration dates to the correct times and setting the category and the place of storage. Swipe right to edit and swipe left to remove unwanted items. \nThanks! 🥳🥑"
-            self.showAlert.toggle()
-            
-        }
+
+        self.addConfirmedUserItems(confirmedItems: scannedItems)
     }
     
     func addConfirmedUserItems(confirmedItems: [UserItem]) {
@@ -284,6 +267,7 @@ extension MainViewModel {
             self.alertTitle = "Scanning Result"
             self.alertText = "Successfully scanned!"
             self.showAlert.toggle()
+            self.showProgressDialog.toggle()
         }
     }
 
