@@ -217,7 +217,6 @@
 		DB17C4CF28006C5B009C5EDB /* ScanningItems */ = {
 			isa = PBXGroup;
 			children = (
-				DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */,
 				DB7BA23127D93F2200759932 /* EditSheetView.swift */,
 				DBA907A6280F5B22003C1804 /* ScannedReceiptPopover.swift */,
 			);
@@ -345,7 +344,7 @@
 		DB328371285231FC00F73903 /* Old */ = {
 			isa = PBXGroup;
 			children = (
-				DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */,
+				DB518A3E27FA4E6800ABA7B6 /* ConfirmationViewModel.swift */,
 			);
 			path = Old;
 			sourceTree = "<group>";
@@ -353,6 +352,7 @@
 		DB32837428523D9800F73903 /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				DB99D3FB27F4B30000C51B61 /* ConfirmationView.swift */,
 				DBA6EEA227868F58002E19AA /* MainUserView.swift */,
 			);
 			path = Old;
@@ -413,6 +413,7 @@
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DB45EA73277BF75D001BA6C2 /* ProduceViewModel.swift */,
 				DB328386285511C900F73903 /* Requests */,
 				DB328371285231FC00F73903 /* Old */,
 				DB328340284FEE0200F73903 /* Help */,
@@ -623,7 +624,6 @@
 			isa = PBXGroup;
 			children = (
 				DB99D40527F5F83900C51B61 /* EditViewModel.swift */,
-				DB518A3E27FA4E6800ABA7B6 /* ConfirmationViewModel.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";

@@ -10,7 +10,7 @@ import Combine
 
 class EditViewModel: ObservableObject {
     enum ViewToEdit {
-        case confirmationView
+//        case confirmationView
         case userItemListView
         case manualAddView
     }
@@ -39,7 +39,7 @@ class EditViewModel: ObservableObject {
     
     // Let listeners know when edits have finished
     @Published var confirmed: Bool = false
-    @Published var viewToEdit: ViewToEdit = .confirmationView
+    @Published var viewToEdit: ViewToEdit = .userItemListView
     
     var cancellables = Set<AnyCancellable>()
     
