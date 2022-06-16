@@ -87,10 +87,28 @@ class GenericItemViewModel: ObservableObject {
      * Return a query for generic items by name and optional parameters
      *  (for generic item lookup by item matcher)
      */
+    func getGenericItem(name: String, params: [String: String]?) -> [GenericItem] {
+        var items: [GenericItem] = []
+        let group = DispatchGroup()
+        group.enter()
+        
+        genericItemsHTTPManager.fetchGenericItem(for: name, jsonParams: params) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.handleError(error: error)
+            case .success(let genericItems):
+                items = genericItems
+            }
+            group.leave()
+        }
+        group.wait()
+        return items
+    }
+    
     func getGenericItemAsync(name: String, params: [String: String]?) async -> [GenericItem] {
         var items: [GenericItem] = []
         do {
-            items = try await genericItemsHTTPManager.fetchGenericItemAsync(for: name, formParms: params)
+            items = try await genericItemsHTTPManager.fetchGenericItemAsync(for: name, jsonParams: params)
         } catch {
             self.handleError(error: error)
         }
@@ -113,6 +131,24 @@ class GenericItemViewModel: ObservableObject {
     /*
      * Return String, matched generic item, given scannedItem
      */
+    func getMatchedItem(for scannedItem: String) -> String? {
+        var matchedItem: String?
+        let group = DispatchGroup()
+        group.enter()
+        
+        genericItemsHTTPManager.fetchMatchedItem(for: scannedItem) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.handleError(error: error)
+            case .success(let result):
+                matchedItem = result
+            }
+            group.leave()
+        }
+        group.wait()
+        return matchedItem
+    }
+    
     func getMatchedItemAsync(for scannedItem: String) async -> String? {
         var matchedItem: String?
         do {

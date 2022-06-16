@@ -204,13 +204,20 @@ extension MainViewModel {
         // Get expiration time interval
         let itemMatcher = ItemMatcher.matcher
         var scannedItems: [UserItem] = []
+        var itemsToMatch: [String] = []
         
         for item in itemsArray {
             let name = item.valueObject["Name"]?.valueString ?? "Unknown"
             var dateToRemind: Date = dateOfPurchase
             
             // Find best match
-            dateToRemind += itemMatcher.getEatByInterval(for: name)
+            if let eatByInterval = itemMatcher.getEatByInterval(for: name) {
+                dateToRemind += eatByInterval
+            } else {
+                itemsToMatch.append(name)
+                // should we add in the items' matched interval
+                dateToRemind += itemMatcher.matchScannedItem(for: name)
+            }
 
             
             scannedItems.append(
@@ -225,7 +232,8 @@ extension MainViewModel {
             )
         }
         print("INFO: \(scannedItems.count) items scanned and matched.")
-
+        print(itemsToMatch)
+        
         self.addConfirmedUserItems(confirmedItems: scannedItems)
     }
     

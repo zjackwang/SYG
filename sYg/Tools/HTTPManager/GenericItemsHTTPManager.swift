@@ -12,7 +12,8 @@ class GenericItemsHTTPManager <T: URLSessionProtocol>: HTTPManager<T> {
     let genericItemURLString = "https://api-syg.herokuapp.com/genericitem/"
     let genericItemSetURLString = "https://api-syg.herokuapp.com/genericitemset"
     let genericItemListURLString = "https://api-syg.herokuapp.com/genericitemlist"
-    let matchedItemDictURLString = "https://api-syg.herokuapp.com/matcheditemdict/"
+    let matchedItemDictURLString = "https://api-syg.herokuapp.com/matcheditemdict"
+
     
     private let secretKey: String = Info.envVars?["Public_Api_Secret_Key"] ?? ""
     private let publicKey: String = Info.envVars?["Public_Api_Key"] ?? ""
@@ -31,9 +32,9 @@ class GenericItemsHTTPManager <T: URLSessionProtocol>: HTTPManager<T> {
         })
     }
     
-    func fetchGenericItemAsync(for name: String, formParms: [String: String]?) async throws -> [GenericItem] {
+    func fetchGenericItemAsync(for name: String, jsonParams: [String: String]?) async throws -> [GenericItem] {
         return try await withCheckedThrowingContinuation({ continuation in
-            fetchGenericItem(for: name, formParams: formParms) { result in
+            fetchGenericItem(for: name, jsonParams: jsonParams) { result in
                 switch result {
                 case .success(let items):
                     continuation.resume(returning: items)
@@ -122,7 +123,7 @@ extension GenericItemsHTTPManager {
      *        formParms: Dict<String: Any>? optional table of parameters to narrow down fetch request
      * OUTPUT: List of GenericItem structs, via the completion block
      */
-    func fetchGenericItem(for name: String, formParams: [String: String]?, completionBlock: @escaping (Result<[GenericItem], Error>) -> Void) {
+    func fetchGenericItem(for name: String, jsonParams: [String: String]?, completionBlock: @escaping (Result<[GenericItem], Error>) -> Void) {
         let urlString: String = genericItemURLString + name
 
         // validate url
@@ -131,17 +132,22 @@ extension GenericItemsHTTPManager {
             return
         }
         
-        // get payload
-        var payload = ""
-        if let formParams = formParams {
-            for (key, value) in formParams {
-                payload += (key + "=" + value + " ")
-            }
-        }
-        
         // request
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/JSON", forHTTPHeaderField: "Content-Type")
+        
+        // POST payload
+        if let jsonParams = jsonParams {
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject:jsonParams)
+                urlRequest.httpBody = jsonData
+            } catch {
+                print(error)
+                completionBlock(.failure(error))
+            }
+        }
+        
         // request headers
         urlRequest.addValue(publicKey, forHTTPHeaderField: "X-Syg-Api-Key")
         let (hmacSigString, message) = Crypto.generateHMAC(keyString: secretKey)
@@ -227,11 +233,12 @@ extension GenericItemsHTTPManager {
      * INPUT: String scannedItem Name
      */
     func fetchMatchedItem(for scannedItem: String, completionBlock: @escaping (Result<String?, Error>) -> Void) {
-        let scannedItemSplit = scannedItem.split(separator: " ")
-        let scannedItemJoined = scannedItemSplit.joined(separator: "%20")
-        
-        let urlString: String = matchedItemDictURLString + scannedItemJoined
+//        let scannedItemSplit = scannedItem.split(separator: " ")
+//        let scannedItemJoined = scannedItemSplit.joined(separator: "%20")
+//        let urlString: String = matchedItemDictURLString + scannedItemJoined
 
+        let urlString: String = matchedItemDictURLString
+        
         // validate url
         guard let url = URL(string: urlString) else {
             completionBlock(.failure(HTTPError.invalidURL))
@@ -240,14 +247,25 @@ extension GenericItemsHTTPManager {
         
         // request
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "GET"
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/JSON", forHTTPHeaderField: "Content-Type")
+        // POST payload
+        do {
+            let json: [String: String] = ["scannedItemName" : scannedItem]
+            let jsonData = try JSONSerialization.data(withJSONObject: json)
+            urlRequest.httpBody = jsonData
+        } catch {
+            print(error)
+            completionBlock(.failure(error))
+        }
+        
         // request headers
         urlRequest.addValue(publicKey, forHTTPHeaderField: "X-Syg-Api-Key")
         let (hmacSigString, message) = Crypto.generateHMAC(keyString: secretKey)
         urlRequest.addValue(hmacSigString, forHTTPHeaderField: "X-HMAC-Signature")
         urlRequest.addValue(message, forHTTPHeaderField: "X-Hmac-Message")
-
-        // make keyed request with form params
+        
+        // make keyed request
         makeRequest(request: urlRequest) {
             result, response in
             
