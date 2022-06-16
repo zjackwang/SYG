@@ -27,10 +27,9 @@ class ItemMatcher {
     func getEatByInterval(for scannedItem: String) -> TimeInterval? {
         var eatByInterval: TimeInterval?
         
-        if let matchedItemName = givm.getMatchedItem(for:scannedItem) {
-            let genericItem = givm.getGenericItem(name: matchedItemName, params: nil)
+        if let matchedItem = givm.getMatchedItem(for:scannedItem) {
             // default to fridge
-            eatByInterval = genericItem[0].DaysInFridge
+            eatByInterval = matchedItem.DaysInFridge
         }
         
         return eatByInterval

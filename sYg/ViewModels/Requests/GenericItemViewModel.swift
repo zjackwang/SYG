@@ -129,10 +129,10 @@ class GenericItemViewModel: ObservableObject {
     }
     
     /*
-     * Return String, matched generic item, given scannedItem
+     * Return matched generic item, given scannedItem
      */
-    func getMatchedItem(for scannedItem: String) -> String? {
-        var matchedItem: String?
+    func getMatchedItem(for scannedItem: String) -> GenericItem? {
+        var genericItem: GenericItem?
         let group = DispatchGroup()
         group.enter()
         
@@ -141,22 +141,22 @@ class GenericItemViewModel: ObservableObject {
             case .failure(let error):
                 self?.handleError(error: error)
             case .success(let result):
-                matchedItem = result
+                genericItem = result
             }
             group.leave()
         }
         group.wait()
-        return matchedItem
+        return genericItem
     }
     
-    func getMatchedItemAsync(for scannedItem: String) async -> String? {
-        var matchedItem: String?
+    func getMatchedItemAsync(for scannedItem: String) async -> GenericItem? {
+        var genericItem: GenericItem?
         do {
-            matchedItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItem)
+            genericItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItem)
         } catch {
             self.handleError(error: error)
         }
-        return matchedItem
+        return genericItem
     }
     
     /*

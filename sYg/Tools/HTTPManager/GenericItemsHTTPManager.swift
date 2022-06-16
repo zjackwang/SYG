@@ -58,7 +58,7 @@ class GenericItemsHTTPManager <T: URLSessionProtocol>: HTTPManager<T> {
         })
     }
     
-    func fetchMatchedItemAsync(for scannedItem: String) async throws -> String? {
+    func fetchMatchedItemAsync(for scannedItem: String) async throws -> GenericItem? {
         return try await withCheckedThrowingContinuation({ continuation in
             fetchMatchedItem(for: scannedItem) { result in
                 switch result {
@@ -232,11 +232,7 @@ extension GenericItemsHTTPManager {
     /*
      * INPUT: String scannedItem Name
      */
-    func fetchMatchedItem(for scannedItem: String, completionBlock: @escaping (Result<String?, Error>) -> Void) {
-//        let scannedItemSplit = scannedItem.split(separator: " ")
-//        let scannedItemJoined = scannedItemSplit.joined(separator: "%20")
-//        let urlString: String = matchedItemDictURLString + scannedItemJoined
-
+    func fetchMatchedItem(for scannedItem: String, completionBlock: @escaping (Result<GenericItem?, Error>) -> Void) {
         let urlString: String = matchedItemDictURLString
         
         // validate url
@@ -275,8 +271,8 @@ extension GenericItemsHTTPManager {
             case .success(let data):
                 // Decode into generic items
                 do {
-                    let returnedMatchedItem = try JSONDecoder().decode(String.self, from: data)
-                    completionBlock(.success(returnedMatchedItem))
+                    let returnedGenericItem = try JSONDecoder().decode([GenericItem].self, from: data)
+                    completionBlock(.success(returnedGenericItem[0]))
                 } catch DecodingError.typeMismatch(_, _) {
                     // Error message
                     let errorResponse = try! JSONDecoder().decode([String: String].self, from: data)

@@ -34,7 +34,9 @@ class UserSuggestionAPIEndpointTests: XCTestCase {
     }
     
     func testSuccessfulPostMatchedItemTestAsync() async throws {
-        let submittedMatchedItem: MatchedItem = MatchedItem(ScannedItemName: "ExampleScannedName", GenericItemName: "ExampleGenericName")
+        let submittedGenericItem: GenericItem = GenericItem(name: "Example", daysInFridge: 20.5, daysInFreezer: 20.5, daysOnShelf: 20.5, category: "Produce", subcategory: "Fresh", isCut: false, isCooked: false, isOpened: false, notes: "", links: "")
+
+        let submittedMatchedItem: MatchedItem = MatchedItem(scannedItemName: "ExampleScannedName", genericItem: submittedGenericItem)
         
         try await userSuggestionHTTPManager.submitSuggestedMatchedItemAsync(matchedItem: submittedMatchedItem)
         

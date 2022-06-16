@@ -119,14 +119,14 @@ class GenericItemEndpointTests: XCTestCase {
 
         var responseError: Error?
         let scannedItemName = "Premium Bananas"
-        var returnedMatchedItem: String?
+        var returnedGenericItem: GenericItem?
 
         genericItemsHTTPManager.fetchMatchedItem(for: scannedItemName) { result in
             switch result {
             case .failure(let error):
                 responseError = error
             case .success(let item):
-                returnedMatchedItem = item
+                returnedGenericItem = item
             }
             guard let p = promise else {
                 return
@@ -137,7 +137,7 @@ class GenericItemEndpointTests: XCTestCase {
 
         waitForExpectations(timeout: 10)
         XCTAssertNil(responseError, "Error: \(responseError!)")
-        XCTAssertNotNil(returnedMatchedItem, "Did not get item back")
+        XCTAssertNotNil(returnedGenericItem, "Did not get item back")
     }
     
     func testNotFoundFetchMatchedItem() throws {
@@ -145,14 +145,14 @@ class GenericItemEndpointTests: XCTestCase {
 
         var responseError: Error?
         let scannedItemName = "Definitely not in there"
-        var returnedMatchedItem: String?
+        var returnedGenericItem: GenericItem?
 
         genericItemsHTTPManager.fetchMatchedItem(for: scannedItemName) { result in
             switch result {
             case .failure(let error):
                 responseError = error
             case .success(let item):
-                returnedMatchedItem = item
+                returnedGenericItem = item
             }
             guard let p = promise else {
                 return
@@ -163,7 +163,7 @@ class GenericItemEndpointTests: XCTestCase {
 
         waitForExpectations(timeout: 10)
         XCTAssertNil(responseError, "Error: \(responseError!)")
-        XCTAssertNil(returnedMatchedItem, "Got something back...")
+        XCTAssertNil(returnedGenericItem, "Got something back...")
     }
     
     // MARK: Async Tests
@@ -190,15 +190,15 @@ class GenericItemEndpointTests: XCTestCase {
     
     func testSuccessfulFetchMatchedItemAsync() async throws {
         let scannedItemName = "Premium Bananas"
-        let returnedMatchedItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItemName)
+        let returnedGenericItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItemName)
         
-        XCTAssertNotNil(returnedMatchedItem)
+        XCTAssertNotNil(returnedGenericItem)
     }
     
     func testNotFoundFetchMatchedItemAsync() async throws {
         let scannedItemName = "Will Not Exist"
-        let returnedMatchedItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItemName)
+        let returnedGenericItem = try await genericItemsHTTPManager.fetchMatchedItemAsync(for: scannedItemName)
         
-        XCTAssertNil(returnedMatchedItem)
+        XCTAssertNil(returnedGenericItem)
     }
 }

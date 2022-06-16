@@ -37,7 +37,7 @@ struct RecentlyScannedView: View {
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(onBackground)
-                                Text(matchedItem.GenericItemName)
+                                Text(matchedItem.GenericItemObj?.Name ?? "N/A")
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(onBackground)

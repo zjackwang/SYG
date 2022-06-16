@@ -229,9 +229,9 @@ extension MainViewModel {
                 dateToRemind += eatByInterval
             } else {
                 // Find best match and record
-                var matchedItem = MatchedItem(ScannedItemName: name, GenericItemName: "N/A")
+                var matchedItem = MatchedItem(scannedItemName: name, genericItem: nil)
                 if let genericItem = itemMatcher.matchScannedItem(for: name) {
-                    matchedItem.GenericItemName = genericItem.Name
+                    matchedItem.GenericItemObj = genericItem
                     dateToRemind += genericItem.DaysInFridge
                     
                 } else {
