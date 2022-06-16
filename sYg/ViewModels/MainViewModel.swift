@@ -61,6 +61,13 @@ class MainViewModel: ObservableObject {
     @Published var alertTitle: String = ""
     @Published var alertText: String = ""
     @Published var error: Error?
+    @Published var showNavPrompt: Bool = false
+    @Published var navToRecentlyScanned: Bool = false
+
+    // For notif to user after a scan
+    // Reset by each scan, result of prev scan will stay in memory for now
+    @Published var matchedItems: [MatchedItem] = []
+    @Published var matchedItemDefaults: Int = 0
     
     // For editing items on MainView
     @Published var showEdit: Bool = false
@@ -117,6 +124,12 @@ extension MainViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    func resetAlert() {
+        self.alertTitle = ""
+        self.alertText = ""
+        self.showNavPrompt = false
     }
     
     func showError(error: Error) {
@@ -204,19 +217,27 @@ extension MainViewModel {
         // Get expiration time interval
         let itemMatcher = ItemMatcher.matcher
         var scannedItems: [UserItem] = []
-        var itemsToMatch: [String] = []
+        var matchedItems: [MatchedItem] = []
+        var numMatchDefaults: Int = 0
         
         for item in itemsArray {
             let name = item.valueObject["Name"]?.valueString ?? "Unknown"
             var dateToRemind: Date = dateOfPurchase
             
-            // Find best match
+            // Look up existing matches
             if let eatByInterval = itemMatcher.getEatByInterval(for: name) {
                 dateToRemind += eatByInterval
             } else {
-                itemsToMatch.append(name)
-                // should we add in the items' matched interval
-                dateToRemind += itemMatcher.matchScannedItem(for: name)
+                // Find best match and record
+                var matchedItem = MatchedItem(ScannedItemName: name, GenericItemName: "N/A")
+                if let genericItem = itemMatcher.matchScannedItem(for: name) {
+                    matchedItem.GenericItemName = genericItem.Name
+                    dateToRemind += genericItem.DaysInFridge
+                    
+                } else {
+                    numMatchDefaults += 1
+                }
+                matchedItems.append(matchedItem)
             }
 
             
@@ -232,7 +253,12 @@ extension MainViewModel {
             )
         }
         print("INFO: \(scannedItems.count) items scanned and matched.")
-        print(itemsToMatch)
+        print(matchedItems)
+        
+        DispatchQueue.main.async {
+            self.matchedItems = matchedItems
+            self.matchedItemDefaults = numMatchDefaults
+        }
         
         self.addConfirmedUserItems(confirmedItems: scannedItems)
     }
@@ -274,6 +300,10 @@ extension MainViewModel {
         DispatchQueue.main.async {
             self.alertTitle = "Scanning Result"
             self.alertText = "Successfully scanned!"
+            if !self.matchedItems.isEmpty {
+                self.showNavPrompt.toggle()
+                self.alertText += "\n \(self.matchedItems.count - self.matchedItemDefaults) items were matched to a generic item and \(self.matchedItemDefaults) used the default eat-by interval."
+            }
             self.showAlert.toggle()
             self.showProgressDialog.toggle()
         }

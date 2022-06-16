@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MatchedItem: Codable {
-    let ScannedItemName: String
-    let GenericItemName: String
+struct MatchedItem: Codable, Hashable {
+    var ScannedItemName: String
+    var GenericItemName: String
 }

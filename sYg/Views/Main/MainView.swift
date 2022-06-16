@@ -68,6 +68,9 @@ struct MainView: View {
                 
                 // Manual edit
                 EditSheetView(show: $mvm.showEdit)
+                
+                // "See more"
+                RecentlyScannedNavLink
             }
             // Top toolbar
             .toolbar {
@@ -76,17 +79,30 @@ struct MainView: View {
             }
             // User confirmation alert
             .alert(isPresented: $mvm.showAlert) {
-                return Alert(
+                
+                if mvm.showNavPrompt {
+                    return Alert(
+                        title: Text(mvm.alertTitle),
+                        message: Text(getMessageString(error: mvm.error)),
+                        primaryButton:
+                                .destructive(Text("See More")) {
+                                    mvm.navToRecentlyScanned.toggle()
+                        },
+                        secondaryButton: .cancel()
+                        )
+                } else {
+                    return Alert(
                         title: Text(mvm.alertTitle),
                         message: Text(getMessageString(error: mvm.error)),
                         dismissButton:
-                                .default(
-                                    Text("Ok"),
-                                    action: {
-                                            mvm.showAlert.toggle()
-                                    }
-                               )
-                        )
+                            .default(
+                                Text("Ok"),
+                                action: {
+                                    mvm.showAlert.toggle()
+                                }
+                           )
+                    )
+                }
             }
         }
         .navigationTitle("Main Page")
@@ -234,8 +250,10 @@ extension MainView {
                     .foregroundColor(onBackground)
                     .padding()
             }
-
-            
         }
+    }
+    
+    private var RecentlyScannedNavLink: some View {
+        NavigationLink(destination: RecentlyScannedView(), isActive: $mvm.navToRecentlyScanned) { }
     }
 }
