@@ -12,21 +12,21 @@ struct MatchedItem: Codable, Hashable {
     var GenericItemObj: GenericItem?
     
     private enum CodingKeys: String, CodingKey {
-        case ScannedItemName, GenericItem
+        case ScannedItemName, GenericItemObj
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.ScannedItemName = try container.decode(String.self, forKey: .ScannedItemName)
-        self.GenericItemObj = try container.decodeIfPresent(GenericItem.self, forKey: .GenericItem)
+        self.GenericItemObj = try container.decodeIfPresent(GenericItem.self, forKey: .GenericItemObj)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(ScannedItemName, forKey: .ScannedItemName)
-        try container.encodeIfPresent(GenericItemObj, forKey: .GenericItem)
+        try container.encodeIfPresent(GenericItemObj, forKey: .GenericItemObj)
     }
     
     init(scannedItemName: String, genericItem: GenericItem?) {

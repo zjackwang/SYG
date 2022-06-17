@@ -34,8 +34,8 @@ class UserSuggestionAPIEndpointTests: XCTestCase {
     }
     
     func testSuccessfulPostMatchedItemTestAsync() async throws {
-        let submittedGenericItem: GenericItem = GenericItem(name: "Example", daysInFridge: 20.5, daysInFreezer: 20.5, daysOnShelf: 20.5, category: "Produce", subcategory: "Fresh", isCut: false, isCooked: false, isOpened: false, notes: "", links: "")
-
+        let submittedGenericItem: GenericItem = GenericItem(name: "Apple", daysInFridge: 30.0, daysInFreezer: 240.0, daysOnShelf: 10.0, category: "Produce", subcategory: "Fresh", isCut: false, isCooked: nil, isOpened: nil, notes: "", links: "https://www.healthline.com/nutrition/how-long-do-apples-last#shelf-life")
+        
         let submittedMatchedItem: MatchedItem = MatchedItem(scannedItemName: "ExampleScannedName", genericItem: submittedGenericItem)
         
         try await userSuggestionHTTPManager.submitSuggestedMatchedItemAsync(matchedItem: submittedMatchedItem)
