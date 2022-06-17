@@ -40,8 +40,6 @@ struct OnboardingView: View {
 //    @AppStorage("signed_in") var isUserSignedIn: Bool = false
 //    @AppStorage("name") var currentUserName: String = ""
     
-    // View models
-    @StateObject var pvm = ProduceViewModel.shared
     
     var body: some View {
         ZStack {
@@ -59,11 +57,7 @@ struct OnboardingView: View {
                     MainView()
                         // Our core data managed object context into env.
                         .environment(\.managedObjectContext, ScannedItemViewModel.shared.container.viewContext)
-                        .onAppear {
-                            // Fetch items
-                            let _ = pvm.getAllItemsInfo()
-                            
-                        }
+                       
                         .transition(transition)
                 }
             }
