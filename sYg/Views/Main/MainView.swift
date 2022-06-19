@@ -97,9 +97,7 @@ struct MainView: View {
                         dismissButton:
                             .default(
                                 Text("Ok"),
-                                action: {
-                                    mvm.showAlert.toggle()
-                                }
+                                action: {}
                            )
                     )
                 }
@@ -243,8 +241,17 @@ extension MainView {
                     }
                 }
             // Settings
+//            NavigationLink {
+//                SettingsView()
+//            } label: {
+//                Image(systemName: "info.circle")
+//                    .foregroundColor(onBackground)
+//                    .padding()
+//            }
+            // Generic items info
+            // eventually menu.
             NavigationLink {
-                SettingsView()
+                GenericItemsView()
             } label: {
                 Image(systemName: "slider.horizontal.3")
                     .foregroundColor(onBackground)

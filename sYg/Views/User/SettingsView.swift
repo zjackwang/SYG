@@ -17,15 +17,6 @@ struct SettingsView: View {
             ReminderSettings
         }
         .listStyle(.insetGrouped)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                NavigationLink {
-                    GenericItemsView()
-                } label: {
-                    Text("Go to database")
-                }
-            }
-        }
         .navigationTitle("Settings")
     
     }

@@ -82,7 +82,6 @@ extension EditSheetView {
             )
     }
     
-    // TODO: STILL NOT UPDATING UPON EVERY APPEAR
     private var categoryPicker: some View {
         return Picker("Category", selection: $vm.categorySelection) {
             Text("Produce").tag("Produce")
