@@ -11,12 +11,13 @@ import Combine
 class EditViewModel: ObservableObject {
     enum ViewToEdit {
 //        case confirmationView
+        case none
         case userItemListView
         case manualAddView
     }
     
     static let shared = EditViewModel()
-    
+
     // used to update reminder
     @Published var scannedItemToEdit: ScannedItem?
     
@@ -39,11 +40,11 @@ class EditViewModel: ObservableObject {
     
     // Let listeners know when edits have finished
     @Published var confirmed: Bool = false
-    @Published var viewToEdit: ViewToEdit = .userItemListView
+    @Published var viewToEdit: ViewToEdit = .none
     
     var cancellables = Set<AnyCancellable>()
     
-    init() {
+    private init() {
         addButtonSubscriber()
         addTextFieldSubscriber()
     }
@@ -100,16 +101,18 @@ class EditViewModel: ObservableObject {
         self.category = CategoryConverter.fromRawValue(for: self.categorySelection)
         self.storage = StorageConverter.fromRawValue(for: self.storageSelection)
         let item = UserItem(NameFromAnalysis: self.nameFromAnalysis, Name: self.nameText, DateOfPurchase: self.purchaseDate, DateToRemind: self.remindDate, Category: self.category, Storage: self.storage)
+        self.resetFields()
         print("DEBUGGING >>>> SAVED ITEM: \(item)")
         return item
     }
     
-    func resetFields(for id: String) {
+    func resetFields() {
         self.nameText = ""
         self.category = .produce
         self.storage = .fridge
         self.purchaseDate = Date.now
         self.remindDate = Date.now
         self.confirmed = false
+        self.viewToEdit = .none
     }
 }
