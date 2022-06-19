@@ -40,6 +40,7 @@
 		DB32838A2855121100F73903 /* UserSuggestionHTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3283892855121100F73903 /* UserSuggestionHTTPManager.swift */; };
 		DB32838C2855125700F73903 /* UserSuggestionAPIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32838B2855125700F73903 /* UserSuggestionAPIEndpointTests.swift */; };
 		DB32838F285B8B5E00F73903 /* RecentlyScannedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB32838E285B8B5E00F73903 /* RecentlyScannedView.swift */; };
+		DB328393285D4B9C00F73903 /* Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB328392285D4B9C00F73903 /* Searching.swift */; };
 		DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */; };
 		DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */; };
 		DB518A3C27F9E3D900ABA7B6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB518A3B27F9E3D900ABA7B6 /* CloudKit.framework */; };
@@ -53,6 +54,7 @@
 		DB623D1B2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D1A2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift */; };
 		DB623D242784F5B400EEEC09 /* AnalyzeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D232784F5B400EEEC09 /* AnalyzeResult.swift */; };
 		DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB623D252784F70900EEEC09 /* DocumentResult.swift */; };
+		DB6AE835285E2D09004CD121 /* GenericItemSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE834285E2D09004CD121 /* GenericItemSuggestionView.swift */; };
 		DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78D9E62753301900EDA0E1 /* sYgApp.swift */; };
 		DB78D9EB2753301C00EDA0E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */; };
 		DB7BA23227D93F2200759932 /* EditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7BA23127D93F2200759932 /* EditSheetView.swift */; };
@@ -131,6 +133,7 @@
 		DB3283892855121100F73903 /* UserSuggestionHTTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSuggestionHTTPManager.swift; sourceTree = "<group>"; };
 		DB32838B2855125700F73903 /* UserSuggestionAPIEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSuggestionAPIEndpointTests.swift; sourceTree = "<group>"; };
 		DB32838E285B8B5E00F73903 /* RecentlyScannedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyScannedView.swift; sourceTree = "<group>"; };
+		DB328392285D4B9C00F73903 /* Searching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searching.swift; sourceTree = "<group>"; };
 		DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanningErrors.swift; sourceTree = "<group>"; };
 		DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedItemViewModel.swift; sourceTree = "<group>"; };
 		DB518A3927F9E3D400ABA7B6 /* sYgRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sYgRelease.entitlements; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 		DB623D1A2783CCC500EEEC09 /* URLSessionDataTask - URLSessionDataTaskProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionDataTask - URLSessionDataTaskProtocol.swift"; sourceTree = "<group>"; };
 		DB623D232784F5B400EEEC09 /* AnalyzeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeResult.swift; sourceTree = "<group>"; };
 		DB623D252784F70900EEEC09 /* DocumentResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentResult.swift; sourceTree = "<group>"; };
+		DB6AE834285E2D09004CD121 /* GenericItemSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemSuggestionView.swift; sourceTree = "<group>"; };
 		DB78D9E32753301900EDA0E1 /* sYg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sYg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB78D9E62753301900EDA0E1 /* sYgApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sYgApp.swift; sourceTree = "<group>"; };
 		DB78D9EA2753301C00EDA0E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -324,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				DB32838E285B8B5E00F73903 /* RecentlyScannedView.swift */,
+				DB6AE834285E2D09004CD121 /* GenericItemSuggestionView.swift */,
 			);
 			path = UserSuggestionViews;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				DB623D072783AA0700EEEC09 /* HTTPManager */,
 				DB45EA7D277C0919001BA6C2 /* Scanning */,
 				DB25C19727C5559A00DBEBB2 /* FunctionEvaluator.swift */,
+				DB328392285D4B9C00F73903 /* Searching.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -751,6 +757,7 @@
 				DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */,
 				DBFFD78927CDE39600584484 /* PopOvers.swift in Sources */,
 				DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */,
+				DB328393285D4B9C00F73903 /* Searching.swift in Sources */,
 				DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */,
 				DB99D3FE27F4BEB500C51B61 /* ConfirmButton.swift in Sources */,
 				DBD1318827D33445007BBA37 /* EnvVars.swift in Sources */,
@@ -773,6 +780,7 @@
 				DB623D0E2783AC0400EEEC09 /* HTTPManagerProtocol.swift in Sources */,
 				DB99D3F327F3F02A00C51B61 /* CloudKitUtility.swift in Sources */,
 				DBA907A5280F59C7003C1804 /* MainView.swift in Sources */,
+				DB6AE835285E2D09004CD121 /* GenericItemSuggestionView.swift in Sources */,
 				DBFFD78D27CE769600584484 /* SettingsView.swift in Sources */,
 				DBA907A7280F5B22003C1804 /* ScannedReceiptPopover.swift in Sources */,
 				DB99D3F827F3F1BC00C51B61 /* CloudItem.swift in Sources */,

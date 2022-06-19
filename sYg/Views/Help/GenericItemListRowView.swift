@@ -11,11 +11,10 @@ struct GenericItemListRowView: View {
     @Binding var item: GenericItem
     
     let columns = [
-                GridItem(.flexible(maximum: 100)), // Category
-                GridItem(.flexible(maximum: 100)), // Name
-                GridItem(.flexible(maximum: 100)), // Times
-//                GridItem(.flexible()), // Link?
-    ]
+            GridItem(.flexible(maximum: 75)), // Category
+            GridItem(.flexible(maximum: 100)), // Name
+            GridItem(.flexible()), // Times
+        ]
     
     private let background: Color = Color.DarkPalette.background
     private let onBackground: Color = Color.DarkPalette.onBackground
@@ -26,15 +25,11 @@ struct GenericItemListRowView: View {
         ZStack {
             LazyVGrid(columns: columns) {
                 Text(item.Category)
-                    .font(.headline)
+                    .font(.system(size: 14))
                     .fontWeight(.semibold)
-//                    .padding(.leading, 10)
-                    .foregroundColor(onPrimary)
                 Text(item.Name)
-                    .font(.headline)
+                    .font(.subheadline)
                     .fontWeight(.semibold)
-//                    .padding(.leading, 10)
-                    .foregroundColor(onPrimary)
                 HStack {
                    eatByText
 //                    .padding(.trailing)
@@ -49,14 +44,12 @@ struct GenericItemListRowView: View {
 
 extension GenericItemListRowView {
     private var eatByText: Text {
-        let fridgeTimeInDays = String(format: "%.1f", item.DaysInFridge / 24 * 60 * 60)
-        let freezerTimeInDays = String(format: "%.1f", item.DaysInFreezer / 24 * 60 * 60)
-        let shelfTimeInDays = String(format: "%.1f", item.DaysOnShelf / 24 * 60 * 60)
+        let fridgeTimeInDays = String(format: "%.1f", item.DaysInFridge)
+        let freezerTimeInDays = String(format: "%.1f", item.DaysInFreezer)
+        let shelfTimeInDays = String(format: "%.1f", item.DaysOnShelf)
         
         return Text("\(fridgeTimeInDays) | \(freezerTimeInDays) | \(shelfTimeInDays)")
-            .font(.subheadline)
-//                        .padding(.trailing, 20)
-            .foregroundColor(onPrimary)
+            .font(.headline)
     }
 }
     

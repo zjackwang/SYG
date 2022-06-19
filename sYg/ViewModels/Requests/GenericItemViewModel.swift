@@ -25,14 +25,15 @@ class GenericItemViewModel: ObservableObject {
         }
     }
 
-    // Display or for item name matching
-    @Published var genericItems: [GenericItem] = []
+    var genericItems: [GenericItem] = []
     
     private var genericItemsHTTPManager: GenericItemsHTTPManager = GenericItemsHTTPManager(session: URLSession.shared)
     
-    // Searching
-    let searchPrompt: String = "Enter an item name here!"
+    // For searching in generic items view
+    let searchPrompt: String = "Enter item name or category here!"
+    @Published var editMessage: String = "Swipe right to suggest edit"
     @Published var searchText: String = ""
+    @Published var displayedGenericItems: [GenericItem] = []
 
     // For fetching
     // may have situation where app is fetching, then tries to fetch again.
@@ -41,9 +42,19 @@ class GenericItemViewModel: ObservableObject {
     // For error handling
     private let mvm = MainViewModel.shared
     
-    // MARK: Functions
+    // MARK: View Functions
     
-    
+    func userSearched(for searchText: String) {
+        if !searchText.isEmpty {
+            displayedGenericItems = Searching.filterGenericItemsByNameAndDescription(searchText: searchText, genericItems: genericItems)
+        } else {
+            displayedGenericItems = []
+        }
+    }
+}
+
+// MARK: Request Functions
+extension GenericItemViewModel {
     func fetchAllGenericItemsAsync() async {
         do {
             let items = try await genericItemsHTTPManager.fetchAllGenericItemsAsync()
@@ -160,10 +171,10 @@ class GenericItemViewModel: ObservableObject {
     }
     
     /*
-     * Display error on main view if any routine returns one
+     * Display error on main view if any request returns one
      */
     func handleError(error: Error) {
         mvm.alertTitle = "Database Request Error"
-        mvm.error = error 
+        mvm.error = error
     }
 }
