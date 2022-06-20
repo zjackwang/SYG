@@ -21,7 +21,6 @@ class Searching {
             contentsOf:
                 genericItems.filter({
                     $0.Name.lowercased().contains(searchTextLowerCase)
-                        || $0.Name.lowercased().contains(searchTextLowerCase)
                         || $0.Category.lowercased().contains(searchTextLowerCase)
                 })
                 .sorted(
