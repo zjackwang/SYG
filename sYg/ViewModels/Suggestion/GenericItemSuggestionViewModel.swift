@@ -19,8 +19,7 @@ class GenericItemSuggestionViewModel: ObservableObject {
     
     private let usvm: UserSuggestionViewModel = UserSuggestionViewModel.shared
 
-
-    let title: String = "Suggest Changes"
+    var title: String = "Suggest Changes"
 
     // For recording user submission
     @Published var genericItemToChange: GenericItem?
@@ -60,12 +59,24 @@ class GenericItemSuggestionViewModel: ObservableObject {
     func submitGenericItemSuggestion() {
         let item = saveEditsToGenericItem()
         Task {
-            await usvm.suggestGenericItemAsync(genericItem: item)
+            // Updating existing
+            if let genericItemToChange = genericItemToChange {
+                let updatedItem = UserUpdatedGenericItem(Original: genericItemToChange, Updated: item)
+                await usvm.suggestGenericItemUpdateAsync(userUpdatedGenericItem: updatedItem)
+            } else {
+                // New item suggestion
+                await usvm.suggestGenericItemAsync(genericItem: item)
+            }
             // Enough time to display message
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 self.usvm.showSuggestionAlert()
+                self.resetFields()
             })
         }
+    }
+    
+    func setTitle(newTitle: String) {
+        self.title = newTitle
     }
     
     func addButtonSubscriber() {
@@ -139,6 +150,7 @@ class GenericItemSuggestionViewModel: ObservableObject {
     }
     
     func setItemFields(from genericItem: GenericItem) {
+        self.genericItemToChange = genericItem
         self.nameText = genericItem.Name
         self.category = CategoryConverter.fromRawValue(for: genericItem.Category)
         self.subcategory = genericItem.Subcategory
@@ -158,13 +170,13 @@ class GenericItemSuggestionViewModel: ObservableObject {
         self.daysInFreezer = Double(self.daysInFreezerText) ?? 0.0
         self.daysOnShelf = Double(self.daysOnShelfText) ?? 0.0
         
-        let item = GenericItem(name: self.nameText, daysInFridge: self.daysInFridge, daysInFreezer: self.daysInFreezer, daysOnShelf: self.daysOnShelf, category: self.categorySelection, subcategory: self.subcategory, isCut: self.isCut, isCooked: self.isCooked, isOpened: self.isOpened, notes: "User Suggested Edit", links: self.link)
-        self.resetFields()
+        let item = GenericItem(name: self.nameText, daysInFridge: self.daysInFridge, daysInFreezer: self.daysInFreezer, daysOnShelf: self.daysOnShelf, category: self.categorySelection, subcategory: self.subcategory, isCut: self.isCut, isCooked: self.isCooked, isOpened: self.isOpened, notes: "User Suggested", links: self.link)
         print("DEBUGGING >>>> SAVED ITEM: \(item)")
         return item
     }
     
     func resetFields() {
+        self.genericItemToChange = nil
         self.nameText = ""
         self.category = .produce
         self.categorySelection = ""

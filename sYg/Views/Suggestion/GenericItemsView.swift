@@ -48,12 +48,24 @@ struct GenericItemsView: View {
                 Text(givm.message)
                     .font(.subheadline)
                     .fontWeight(.regular)
+                    .padding([.bottom], 10)
+                // Suggest new Generic Item
+                Text(givm.manualAddText)
+                    .font(.subheadline)
+                    .fontWeight(.regular)
+                    .opacity(usvm.suggestionType == .SuggestGenericItem ? 1.0 : 0.0)
                 Text("For: \(misvm.matchedItem?.ScannedItemName ?? "NIL")")
                     .font(.subheadline)
                     .fontWeight(.regular)
                     .opacity(usvm.suggestionType == .SuggestMatchedItem ? 1.0 : 0.0)
             }
             .opacity(givm.searchText.isEmpty ? 1.0 : 0.0)
+            .onTapGesture {
+                print("BEGING TAPPED")
+                gisvm.setTitle(newTitle: "Suggest New Item")
+                usvm.showGenericItemSuggestionView.toggle()
+            }
+            
             
             List {
                 Section {
@@ -71,6 +83,7 @@ struct GenericItemsView: View {
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             Button {
                                 if usvm.suggestionType == .SuggestGenericItem {
+                                    gisvm.setTitle(newTitle: "Suggest Changes")
                                     gisvm.setItemFields(from: item)
                                     usvm.showGenericItemSuggestionView.toggle()
                                 } else {
@@ -89,6 +102,13 @@ struct GenericItemsView: View {
                     }
                 } header: {
                     Text(givm.header)
+                }
+            }
+            .onTapGesture {
+                print("BEGING TAPPED")
+                if givm.searchText.isEmpty {
+                    gisvm.setTitle(newTitle: "Suggest New Item")
+                    usvm.showGenericItemSuggestionView.toggle()
                 }
             }
             .listStyle(.inset)

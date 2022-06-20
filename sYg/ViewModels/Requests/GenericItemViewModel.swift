@@ -31,7 +31,9 @@ class GenericItemViewModel: ObservableObject {
     // For searching in generic items view
     let searchPrompt: String = "Enter item name or category here!"
     let title: String = "Search Generic Items"
+    let manualAddText: String = "Or tap here to suggest a new Generic Item"
     let header: String = "Days: Fridge | Freezer | Shelf"
+    
     @Published var message: String =  "Swipe right to suggest edit"
     @Published var searchText: String = ""
     @Published var displayedGenericItems: [GenericItem] = []

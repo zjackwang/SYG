@@ -258,9 +258,10 @@ extension MainView {
                 Image(systemName: "slider.horizontal.3")
                     .foregroundColor(onBackground)
                     .padding()
-                    .onTapGesture {
-                        usvm.setSuggestionType(suggestionType: .SuggestMatchedItem)
-                    }
+//                     
+            }
+            .onTapGesture {
+                usvm.suggestionType = .SuggestGenericItem
             }
         }
     }
