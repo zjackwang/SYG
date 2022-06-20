@@ -31,7 +31,8 @@ struct MainView: View {
     @StateObject private var mvm = MainViewModel.shared
     @StateObject private var sivm = ScannedItemViewModel.shared
     @StateObject private var evm = EditViewModel.shared
-    @StateObject var givm = GenericItemViewModel.shared
+    @StateObject private var givm = GenericItemViewModel.shared
+    @StateObject private var usvm = UserSuggestionViewModel.shared
     
     // Color Palette
     private let background: Color = Color.DarkPalette.background
@@ -104,6 +105,7 @@ struct MainView: View {
             }
         }
         .navigationTitle("Main Page")
+        .navigationViewStyle(StackNavigationViewStyle())
         // TODO: Change Beta2.3. when app start structure changes
         // MARK: iCloud auth
         .onAppear {
@@ -256,6 +258,9 @@ extension MainView {
                 Image(systemName: "slider.horizontal.3")
                     .foregroundColor(onBackground)
                     .padding()
+                    .onTapGesture {
+                        usvm.setSuggestionType(suggestionType: .SuggestMatchedItem)
+                    }
             }
         }
     }

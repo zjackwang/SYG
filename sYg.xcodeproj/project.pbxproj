@@ -60,6 +60,11 @@
 		DB7BA23227D93F2200759932 /* EditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7BA23127D93F2200759932 /* EditSheetView.swift */; };
 		DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB833FD427C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld */; };
 		DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB833FD827C08C39004BF14D /* TimeConstants.swift */; };
+		DB8C16DC285FCCDA00399740 /* GenericItemSuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C16DB285FCCDA00399740 /* GenericItemSuggestionViewModel.swift */; };
+		DB8C16DE285FD0ED00399740 /* MatchedItemSuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C16DD285FD0ED00399740 /* MatchedItemSuggestionViewModel.swift */; };
+		DB8C16E0285FD4E800399740 /* GeneralError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C16DF285FD4E800399740 /* GeneralError.swift */; };
+		DB8C16E2285FF31500399740 /* MatchedItemSuggestionVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C16E1285FF31500399740 /* MatchedItemSuggestionVIew.swift */; };
+		DB8C16E4285FF85F00399740 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C16E3285FF85F00399740 /* DoubleExtension.swift */; };
 		DB99D3F327F3F02A00C51B61 /* CloudKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F227F3F02A00C51B61 /* CloudKitUtility.swift */; };
 		DB99D3F527F3F0AD00C51B61 /* CloudKitableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F427F3F0AD00C51B61 /* CloudKitableProtocol.swift */; };
 		DB99D3F827F3F1BC00C51B61 /* CloudItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB99D3F727F3F1BC00C51B61 /* CloudItem.swift */; };
@@ -156,6 +161,11 @@
 		DB7BA23127D93F2200759932 /* EditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSheetView.swift; sourceTree = "<group>"; };
 		DB833FD527C082BB004BF14D /* ScannedItemsDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScannedItemsDataModel.xcdatamodel; sourceTree = "<group>"; };
 		DB833FD827C08C39004BF14D /* TimeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConstants.swift; sourceTree = "<group>"; };
+		DB8C16DB285FCCDA00399740 /* GenericItemSuggestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemSuggestionViewModel.swift; sourceTree = "<group>"; };
+		DB8C16DD285FD0ED00399740 /* MatchedItemSuggestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedItemSuggestionViewModel.swift; sourceTree = "<group>"; };
+		DB8C16DF285FD4E800399740 /* GeneralError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralError.swift; sourceTree = "<group>"; };
+		DB8C16E1285FF31500399740 /* MatchedItemSuggestionVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedItemSuggestionVIew.swift; sourceTree = "<group>"; };
+		DB8C16E3285FF85F00399740 /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 		DB99D3F227F3F02A00C51B61 /* CloudKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUtility.swift; sourceTree = "<group>"; };
 		DB99D3F427F3F0AD00C51B61 /* CloudKitableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitableProtocol.swift; sourceTree = "<group>"; };
 		DB99D3F727F3F1BC00C51B61 /* CloudItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudItem.swift; sourceTree = "<group>"; };
@@ -319,7 +329,6 @@
 			children = (
 				DB328342284FEE0200F73903 /* GenericItemViewModel.swift */,
 				DB34305327BEE02800CF076A /* ScannedItemViewModel.swift */,
-				DB328387285511F200F73903 /* UserSuggestionViewModel.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -346,6 +355,7 @@
 			children = (
 				DB34300827BEC12900CF076A /* ReceiptScanningErrors.swift */,
 				DB25C1A027C5ADC200DBEBB2 /* EatByReminderError.swift */,
+				DB8C16DF285FD4E800399740 /* GeneralError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -371,6 +381,7 @@
 		DB45EA72277BF74B001BA6C2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DB8C16DA285FCCD000399740 /* Suggestion */,
 				DB328386285511C900F73903 /* Requests */,
 				DB328340284FEE0200F73903 /* Help */,
 				DB99D40427F5F82C00C51B61 /* Edit */,
@@ -386,7 +397,7 @@
 				DBFFD79727CFEC3D00584484 /* UI */,
 				DBFFD79027CE853700584484 /* Misc */,
 				DBA6EEA127868F2F002E19AA /* Main */,
-				DBA6EEA027868F27002E19AA /* Help */,
+				DBA6EEA027868F27002E19AA /* Suggestion */,
 				DBA6EE9F27868F1E002E19AA /* User */,
 			);
 			path = Views;
@@ -539,6 +550,16 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DB8C16DA285FCCD000399740 /* Suggestion */ = {
+			isa = PBXGroup;
+			children = (
+				DB328387285511F200F73903 /* UserSuggestionViewModel.swift */,
+				DB8C16DB285FCCDA00399740 /* GenericItemSuggestionViewModel.swift */,
+				DB8C16DD285FD0ED00399740 /* MatchedItemSuggestionViewModel.swift */,
+			);
+			path = Suggestion;
+			sourceTree = "<group>";
+		};
 		DB99D3F127F3EABB00C51B61 /* Cloudkit */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,13 +604,14 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		DBA6EEA027868F27002E19AA /* Help */ = {
+		DBA6EEA027868F27002E19AA /* Suggestion */ = {
 			isa = PBXGroup;
 			children = (
 				DBC6479E280F03B700AE893E /* GenericItemsView.swift */,
 				DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */,
+				DB8C16E1285FF31500399740 /* MatchedItemSuggestionVIew.swift */,
 			);
-			path = Help;
+			path = Suggestion;
 			sourceTree = "<group>";
 		};
 		DBA6EEA127868F2F002E19AA /* Main */ = {
@@ -618,6 +640,7 @@
 			isa = PBXGroup;
 			children = (
 				DBFFD79827CFEC4800584484 /* ColorExtension.swift */,
+				DB8C16E3285FF85F00399740 /* DoubleExtension.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -756,6 +779,7 @@
 				DB0172D527FF35E3005F1129 /* Storage.swift in Sources */,
 				DB833FD627C082BB004BF14D /* ScannedItemsDataModel.xcdatamodeld in Sources */,
 				DBFFD78927CDE39600584484 /* PopOvers.swift in Sources */,
+				DB8C16E4285FF85F00399740 /* DoubleExtension.swift in Sources */,
 				DB293A5F2795C9D700001DA6 /* UserItemListView.swift in Sources */,
 				DB328393285D4B9C00F73903 /* Searching.swift in Sources */,
 				DB297AE127A88C2700EAA3C3 /* StatusClockView.swift in Sources */,
@@ -770,10 +794,12 @@
 				DB623D192783CCAD00EEEC09 /* URLSession-URLSessionProtocol.swift in Sources */,
 				DB34300927BEC12900CF076A /* ReceiptScanningErrors.swift in Sources */,
 				DB32837F2853E52C00F73903 /* MatchedItem.swift in Sources */,
+				DB8C16DC285FCCDA00399740 /* GenericItemSuggestionViewModel.swift in Sources */,
 				DB25C1A127C5ADC200DBEBB2 /* EatByReminderError.swift in Sources */,
 				DB3283852853E5E300F73903 /* UserUpdatedGenericItem.swift in Sources */,
 				DB32837C285390DA00F73903 /* ItemMatcher.swift in Sources */,
 				DB297AE327A8E81200EAA3C3 /* Cache.swift in Sources */,
+				DB8C16DE285FD0ED00399740 /* MatchedItemSuggestionViewModel.swift in Sources */,
 				DB833FD927C08C39004BF14D /* TimeConstants.swift in Sources */,
 				DB623D262784F70900EEEC09 /* DocumentResult.swift in Sources */,
 				DBB25C4C277CC3AE00C5F783 /* Selector.swift in Sources */,
@@ -787,6 +813,7 @@
 				DB328343284FEE0200F73903 /* SettingsViewModel.swift in Sources */,
 				DB623D102783AF3C00EEEC09 /* AzureHTTPManagerProtocol.swift in Sources */,
 				DB09F81027CB432D0022C034 /* UrgentToEatView.swift in Sources */,
+				DB8C16E2285FF31500399740 /* MatchedItemSuggestionVIew.swift in Sources */,
 				DB99D3F527F3F0AD00C51B61 /* CloudKitableProtocol.swift in Sources */,
 				DB297ADF27A88BAA00EAA3C3 /* UserItemView.swift in Sources */,
 				DB78D9E72753301900EDA0E1 /* sYgApp.swift in Sources */,
@@ -796,6 +823,7 @@
 				DB623D0B2783ABD300EEEC09 /* AzureHTTPManager.swift in Sources */,
 				DBA3AC4A27B6C10B008975C4 /* AzureHTTPManager - AzureHTTPManagerProtocol.swift in Sources */,
 				DB34305427BEE02800CF076A /* ScannedItemViewModel.swift in Sources */,
+				DB8C16E0285FD4E800399740 /* GeneralError.swift in Sources */,
 				DB623D092783AA7A00EEEC09 /* AnalyzedReceipt.swift in Sources */,
 				DBBDD37F277C09A60030A51E /* ReceiptSelector.swift in Sources */,
 				DB25C19827C5559A00DBEBB2 /* FunctionEvaluator.swift in Sources */,

@@ -21,8 +21,10 @@ import SwiftUI
  *  5. Swipe right to suggest edit
  */
 struct GenericItemsView: View {
-    @StateObject var givm = GenericItemViewModel.shared
-    @StateObject var usvm = UserSuggestionViewModel.shared
+    @StateObject private var givm = GenericItemViewModel.shared
+    @StateObject private var usvm = UserSuggestionViewModel.shared
+    @StateObject private var gisvm = GenericItemSuggestionViewModel.shared
+    @StateObject private var misvm = MatchedItemSuggestionViewModel.shared
 
     @State var rowNum: Int = 0
     
@@ -37,17 +39,19 @@ struct GenericItemsView: View {
     var body: some View {
         ZStack {
             VStack {
-                Text("Pull down and search Generic Items")
+                Text(givm.title)
                     .font(.title2)
                     .fontWeight(.medium)
 //                Text("Tap to see more info")
 //                    .font(.subheadline)
 //                    .fontWeight(.regular)
-                Text(givm.editMessage)
+                Text(givm.message)
                     .font(.subheadline)
                     .fontWeight(.regular)
-                
-                
+                Text("For: \(misvm.matchedItem?.ScannedItemName ?? "NIL")")
+                    .font(.subheadline)
+                    .fontWeight(.regular)
+                    .opacity(usvm.suggestionType == .SuggestMatchedItem ? 1.0 : 0.0)
             }
             .opacity(givm.searchText.isEmpty ? 1.0 : 0.0)
             
@@ -66,10 +70,15 @@ struct GenericItemsView: View {
                         // Send Update
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             Button {
-                                usvm.setItemFields(from: item)
-                                usvm.showSuggestionView.toggle()
+                                if usvm.suggestionType == .SuggestGenericItem {
+                                    gisvm.setItemFields(from: item)
+                                    usvm.showGenericItemSuggestionView.toggle()
+                                } else {
+                                    misvm.setGenericItem(genericItem: item)
+                                    usvm.showMatchedItemSuggestionView.toggle()
+                                }
                             } label: {
-                                Label("Report", systemImage: "exclamationmark.bubble.fill")
+                                Label("Suggest", systemImage: "exclamationmark.bubble.fill")
                             }
                             .tint(.yellow)
                         }
@@ -79,18 +88,21 @@ struct GenericItemsView: View {
                         }
                     }
                 } header: {
-                    Text("Days: Fridge | Freezer | Shelf")
+                    Text(givm.header)
                 }
             }
             .listStyle(.inset)
-            .searchable(text: $givm.searchText, placement: .toolbar, prompt: givm.searchPrompt)
-            .onChange(of: givm.searchText, perform: givm.userSearched)
+            .searchable(text: $givm.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: givm.searchPrompt)
+            .onChange(of: givm.searchText, perform: givm.userSearched) 
         }
         .navigationTitle("Generic Items")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $usvm.showSuggestionView) {
+        .sheet(isPresented: $usvm.showGenericItemSuggestionView) {
             GenericItemSuggestionView()
         }
+        .sheet(isPresented: $usvm.showMatchedItemSuggestionView, content: {
+            MatchedItemSuggestionView()
+        })
         .alert(isPresented: $usvm.showAlert) {
             return Alert(
                 title: Text("Suggestion result"),

@@ -1,44 +1,29 @@
 //
-//  UserSuggestionViewModel.swift
+//  GenericItemSuggestionViewModel.swift
 //  sYg
 //
-//  Created by Jack Wang on 6/11/22.
+//  Created by Jack Wang on 6/19/22.
 //
 
 import Foundation
-import Combine
+import Combine 
 
-/*
- * UserSuggestionViewModel
- *  should submit user suggested generic items for approval
- *  should submit user suggested matched items for approval
- *  should submit user suggested generic item updates for approval
- *  should propagate errors in the above submission processes to the user
- */
-class UserSuggestionViewModel: ObservableObject {
+class GenericItemSuggestionViewModel: ObservableObject {
     
-    /*
-     * MARK: Initialization
-     */
-    
-    static let shared = UserSuggestionViewModel()
+    // MARK: Initialization
+    static let shared = GenericItemSuggestionViewModel()
     private init () {
         addButtonSubscriber()
         addTextFieldsSubscriber()
     }
     
-    private var userSuggestionHTTPManager: UserSuggestionHTTPManager = UserSuggestionHTTPManager(session: URLSession.shared)
-    
-    // For error handling
-//    private let mvm = MainViewModel.shared
-    
+    private let usvm: UserSuggestionViewModel = UserSuggestionViewModel.shared
+
+
+    let title: String = "Suggest Changes"
+
     // For recording user submission
-    
-    // used to update reminder
     @Published var genericItemToChange: GenericItem?
-    
-    @Published var title: String = "Suggest Changes"
-    
     @Published var nameText: String = ""
     @Published var nameTextIsValid: Bool = false
     @Published var nameTextCount: Int = 0
@@ -65,31 +50,20 @@ class UserSuggestionViewModel: ObservableObject {
     @Published var isCookedSelection = "Uncooked"
     @Published var isOpened = false
     @Published var isOpenedSelection = "Unopened"
-    
     @Published var link: String = ""
-    
     @Published var showConfirmButton: Bool = false
     
-    // Let listeners know when edits have finished
-    @Published var showAlert: Bool = false
-    @Published var alertText: String = "Success!"
-    @Published var error: Error?
-    @Published var showSuggestionView: Bool = false
-
+    // For combine 
     var cancellables = Set<AnyCancellable>()
-
-    /*
-     * MARK: Functions
-     */
-    
+            
+    // MARK: Functions
     func submitGenericItemSuggestion() {
         let item = saveEditsToGenericItem()
         Task {
-            await suggestGenericItemAsync(genericItem: item)
+            await usvm.suggestGenericItemAsync(genericItem: item)
             // Enough time to display message
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                self.showAlert.toggle()
-                print(self.showAlert)
+                self.usvm.showSuggestionAlert()
             })
         }
     }
@@ -201,41 +175,5 @@ class UserSuggestionViewModel: ObservableObject {
         self.isCut = false
         self.isCooked = false
         self.isOpened = false
-    }
-    
-    /*
-     * Display error on main view if any routine returns one
-     */
-    func handleError(error: Error) {
-        DispatchQueue.main.async {
-            self.error = error
-        }
-    }
-}
-
-// MARK: Submitting suggestion functions
-extension UserSuggestionViewModel {
-    func suggestGenericItemAsync(genericItem: GenericItem) async {
-        do {
-            try await userSuggestionHTTPManager.submitSuggestGenericItemAsync(genericItem: genericItem)
-        } catch {
-            self.handleError(error: error)
-        }
-    }
-    
-    func suggestMatchedItemAsync(matchedItem: MatchedItem) async {
-        do {
-            try await userSuggestionHTTPManager.submitSuggestedMatchedItemAsync(matchedItem: matchedItem)
-        } catch {
-            self.handleError(error: error)
-        }
-    }
-    
-    func suggestGenericItemUpdateAsync(userUpdatedGenericItem: UserUpdatedGenericItem) async {
-        do {
-            try await userSuggestionHTTPManager.submitSuggestedGenericItemUpdateAsync(updatedGenericItem: userUpdatedGenericItem)
-        } catch {
-            self.handleError(error: error)
-        }
     }
 }

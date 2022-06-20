@@ -11,8 +11,9 @@ import Combine
 // Going to be similar to EditSheetView 
 struct GenericItemSuggestionView: View {
     
-    @StateObject private var vm = UserSuggestionViewModel.shared
-    
+    @StateObject private var vm = GenericItemSuggestionViewModel.shared
+    @StateObject private var usvm = UserSuggestionViewModel.shared
+
     @State var cancellables = Set<AnyCancellable>()
     
     var body: some View {
@@ -41,7 +42,7 @@ struct GenericItemSuggestionView: View {
                 linkField
                 
                 Button {
-                    vm.showSuggestionView.toggle()
+                    usvm.showGenericItemSuggestionView.toggle()
                 } label: {
                     Text("Cancel")
                 }
@@ -49,7 +50,7 @@ struct GenericItemSuggestionView: View {
                 Button {
                     // save form
                     vm.submitGenericItemSuggestion()
-                    vm.showSuggestionView.toggle()
+                    usvm.showGenericItemSuggestionView.toggle()
                 } label: {
                     Text("Save")
                 }
@@ -122,7 +123,7 @@ extension GenericItemSuggestionView {
             Text("Days In Fridge: ")
                 .foregroundColor(.gray)
             
-            TextField("\(vm.daysInFridge)", text: $vm.daysInFridgeText)
+            TextField("\(vm.daysInFridge.formatted)", text: $vm.daysInFridgeText)
                 .overlay(
                     ZStack {
                         Image(systemName: "xmark")
@@ -145,7 +146,7 @@ extension GenericItemSuggestionView {
             Text("Days In Freezer: ")
                 .foregroundColor(.gray)
 
-            TextField("\(vm.daysInFreezer)", text: $vm.daysInFreezerText)
+            TextField("\(vm.daysInFreezer.formatted)", text: $vm.daysInFreezerText)
                 .overlay(
                     ZStack {
                         Image(systemName: "xmark")
@@ -169,7 +170,7 @@ extension GenericItemSuggestionView {
             Text("Days On Shelf: ")
                 .foregroundColor(.gray)
         
-            TextField("\(vm.daysOnShelf)", text: $vm.daysOnShelfText)
+            TextField("\(vm.daysOnShelf.formatted)", text: $vm.daysOnShelfText)
                 .overlay(
                     ZStack {
                         Image(systemName: "xmark")

@@ -27,11 +27,12 @@ class GenericItemViewModel: ObservableObject {
 
     var genericItems: [GenericItem] = []
     
-    private var genericItemsHTTPManager: GenericItemsHTTPManager = GenericItemsHTTPManager(session: URLSession.shared)
-    
+    private var genericItemsHTTPManager: GenericItemsHTTPManager = GenericItemsHTTPManager(session: URLSession.shared)    
     // For searching in generic items view
     let searchPrompt: String = "Enter item name or category here!"
-    @Published var editMessage: String = "Swipe right to suggest edit"
+    let title: String = "Search Generic Items"
+    let header: String = "Days: Fridge | Freezer | Shelf"
+    @Published var message: String =  "Swipe right to suggest edit"
     @Published var searchText: String = ""
     @Published var displayedGenericItems: [GenericItem] = []
 
