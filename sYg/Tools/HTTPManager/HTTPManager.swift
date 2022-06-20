@@ -38,6 +38,7 @@ class HTTPManager<T : URLSessionProtocol> {
      *          or a failure with corresponding error code in the completionBlock
      */
     func makeRequest(request: URLRequest, completionBlock: @escaping (Result<Data, Error>, URLResponse?) -> Void) {
+        
         let task = self.session.dataTask(with: request) {
             data, response, error in
             
@@ -67,6 +68,14 @@ class HTTPManager<T : URLSessionProtocol> {
         }
         
         task.resume()
+    }
+ 
+    func validateURL(urlString: String) throws -> URL {
+        guard let url = URL(string: urlString)
+        else {
+            throw HTTPError.invalidURL
+        }
+        return url
     }
     
 }

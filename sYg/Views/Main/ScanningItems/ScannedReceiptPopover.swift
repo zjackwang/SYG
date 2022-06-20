@@ -45,13 +45,16 @@ struct ScannedReceiptPopover: View {
                 // Confirmation
                 if let receipt = mvm.receipt{
                     Button {
-                        mvm.analyzeImage(receipt: receipt)
+                        Task {
+                            await mvm.analyzeReceiptAndStore(receipt: receipt)
+                        }
                         withAnimation {
                             showPopover.toggle()
                         }
                     } label: {
                         ConfirmButtonLabel(text: "Confirm Image", height: 50, width: 300)
                     }
+                    
                 }
             }
         }

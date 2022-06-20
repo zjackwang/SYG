@@ -32,6 +32,10 @@ class UserSuggestionViewModel: ObservableObject {
         case SuggestMatchedItem
     }
     
+    // For notif to user after a scan
+    // Reset by each scan, result of prev scan will stay in memory for now
+    @Published var matchedItems: [MatchedItem] = []
+    
     @Published var suggestionType: SuggestionType = .SuggestGenericItem
     @Published var showGenericItemSuggestionView: Bool = false
     @Published var showMatchedItemSuggestionView: Bool = false

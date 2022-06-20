@@ -333,15 +333,6 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
-		DB32838D285B8B4D00F73903 /* UserSuggestionViews */ = {
-			isa = PBXGroup;
-			children = (
-				DB32838E285B8B5E00F73903 /* RecentlyScannedView.swift */,
-				DB6AE834285E2D09004CD121 /* GenericItemSuggestionView.swift */,
-			);
-			path = UserSuggestionViews;
-			sourceTree = "<group>";
-		};
 		DB328390285CFD5D00F73903 /* Old */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,6 +598,8 @@
 		DBA6EEA027868F27002E19AA /* Suggestion */ = {
 			isa = PBXGroup;
 			children = (
+				DB32838E285B8B5E00F73903 /* RecentlyScannedView.swift */,
+				DB6AE834285E2D09004CD121 /* GenericItemSuggestionView.swift */,
 				DBC6479E280F03B700AE893E /* GenericItemsView.swift */,
 				DBC647A5280F0D9B00AE893E /* GenericItemListRowView.swift */,
 				DB8C16E1285FF31500399740 /* MatchedItemSuggestionVIew.swift */,
@@ -617,7 +610,6 @@
 		DBA6EEA127868F2F002E19AA /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				DB32838D285B8B4D00F73903 /* UserSuggestionViews */,
 				DB17C4CF28006C5B009C5EDB /* ScanningItems */,
 				DB293A5B2795C98600001DA6 /* UserItemViews */,
 				DBA907A4280F59C7003C1804 /* MainView.swift */,

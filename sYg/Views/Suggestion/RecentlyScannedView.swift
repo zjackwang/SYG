@@ -9,7 +9,6 @@ import SwiftUI
 
 
 struct RecentlyScannedView: View {
-    private let mvm = MainViewModel.shared
     private let usvm = UserSuggestionViewModel.shared
     private let misvm = MatchedItemSuggestionViewModel.shared
 
@@ -39,7 +38,7 @@ struct RecentlyScannedView: View {
             // content
             List {
                 Section {
-                    ForEach(mvm.matchedItems, id: \.self) {
+                    ForEach(usvm.matchedItems, id: \.self) {
                         matchedItem in
                         LazyVGrid(columns: columns, spacing: 20) {
                             HStack(spacing: 20) {
