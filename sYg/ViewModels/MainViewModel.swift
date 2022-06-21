@@ -176,8 +176,7 @@ extension MainViewModel {
                 if !matchedItems.isEmpty {
                     self.showNavPrompt.toggle()
                     self.alertText += "\n \(matchedItems.count - numMatchDefaults) items were matched to a generic item and \(numMatchDefaults) used the default eat-by interval."
-                    UserSuggestionViewModel.shared
-.matchedItems = matchedItems
+                    UserSuggestionViewModel.shared.matchedItems = matchedItems
                 }
                 self.showAlert.toggle()
                 self.showProgressDialog.toggle()

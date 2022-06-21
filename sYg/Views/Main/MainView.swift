@@ -79,30 +79,17 @@ struct MainView: View {
                 ToolbarItemGroup(placement: .navigationBarTrailing) { ToolbarButtons }
             }
             // User confirmation alert
-            .alert(isPresented: $mvm.showAlert) {
-                
+            .alert(mvm.alertTitle, isPresented: $mvm.showAlert, actions: {
+                Button("Ok", role: .cancel) {}
                 if mvm.showNavPrompt {
-                    return Alert(
-                        title: Text(mvm.alertTitle),
-                        message: Text(getMessageString(error: mvm.error)),
-                        primaryButton:
-                                .destructive(Text("See More")) {
-                                    mvm.navToRecentlyScanned.toggle()
-                        },
-                        secondaryButton: .cancel()
-                        )
-                } else {
-                    return Alert(
-                        title: Text(mvm.alertTitle),
-                        message: Text(getMessageString(error: mvm.error)),
-                        dismissButton:
-                            .default(
-                                Text("Ok"),
-                                action: {}
-                           )
-                    )
+                    Button("Suggest", role: nil) {
+                        mvm.navToRecentlyScanned.toggle()
+                        mvm.resetAlert()
+                    }
                 }
-            }
+            }, message: {
+                Text(getMessageString(error: mvm.error))
+            })
         }
         .navigationTitle("Main Page")
         .navigationViewStyle(StackNavigationViewStyle())
@@ -111,7 +98,7 @@ struct MainView: View {
         .onAppear {
             // Request access for notifications if not given already
             EatByReminderManager.instance.requestAuthorization()
-            
+
             // DEBUGGING
             print(EatByReminderManager.instance.getAllScheduledNotifications())
             
