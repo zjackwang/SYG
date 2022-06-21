@@ -32,9 +32,7 @@ struct GenericItemListRowView: View {
                     .fontWeight(.semibold)
                 HStack {
                    eatByText
-//                    .padding(.trailing)
             }
-                
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .listRowBackground(background)

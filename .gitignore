@@ -2,7 +2,6 @@
 xcuserdata/
 *.xcuserstate
 Preview Content/
-*App.swift
 data/
 parsing/
 legacy/

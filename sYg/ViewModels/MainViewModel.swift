@@ -175,7 +175,7 @@ extension MainViewModel {
                 self.alertText = "Successfully scanned!"
                 if !matchedItems.isEmpty {
                     self.showNavPrompt.toggle()
-                    self.alertText += "\n \(matchedItems.count - numMatchDefaults) items were matched to a generic item and \(numMatchDefaults) used the default eat-by interval."
+                    self.alertText += "\n \(matchedItems.count - numMatchDefaults) items were matched to a generic item and \(numMatchDefaults) used the default eat-by interval. \nSee more to see how your items were matched."
                     UserSuggestionViewModel.shared.matchedItems = matchedItems
                 }
                 self.showAlert.toggle()

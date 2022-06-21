@@ -47,7 +47,7 @@ struct MainView: View {
                 // Background
                 background
                     .ignoresSafeArea()
-             
+                
                 // Content
                 UserItemListView(scannedItems: $sivm.scannedItems)
                     .sheet(isPresented: $mvm.showSelector) {
@@ -55,6 +55,7 @@ struct MainView: View {
                         ReceiptSelector(receipt: $mvm.receipt, sourceType: mvm.source == .library ? .photoLibrary : .camera, showPopover: $mvm.showScannedReceipt)
                             .ignoresSafeArea()
                     }
+                
                 // Progress Dialog
                 ProgressDialog(show: $mvm.showProgressDialog, message: $mvm.progressMessage)
                     .ignoresSafeArea()
@@ -73,6 +74,8 @@ struct MainView: View {
                 // "See more"
                 RecentlyScannedNavLink
             }
+            // Inline to use standard sized navbar
+            .navigationBarTitle(Text(""), displayMode: .inline)
             // Top toolbar
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) { IconBrand }
@@ -82,7 +85,7 @@ struct MainView: View {
             .alert(mvm.alertTitle, isPresented: $mvm.showAlert, actions: {
                 Button("Ok", role: .cancel) {}
                 if mvm.showNavPrompt {
-                    Button("Suggest", role: nil) {
+                    Button("See more", role: nil) {
                         mvm.navToRecentlyScanned.toggle()
                         mvm.resetAlert()
                     }
@@ -91,7 +94,7 @@ struct MainView: View {
                 Text(getMessageString(error: mvm.error))
             })
         }
-        .navigationTitle("Main Page")
+        // So views with search bar don't pop out view stack
         .navigationViewStyle(StackNavigationViewStyle())
         // TODO: Change Beta2.3. when app start structure changes
         // MARK: iCloud auth
@@ -187,10 +190,10 @@ extension MainView {
 
 extension MainView {
     private var IconBrand: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 10) {
             Image("icon")
-                .frame(maxWidth: 10)
-                .padding(20)
+                .resizable()
+                .frame(width: 40, height: 40)
             Text("EatThat!")
                 .font(.title)
                 .fontWeight(.bold)

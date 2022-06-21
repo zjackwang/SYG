@@ -38,6 +38,9 @@ struct GenericItemsView: View {
     
     var body: some View {
         ZStack {
+            background
+                .ignoresSafeArea()
+            
             VStack {
                 Text(givm.title)
                     .font(.title2)
@@ -111,7 +114,7 @@ struct GenericItemsView: View {
                     usvm.showGenericItemSuggestionView.toggle()
                 }
             }
-            .listStyle(.inset)
+            .listStyle(.insetGrouped)
             .searchable(text: $givm.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: givm.searchPrompt)
             .onChange(of: givm.searchText, perform: givm.userSearched) 
         }
