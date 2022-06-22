@@ -52,8 +52,8 @@ class UserSuggestionViewModel: ObservableObject {
     func setSuggestionType(suggestionType: SuggestionType) {
         self.suggestionType = suggestionType
         givm.message = suggestionType == .SuggestGenericItem ?
-                    "Swipe right to suggest edit" :
-                    "Swipe right to suggest match"
+                    "Swipe right on an item to suggest edit" :
+                    "Swipe right to an item to suggest match"
     }
     
     func suggestGenericItemAsync(genericItem: GenericItem) async {

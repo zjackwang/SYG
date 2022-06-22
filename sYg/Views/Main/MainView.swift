@@ -244,14 +244,13 @@ extension MainView {
             // eventually menu.
             NavigationLink {
                 GenericItemsView()
+                    .onAppear {
+                        usvm.setSuggestionType(suggestionType: .SuggestGenericItem)
+                    }
             } label: {
                 Image(systemName: "slider.horizontal.3")
                     .foregroundColor(onBackground)
                     .padding()
-//                     
-            }
-            .onTapGesture {
-                usvm.suggestionType = .SuggestGenericItem
             }
         }
     }

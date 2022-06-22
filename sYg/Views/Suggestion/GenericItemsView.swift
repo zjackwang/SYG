@@ -51,7 +51,6 @@ struct GenericItemsView: View {
                 Text(givm.message)
                     .font(.subheadline)
                     .fontWeight(.regular)
-                    .padding([.bottom], 10)
                 // Suggest new Generic Item
                 Text(givm.manualAddText)
                     .font(.subheadline)
@@ -63,12 +62,6 @@ struct GenericItemsView: View {
                     .opacity(usvm.suggestionType == .SuggestMatchedItem ? 1.0 : 0.0)
             }
             .opacity(givm.searchText.isEmpty ? 1.0 : 0.0)
-            .onTapGesture {
-                print("BEGING TAPPED")
-                gisvm.setTitle(newTitle: "Suggest New Item")
-                usvm.showGenericItemSuggestionView.toggle()
-            }
-            
             
             List {
                 Section {
@@ -109,7 +102,7 @@ struct GenericItemsView: View {
             }
             .onTapGesture {
                 print("BEGING TAPPED")
-                if givm.searchText.isEmpty {
+                if givm.searchText.isEmpty && usvm.suggestionType == .SuggestGenericItem { 
                     gisvm.setTitle(newTitle: "Suggest New Item")
                     usvm.showGenericItemSuggestionView.toggle()
                 }
