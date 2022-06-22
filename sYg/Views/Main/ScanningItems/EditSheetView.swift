@@ -48,8 +48,10 @@ struct EditSheetView: View {
                 }
                 Button {
                     // save form
-                    vm.confirmed = true 
-                    show.toggle()
+                    if vm.showConfirmButton {
+                        vm.confirmed = true
+                        show.toggle()
+                    }
                 } label: {
                     Text("Save")
                 }
