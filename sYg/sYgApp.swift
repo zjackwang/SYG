@@ -52,10 +52,7 @@ struct sYgApp: App {
     var body: some Scene {
         WindowGroup {
             // TODO: Change Beta2.3. when app start structure changes
-            if
-                let currentUserSignedIn = SettingsViewModel.shared.isUserSignedIn,
-                currentUserSignedIn
-            {
+            if SettingsViewModel.shared.isUserSignedIn() {
                 MainView()
                     // Our core data managed object context into env.
                     .environment(\.managedObjectContext, sivm.container.viewContext)

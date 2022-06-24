@@ -36,10 +36,8 @@ struct OnboardingView: View {
     private let onBackground: Color = Color.DarkPalette.onBackground
     private let onPrimary: Color = Color.DarkPalette.onPrimary
     
-//    // App storage
-//    @AppStorage("signed_in") var isUserSignedIn: Bool = false
-//    @AppStorage("name") var currentUserName: String = ""
-    
+    // For user info storage
+    let svm = SettingsViewModel.shared
     
     var body: some View {
         ZStack {
@@ -53,7 +51,6 @@ struct OnboardingView: View {
                     addNameSection
                         .transition(transition)
                 case .signedIn:
-//                    MainUserView()
                     MainView()
                         // Our core data managed object context into env.
                         .environment(\.managedObjectContext, ScannedItemViewModel.shared.container.viewContext)
@@ -175,7 +172,7 @@ extension OnboardingView {
 }
 
 
-// MARK: FUNCTION
+// MARK: FUNCTIONS
 
 extension OnboardingView {
     func handleButtonPressed() {
@@ -191,16 +188,15 @@ extension OnboardingView {
                 signIn()
                 onboardingState = .signedIn
             case .signedIn:
-//                signIn()
                 break
             }
         }
     }
     
     func signIn() {
-        SettingsViewModel.shared.currentUserName = name
+        svm.setInitialDefaults(username: name)
         withAnimation(.spring()) {
-            SettingsViewModel.shared.isUserSignedIn = true
+            svm.toggleSignIn()
         }
     }
     

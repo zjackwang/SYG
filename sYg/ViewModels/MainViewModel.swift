@@ -13,8 +13,6 @@ import Combine
  * Encapsulates objs and actions required to get UIKit ImagePicker Functionality
  * Once image is confirmed, sends to Azure for analysis and returns results 
  */
-
-// TODO: Beta 2.3. Split into two vm, mainvm and scannervm 
 class MainViewModel: ObservableObject {
     
     /*

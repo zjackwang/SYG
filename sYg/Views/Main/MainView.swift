@@ -233,17 +233,8 @@ extension MainView {
                     }
                 }
             // Settings
-//            NavigationLink {
-//                SettingsView()
-//            } label: {
-//                Image(systemName: "info.circle")
-//                    .foregroundColor(onBackground)
-//                    .padding()
-//            }
-            // Generic items info
-            // eventually menu.
             NavigationLink {
-                GenericItemsView()
+                SettingsView()
                     .onAppear {
                         usvm.setSuggestionType(suggestionType: .SuggestGenericItem)
                     }

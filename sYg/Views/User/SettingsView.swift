@@ -8,81 +8,108 @@
 import SwiftUI
 
 struct SettingsView: View {
-    var svm = SettingsViewModel.shared
+    @StateObject private var svm = SettingsViewModel.shared
+
+    private let background: Color = Color.DarkPalette.background
+    private let onBackground: Color = Color.DarkPalette.onBackground
 
     var body: some View {
-        
-        List {
-            InfoSection
-            ReminderSettings
+        ZStack {
+            background
+                .ignoresSafeArea()
+            Text(svm.displayedUsername)
+                .font(.headline)
+            List {
+                StatsSection
+                ReminderSettings
+                DatabaseSection
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Settings")
         }
-        .listStyle(.insetGrouped)
-        .navigationTitle("Settings")
-    
+    }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }
 
 // MARK: COMPONENTS
 extension SettingsView {
     
-    private var InfoSection: some View {
+    private var StatsSection: some View {
         Section {
             HStack {
-                Text("Name:")
+                Text("Scanned Items (lifetime):")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text(SettingsViewModel.shared.currentUserName)
-            }
-            HStack {
-                Text("Scanned Items:")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(ScannedItemViewModel.shared.getNumberScannedItems())")
+                    .frame(maxWidth: 50, alignment: .trailing)
             }
             
+            HStack {
+                Text("Scanned Items (current):")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("\(ScannedItemViewModel.shared.getNumberScannedItems())")
+                    .frame(maxWidth: 50, alignment: .trailing)
+            }
             
         } header: {
-            Text("Info")
+            Text("Stats")
         }
     }
     
     private var ReminderSettings: some View {
         Section {
             HStack {
-                Text("Reminder hour:")
+                Text("Default Days to Eat By:")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text("\(date.getFormattedDate(format: TimeConstants.hourFormat))")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("\(svm.displayedRedClockDays)", value: $svm.defaultEatByDateTextFieldInt, formatter: svm.integer)
+                    .multilineTextAlignment(.trailing)
+                    .frame(maxWidth: 25)
             }
             HStack {
-                Text("Default expiration time interval:")
+                Text("Days Before Red Clock Shown:")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text("\(SettingsViewModel.shared.defaultExpirationDays) days from purchase date")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("\(svm.displayedRedClockDays)", value: $svm.redClockDaysTextFieldInt, formatter: svm.integer)
+                    .multilineTextAlignment(.trailing)
+                    .frame(maxWidth: 25)
             }
             HStack {
-                Text("Red Clock Shown:")
+                Text("Days Before Yellow Clock Shown:")
                     .font(.headline)
                     .fontWeight(.semibold)
-                Text("\(SettingsViewModel.shared.redClockDays) days prior")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("\(svm.displayedYellowClockDays)", value: $svm.yellowClockDaysTextFieldInt, formatter: svm.integer)
+                    .multilineTextAlignment(.trailing)
+                    .frame(maxWidth: 25)
             }
-            HStack {
-                Text("Yellow Clock Shown:")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                Text("\(SettingsViewModel.shared.yellowClockDays) days prior")
-            }
-            
-            
         } header: {
             Text("Reminder Settings")
         }
 
     }
     
-    
-    private var date: Date {
-        let dateComponent = DateComponents(hour: SettingsViewModel.shared.reminderHour)
-        return Calendar.current.date(from: dateComponent)!
+    private var DatabaseSection: some View {
+        Section {
+            NavigationLink {
+                GenericItemsView()
+            } label: {
+                Text("Generic Item Database")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+            }
+        } header: {
+            Text("Database")
+        }
     }
 }
