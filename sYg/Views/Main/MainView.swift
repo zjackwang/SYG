@@ -49,7 +49,7 @@ struct MainView: View {
                     .ignoresSafeArea()
                 
                 // Content
-                UserItemListView(scannedItems: $sivm.scannedItems)
+                UserItemListView()
                     .sheet(isPresented: $mvm.showSelector) {
                         // Receipt Selector
                         ReceiptSelector(receipt: $mvm.receipt, sourceType: mvm.source == .library ? .photoLibrary : .camera, showPopover: $mvm.showScannedReceipt)
@@ -119,7 +119,6 @@ struct MainView: View {
                         print("Is signed in to icloud account!")
                 }
                 .store(in: &mvm.cancellables)
-
             
             // Request access to icloud
             CloudKitUtility.requestApplicationPermission()
@@ -239,7 +238,7 @@ extension MainView {
                         usvm.setSuggestionType(suggestionType: .SuggestGenericItem)
                     }
             } label: {
-                Image(systemName: "slider.horizontal.3")
+                Image(systemName: "gearshape")
                     .foregroundColor(onBackground)
                     .padding()
             }

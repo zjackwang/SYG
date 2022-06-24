@@ -19,20 +19,16 @@ class ItemMatcher {
     
     /*
      * If scannedItem has been matched before, return matched
-     *  generic item eat by interval (default stored in fridge)
+     *  generic item
      * Else, return nil
      * Input: String scannedItem.
-     * Output: optional TimeInterval eat by interval.
+     * Output: optional GenericItem.
      */
-    func getEatByInterval(for scannedItem: String) -> TimeInterval? {
-        var eatByInterval: TimeInterval?
-        
+    func getEatByInterval(for scannedItem: String) -> GenericItem? {
         if let matchedItem = givm.getMatchedItem(for:scannedItem) {
-            // default to fridge
-            eatByInterval = matchedItem.DaysInFridge
+            return matchedItem
         }
-        
-        return eatByInterval
+        return nil
     }
     
     /*

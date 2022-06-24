@@ -230,9 +230,13 @@ extension MainViewModel {
             let name = item.valueObject["Name"]?.valueString ?? "Unknown"
             var dateToRemind: Date = dateOfPurchase
             
+            var category: Category = .unknown
+            let storage: Storage = .fridge
+            
             // Look up existing matches
-            if let eatByInterval = itemMatcher.getEatByInterval(for: name) {
-                dateToRemind += eatByInterval
+            if let genericItem = itemMatcher.getEatByInterval(for: name) {
+                dateToRemind += genericItem.DaysInFridge
+                category = CategoryConverter.fromRawValue(for: (genericItem.Category))
             } else {
                 // Otherwise find best match and record
                 var matchedItem = MatchedItem(scannedItemName: name, genericItem: nil)
@@ -253,8 +257,8 @@ extension MainViewModel {
                     Name: name,
                     DateOfPurchase: dateOfPurchase,
                     DateToRemind: dateToRemind,
-                    Category: .unknown,
-                    Storage: .unknown
+                    Category: category,
+                    Storage: storage
                 )
             )
         }

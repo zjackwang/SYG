@@ -41,14 +41,15 @@ extension SettingsView {
     
     private var StatsSection: some View {
         Section {
-            HStack {
-                Text("Scanned Items (lifetime):")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(ScannedItemViewModel.shared.getNumberScannedItems())")
-                    .frame(maxWidth: 50, alignment: .trailing)
-            }
+            // TODO: beta 2.3.
+//            HStack {
+//                Text("Scanned Items (lifetime):")
+//                    .font(.headline)
+//                    .fontWeight(.semibold)
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                Text("\(ScannedItemViewModel.shared.getNumberScannedItems())")
+//                    .frame(maxWidth: 50, alignment: .trailing)
+//            }
             
             HStack {
                 Text("Scanned Items (current):")
