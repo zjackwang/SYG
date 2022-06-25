@@ -5,6 +5,14 @@ EatThat! will also match each item with its respective “eat-by” time interva
 Swipe away the item when you've eaten it to remove the reminder! 
 Happy eating!
 
+** Beta running on iOS 15.0+ **
+
+## Screenshots
+![EmptyMain](https://user-images.githubusercontent.com/32047259/175753326-b88760e9-be97-4b2b-a2b2-a017bb390cc2.png)
+![ReceiptConfirmation](https://user-images.githubusercontent.com/32047259/175753355-34fe68c7-101e-4e19-9e4a-645d607a14ed.png)
+![MainViewProduce](https://user-images.githubusercontent.com/32047259/175753340-dac4694f-f605-42a1-993f-a6a2f8c715d0.png)
+![Eating](https://user-images.githubusercontent.com/32047259/175753329-0f382b2d-b0f3-4269-9d28-fe9d8b40bdbd.png)
+
 ## Beta 2.2. Features
 1. New Eat-by time assignment process 
     1. Introduced Generic Items: 
