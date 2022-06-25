@@ -23,8 +23,8 @@ import SwiftUI
 struct GenericItemsView: View {
     @StateObject private var givm = GenericItemViewModel.shared
     @StateObject private var usvm = UserSuggestionViewModel.shared
-    @StateObject private var gisvm = GenericItemSuggestionViewModel.shared
-    @StateObject private var misvm = MatchedItemSuggestionViewModel.shared
+    private var gisvm = GenericItemSuggestionViewModel.shared
+    private var misvm = MatchedItemSuggestionViewModel.shared
 
     @State var rowNum: Int = 0
     
@@ -41,27 +41,7 @@ struct GenericItemsView: View {
             background
                 .ignoresSafeArea()
             
-            VStack {
-                Text(givm.title)
-                    .font(.title2)
-                    .fontWeight(.medium)
-//                Text("Tap to see more info")
-//                    .font(.subheadline)
-//                    .fontWeight(.regular)
-                Text(givm.message)
-                    .font(.subheadline)
-                    .fontWeight(.regular)
-                // Suggest new Generic Item
-                Text(givm.manualAddText)
-                    .font(.subheadline)
-                    .fontWeight(.regular)
-                    .opacity(usvm.suggestionType == .SuggestGenericItem ? 1.0 : 0.0)
-                Text("For: \(misvm.matchedItem?.ScannedItemName ?? "NIL")")
-                    .font(.subheadline)
-                    .fontWeight(.regular)
-                    .opacity(usvm.suggestionType == .SuggestMatchedItem ? 1.0 : 0.0)
-            }
-            .opacity(givm.searchText.isEmpty ? 1.0 : 0.0)
+            initialInfoMessage
             
             List {
                 Section {
@@ -69,13 +49,7 @@ struct GenericItemsView: View {
                         $item in
                         GenericItemListRowView(item: $item)
                         .padding([.top, .bottom], 10)
-                        .popover(isPresented: $showPopover,
-                                 attachmentAnchor: .point(.bottom) ,
-                                 arrowEdge: .bottom) {
-//                            genericItemInfoPopover
-                            Rectangle().frame(height: 100).foregroundColor(Color.blue)
-                        }
-                        // Send Update
+                        // Suggest a match or a update to generic item
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             Button {
                                 if usvm.suggestionType == .SuggestGenericItem {
@@ -101,8 +75,7 @@ struct GenericItemsView: View {
                 }
             }
             .onTapGesture {
-                print("BEGING TAPPED")
-                if givm.searchText.isEmpty && usvm.suggestionType == .SuggestGenericItem { 
+                if givm.searchText.isEmpty && usvm.suggestionType == .SuggestGenericItem {
                     gisvm.setTitle(newTitle: "Suggest New Item")
                     usvm.showGenericItemSuggestionView.toggle()
                 }
@@ -118,6 +91,9 @@ struct GenericItemsView: View {
         }
         .sheet(isPresented: $usvm.showMatchedItemSuggestionView, content: {
             MatchedItemSuggestionView()
+        })
+        .popover(isPresented: $showPopover, attachmentAnchor: .rect(.bounds), arrowEdge: .top, content: {
+            GenericItemView(genericItem: $popoverItem)
         })
         .alert(isPresented: $usvm.showAlert) {
             return Alert(
@@ -138,21 +114,158 @@ struct GenericItemsView: View {
 
 // MARK: Components
 extension GenericItemsView {
-    
-    private var genericItemInfoPopover: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(.gray)
-            Text("Generic Item")
+    private var initialInfoMessage: some View {
+        VStack {
+            Text(givm.title)
+                .font(.title2)
+                .fontWeight(.medium)
+            Text("Tap on item to see more info")
+                .font(.subheadline)
+                .fontWeight(.regular)
+            Text(givm.message)
+                .font(.subheadline)
+                .fontWeight(.regular)
+            // Suggest new Generic Item
+            Text(givm.manualAddText)
+                .font(.subheadline)
+                .fontWeight(.regular)
+                .opacity(usvm.suggestionType == .SuggestGenericItem ? 1.0 : 0.0)
+            Text("For: \(misvm.matchedItem?.ScannedItemName ?? "NIL")")
+                .font(.subheadline)
+                .fontWeight(.regular)
+                .opacity(usvm.suggestionType == .SuggestMatchedItem ? 1.0 : 0.0)
         }
-        .frame(width: 100, height: 100)
+        .opacity(givm.searchText.isEmpty ? 1.0 : 0.0)
     }
+    
+    
+
 }
 
 struct GenericItemsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             GenericItemsView()
+        }
+    }
+}
+
+struct GenericItemView: View {
+    @Binding var genericItem: GenericItem?
+    
+    var body: some View {
+        Form {
+            VStack {
+                name
+                category
+                subcategory
+                daysInFridge
+                daysInFreezer
+                daysOnShelf
+                HStack {
+                    isCut
+                    isCooked
+                    isOpened
+                }
+            }
+        }
+    }
+}
+
+extension GenericItemView {
+    private var name: some View {
+        HStack {
+            Text("Name: ")
+            Text(genericItem?.Name ?? "NIL")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var category: some View {
+        HStack {
+            Text("Category: ")
+            Text(genericItem?.Category ?? "NIL")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var subcategory: some View {
+        HStack {
+            Text("Subcategory: ")
+            Text(genericItem?.Subcategory ?? "NIL")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var daysInFridge: some View {
+        HStack {
+            Text("Days In Fridge: ")
+            Text(genericItem?.DaysInFridge.formatted ?? "N/A")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var daysInFreezer: some View {
+        HStack {
+            Text("Days In Freezer: ")
+            Text(genericItem?.DaysInFreezer.formatted ?? "N/A")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var daysOnShelf: some View {
+        HStack {
+            Text("Days On Shelf: ")
+            Text(genericItem?.DaysOnShelf.formatted ?? "N/A")
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var isCut: some View {
+        HStack {
+            Text("Is Cut: ")
+            ZStack {
+                Image(systemName: "xmark")
+                    .foregroundColor(.red)
+                    .opacity(
+                        genericItem?.IsCut ?? false ? 0.0 : 1.0)
+                
+                Image(systemName: "checkmark")
+                    .foregroundColor(.green)
+                    .opacity(genericItem?.IsCooked ?? false ? 1.0: 0.0)
+            }
+        }
+    }
+    
+    private var isCooked: some View {
+        HStack {
+            Text("Is Cooked: ")
+            ZStack {
+                Image(systemName: "xmark")
+                    .foregroundColor(.red)
+                    .opacity(
+                        genericItem?.IsCooked ?? false ? 0.0 : 1.0)
+                
+                Image(systemName: "checkmark")
+                    .foregroundColor(.green)
+                    .opacity(genericItem?.IsCooked ?? false ? 1.0: 0.0)
+            }
+        }
+    }
+    
+    private var isOpened: some View {
+        HStack {
+            Text("Is Opened: ")
+            ZStack {
+                Image(systemName: "xmark")
+                    .foregroundColor(.red)
+                    .opacity(
+                        genericItem?.IsCooked ?? false ? 0.0 : 1.0)
+                
+                Image(systemName: "checkmark")
+                    .foregroundColor(.green)
+                    .opacity(genericItem?.IsCooked ?? false ? 1.0: 0.0)
+            }
         }
     }
 }

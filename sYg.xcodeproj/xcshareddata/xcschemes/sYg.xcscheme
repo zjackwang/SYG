@@ -20,6 +20,34 @@
                ReferencedContainer = "container:sYg.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DBA3AC1F27B6A57F008975C4"
+               BuildableName = "ProduceCacheTests.xctest"
+               BlueprintName = "ProduceCacheTests"
+               ReferencedContainer = "container:sYg.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DBA3AC2E27B6B1C4008975C4"
+               BuildableName = "HTTPManagerTests.xctest"
+               BlueprintName = "HTTPManagerTests"
+               ReferencedContainer = "container:sYg.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -32,7 +60,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DB7E9B2927B5F935001A937A"
+               BlueprintIdentifier = "DB32834A284FFBF700F73903"
                BuildableName = "sYgTests.xctest"
                BlueprintName = "sYgTests"
                ReferencedContainer = "container:sYg.xcodeproj">
@@ -42,19 +70,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DBA3AC1F27B6A57F008975C4"
-               BuildableName = "ProduceCacheTests.xctest"
-               BlueprintName = "ProduceCacheTests"
-               ReferencedContainer = "container:sYg.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DBA3AC2E27B6B1C4008975C4"
-               BuildableName = "HTTPManagerTests.xctest"
-               BlueprintName = "HTTPManagerTests"
+               BlueprintIdentifier = "DB8C16E82862819300399740"
+               BuildableName = "sYgUITests.xctest"
+               BlueprintName = "sYgUITests"
                ReferencedContainer = "container:sYg.xcodeproj">
             </BuildableReference>
          </TestableReference>

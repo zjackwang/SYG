@@ -149,7 +149,7 @@ extension MainViewModel {
             self.resetAlert()
             return
         }
-        sivm.removeScannedItem(item: groceryItem)
+        let _ = sivm.removeScannedItem(item: groceryItem)
         
         // Store in matched item as "non-grocery-item"
         Task {
