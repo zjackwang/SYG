@@ -83,11 +83,17 @@ struct MainView: View {
             }
             // User confirmation alert
             .alert(mvm.alertTitle, isPresented: $mvm.showAlert, actions: {
-                Button("Ok", role: .cancel) {}
-                if mvm.showNavPrompt {
-                    Button("See more", role: nil) {
-                        mvm.navToRecentlyScanned.toggle()
-                        mvm.resetAlert()
+                if mvm.showIsGroceryItem {
+                    Button("It is not", role: .destructive) {
+                        mvm.flagNonGroceryItem()
+                    }
+                } else {
+                    Button("Ok", role: .cancel) {}
+                    if mvm.showNavPrompt {
+                        Button("See more", role: nil) {
+                            mvm.navToRecentlyScanned.toggle()
+                            mvm.resetAlert()
+                        }
                     }
                 }
             }, message: {

@@ -85,3 +85,7 @@ struct GenericItem: Hashable, Codable {
         try container.encode(Links, forKey: .Links)
     }
 }
+
+extension GenericItem {
+    static let nonGroceryItem = GenericItem(name: "Non-Grocery Item", daysInFridge: 0, daysInFreezer: 0, daysOnShelf: 0, category: "N/A", subcategory: "", isCut: nil, isCooked: nil, isOpened: nil, notes: "Represents all non-grocery items", links: "")
+}

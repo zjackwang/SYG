@@ -51,6 +51,13 @@ class MainViewModel: ObservableObject {
     @Published var alertTitle: String = ""
     @Published var alertText: String = ""
     @Published var error: Error?
+    
+    // Flag non-grocery item alert type
+    @Published var showIsGroceryItem: Bool = false
+//    @Published var isGroceryItem: Bool = true
+    private var groceryItem: ScannedItem?
+    
+    // Post-analysis confirmation alert type
     @Published var showNavPrompt: Bool = false
     @Published var navToRecentlyScanned: Bool = false
 
@@ -125,9 +132,39 @@ extension MainViewModel {
         }
     }
     
+    func showIsGroceryItemAlert(item: ScannedItem) {
+        self.alertTitle = "Flag Item"
+        self.alertText = "Is this item a grocery item? If not, it will be removed"
+        self.groceryItem = item
+        self.showIsGroceryItem = true
+        self.showNavPrompt = false
+        self.showAlert.toggle()
+    }
+    
+    func flagNonGroceryItem() {
+        // Remove item from storage
+        guard let groceryItem = self.groceryItem,
+              let scannedItemName = groceryItem.nameFromAnalysis
+        else {
+            self.resetAlert()
+            return
+        }
+        sivm.removeScannedItem(item: groceryItem)
+        
+        // Store in matched item as "non-grocery-item"
+        Task {
+            let matchedItem = MatchedItem(scannedItemName: scannedItemName, genericItem: GenericItem.nonGroceryItem)
+            print(matchedItem)
+            await UserSuggestionViewModel.shared.suggestMatchedItemAsync(matchedItem: matchedItem)
+        }
+        self.resetAlert()
+    }
+    
     func resetAlert() {
         self.alertTitle = ""
         self.alertText = ""
+        self.groceryItem = nil
+        self.showIsGroceryItem = false
         self.showNavPrompt = false
     }
     

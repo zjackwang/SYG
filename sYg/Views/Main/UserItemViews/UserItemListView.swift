@@ -27,6 +27,7 @@ struct UserItemListView: View {
     // Shown Category
     @State var showCategoryPicker: Bool = false
     @State var shownCategory: String = "Produce"
+    @State var itemsInCategory: Int = 0
     
     // Edit
     @State var showEdit = false
@@ -55,10 +56,11 @@ struct UserItemListView: View {
                                             // TODO: Handle error
                                             let _ =  sivm.removeScannedItem(item: item)
                                         } label: {
-                                            Label("Delete", systemImage: "trash.fill")
+                                            Label("Eat", systemImage: "trash.fill")
                                         }
                                     }
-                                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                                        // Edit Button
                                         Button {
                                             // Save item fields
                         //                            print("DEBUGGIN >>> item to edit: \(item)")
@@ -74,13 +76,22 @@ struct UserItemListView: View {
                                         } label: {
                                             Label("Edit", systemImage: "pencil.circle")
                                         }
-                                        .tint(.green)
+                                        .tint(.yellow)
+                                        
+                                        // Flag Button
+                                        Button {
+                                            mvm.showIsGroceryItemAlert(item: item)
+                                        } label: {
+                                            Label("Flag", systemImage: "flag")
+                                        }
+                                        .tint(.orange)
                                     }
                                 }
                             }
                             .listStyle(.insetGrouped)
                             .onAppear {
                                 addSubscriberToEdit()
+                                countItemsInCategory()
                             }
                         } header: {
                             Text("Item Name | Purchase Date | Eat-By Clock")
@@ -90,13 +101,11 @@ struct UserItemListView: View {
                                 .frame(width: reader.size.width - 80, alignment: .leading)
                         }
                     }
+                }
             }
-          
             emptyMessage
             
             EditSheetView(show: $showEdit)
-        
-            }
         }
     }
 }
@@ -112,6 +121,16 @@ extension UserItemListView {
     func changeViewedCategory(newCategory: String) {
         // update displayed category
         shownCategory = newCategory
+        countItemsInCategory()
+    }
+    
+    func countItemsInCategory() {
+        itemsInCategory = 0
+        for item in sivm.scannedItems {
+            if item.category == shownCategory {
+                itemsInCategory += 1
+            }
+        }
     }
 
     func addSubscriberToEdit() {
@@ -216,6 +235,9 @@ extension UserItemListView {
                         // Populate with dummy data
 //                        ScannedItemViewModel.shared.addSampleItems()
                     }
+            } else if itemsInCategory == 0 {
+                Text("No items in this category.")
+                    .foregroundColor(onBackground)
             }
         }
     }
