@@ -21,7 +21,7 @@ struct ScannedReceiptPopover: View {
         ZStack {
             ZStack (alignment: .topLeading){
                 // Background
-                primary
+                background
                     .ignoresSafeArea()
                 // Foreground
                 BackButton(show: $showPopover)
@@ -36,8 +36,8 @@ struct ScannedReceiptPopover: View {
                     .frame(width: 300, height: 300, alignment: .center)
                     .background(
                         Rectangle()
-                            .fill(secondary)
-                            .frame(width: 315, height: 315)
+                            .fill(onBackground)
+                            .frame(width: 305, height: 305)
                             .cornerRadius(5)
                     )
                     .padding([.bottom], 50)

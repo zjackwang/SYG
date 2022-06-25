@@ -157,7 +157,6 @@ extension MainViewModel {
             print(matchedItem)
             await UserSuggestionViewModel.shared.suggestMatchedItemAsync(matchedItem: matchedItem)
         }
-        self.resetAlert()
     }
     
     func resetAlert() {

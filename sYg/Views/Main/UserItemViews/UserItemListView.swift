@@ -228,17 +228,25 @@ extension UserItemListView {
     private var emptyMessage: some View {
         Group {
             if sivm.scannedItems.isEmpty {
-                Text("Scan your first receipt to get started!")
-                    .foregroundColor(onBackground)
+                VStack {
+                    Text("Scan your first receipt to get started!")
+                        .foregroundColor(onBackground)
+                        .bold()
+                        .padding()
+                    Text("1. Use the 'Plus' button on the top right\n2. Swipe left on items to eat\n3. Swipe right to edit or flag as non-grocery\n4. Hold 'Viewing' to switch categories")
+                        .foregroundColor(onBackground)
+                        .frame(alignment: .center)
                     // MARK: TESTING
-                    .onTapGesture(count: 2) {
-                        // Populate with dummy data
-//                        ScannedItemViewModel.shared.addSampleItems()
-                    }
+                        .onTapGesture(count: 2) {
+                            // Populate with dummy data
+                            //                        ScannedItemViewModel.shared.addSampleItems()
+                        }
+                }
             } else if itemsInCategory == 0 {
                 Text("No items in this category.")
                     .foregroundColor(onBackground)
             }
+            
         }
     }
 }

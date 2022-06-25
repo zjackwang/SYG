@@ -14,7 +14,7 @@ struct ConfirmButtonLabel: View {
     
     // Color Palette
     private let textColor: Color = Color.DarkPalette.onBackground
-    private let background: Color = Color.DarkPalette.secondary
+    private let background: Color = Color.DarkPalette.primary
     
     var body: some View {
         Text(text)
@@ -23,7 +23,7 @@ struct ConfirmButtonLabel: View {
                 Rectangle()
                     .fill(background)
                     .frame(width: width, height: height, alignment: .bottom)
-                    .cornerRadius(15)
+                    .cornerRadius(5)
             )
     }
 }

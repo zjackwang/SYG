@@ -84,11 +84,18 @@ struct MainView: View {
             // User confirmation alert
             .alert(mvm.alertTitle, isPresented: $mvm.showAlert, actions: {
                 if mvm.showIsGroceryItem {
+                    Button("It is", role: .cancel) {
+                        mvm.resetAlert()
+                    }
                     Button("It is not", role: .destructive) {
+                        print(mvm.showIsGroceryItem)
                         mvm.flagNonGroceryItem()
+                        mvm.resetAlert()
                     }
                 } else {
-                    Button("Ok", role: .cancel) {}
+                    Button("Ok", role: .cancel) {
+                        mvm.resetAlert()
+                    }
                     if mvm.showNavPrompt {
                         Button("See more", role: nil) {
                             mvm.navToRecentlyScanned.toggle()
