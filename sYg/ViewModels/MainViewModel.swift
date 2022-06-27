@@ -162,6 +162,7 @@ extension MainViewModel {
     func resetAlert() {
         self.alertTitle = ""
         self.alertText = ""
+        self.error = nil
         self.groceryItem = nil
         self.showIsGroceryItem = false
         self.showNavPrompt = false
@@ -280,7 +281,10 @@ extension MainViewModel {
                     matchedItem.GenericItemObj = genericItem
                     
                     // Currently default to days in fridge
-                    dateToRemind += genericItem.DaysInFridge
+                    let daysInFridge = genericItem.DaysInFridge
+                    let hoursInFrdige = 24 * (daysInFridge.truncatingRemainder(dividingBy: 1))
+                    dateToRemind = Calendar.current.date(byAdding: .day, value: Int(daysInFridge), to: dateToRemind) ?? dateOfPurchase
+                    dateToRemind = Calendar.current.date(byAdding: .hour, value: Int(hoursInFrdige), to: dateToRemind) ?? dateOfPurchase
                 } else {
                     numMatchDefaults += 1
                 }

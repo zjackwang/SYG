@@ -17,8 +17,6 @@ struct SettingsView: View {
         ZStack {
             background
                 .ignoresSafeArea()
-            Text(svm.displayedUsername)
-                .font(.headline)
             List {
                 StatsSection
                 ReminderSettings
