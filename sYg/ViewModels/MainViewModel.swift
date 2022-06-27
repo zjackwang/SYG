@@ -85,9 +85,7 @@ extension MainViewModel {
                    viewToEdit == .manualAddView {
 
                     let newItem = self.evm.saveEditsToUserItem()
-
                     print("DEBUGGING >>> CONFIRM MANUAL ADD IN LIST VIEW")
-
                     self.sivm.addScannedItem(userItem: newItem) {
                         result in
                             switch result {
