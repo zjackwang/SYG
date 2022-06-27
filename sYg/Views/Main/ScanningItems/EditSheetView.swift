@@ -43,6 +43,7 @@ struct EditSheetView: View {
                 
                 Button {
                     show.toggle()
+                    vm.resetFields()
                 } label: {
                     Text("Cancel")
                 }
@@ -51,6 +52,7 @@ struct EditSheetView: View {
                     if vm.showConfirmButton {
                         vm.confirmed = true
                         show.toggle()
+                        vm.resetFields()
                     }
                 } label: {
                     Text("Save")

@@ -101,7 +101,6 @@ class EditViewModel: ObservableObject {
         self.category = CategoryConverter.fromRawValue(for: self.categorySelection)
         self.storage = StorageConverter.fromRawValue(for: self.storageSelection)
         let item = UserItem(NameFromAnalysis: self.nameFromAnalysis, Name: self.nameText, DateOfPurchase: self.purchaseDate, DateToRemind: self.remindDate, Category: self.category, Storage: self.storage)
-        self.resetFields()
         print("DEBUGGING >>>> SAVED ITEM: \(item)")
         return item
     }
