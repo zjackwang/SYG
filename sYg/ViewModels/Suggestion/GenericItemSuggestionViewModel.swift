@@ -184,6 +184,9 @@ class GenericItemSuggestionViewModel: ObservableObject {
         self.daysInFridge = 0.0
         self.daysInFreezer = 0.0
         self.daysOnShelf = 0.0
+        self.daysInFridgeText = ""
+        self.daysInFreezerText = ""
+        self.daysOnShelfText = ""
         self.isCut = false
         self.isCooked = false
         self.isOpened = false

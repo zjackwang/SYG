@@ -43,6 +43,7 @@ struct GenericItemSuggestionView: View {
                 
                 Button {
                     usvm.showGenericItemSuggestionView.toggle()
+                    vm.resetFields()
                 } label: {
                     Text("Cancel")
                 }
@@ -51,6 +52,7 @@ struct GenericItemSuggestionView: View {
                     // save form
                     vm.submitGenericItemSuggestion()
                     usvm.showGenericItemSuggestionView.toggle()
+                    vm.resetFields()
                 } label: {
                     Text("Save")
                 }

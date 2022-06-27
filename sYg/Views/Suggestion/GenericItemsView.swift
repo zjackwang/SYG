@@ -232,7 +232,7 @@ extension GenericItemView {
                 
                 Image(systemName: "checkmark")
                     .foregroundColor(.green)
-                    .opacity(genericItem?.IsCooked ?? false ? 1.0: 0.0)
+                    .opacity(genericItem?.IsCut ?? false ? 1.0: 0.0)
             }
         }
     }
